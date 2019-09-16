@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' async class='remove'></script>
+    <script class='remove'>
+      var respecConfig = {
+        specStatus: "unofficial",
+        subtitle: "A protocol for data matching on the Web",
+        shortName: "reconciliation-api-10",
+        pluralize: true,
+        wg: "Entity Reconciliation Community Group",
+        wgPublicList: "public-reconciliation",
+        wgURI: "https://www.w3.org/community/reconciliation/",
+        editors: [
+          {
+            name: "Antonin Delpeuch",
+            url: "http://antonin.delpeuch.eu/",
+            orcid: "0000-0002-8612-8827",
+            company: "University of Oxford",
+            companyURL: "https://www.ox.ac.uk/"
+          },
+          // add yourself here!
+        ],
+        github: "https://github.com/reconciliation-api/specs",
+      };
+    </script>
+    <title>Reconciliation service API</title>
+  </head>
+  <body>
+    <h1>Reconciliation service API</h1>
+    <section id='abstract'>
+      <p>
+        This document describes the reconciliation service API as supported by OpenRefine 3.x.
+        It is intended to comprehensive and definitive specification of this API in its given state.
+        Further improvements to the API, to be discussed in the W3C Entity Reconciliation Community Group,
+        will be specified in the next iteration of this document.
+      </p>
+    </section>
+    <section id='sotd'>
+      <p>
+        This report was published by the <a href="http://www.w3.org/community/reconciliation/">Entity Reconciliation Community Group</a>.
+        It is not a W3C Standard nor is it on the W3C Standards Track.
+        Please note that under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
+        Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.
+      </p>
+      <p>
+        Members of the Community Group are encouraged to contribute to this document by
+        documenting the current behaviour of the reconciliation API.
+        The <a href="https://github.com/w3c/respec/wiki/ReSpec-Editor's-Guide">ReSpec Editor's Guide</a>
+        can be used to learn more about the markup to use in this document.
+      </p>
+    </section>
+    <section class="informative">
+      <h2>Introduction</h2>
+      <section>
+        <h3>Data matching on the web</h3> 
+        <p class="ednote">
+          TODO: We could write a quick introduction to the problem the API intends to solve. Rule out similar use cases such as text annotation.
+        </p>
+      </section>
+      <section>
+        <h3>History of the reconciliation API</h3>
+        <p class="ednote">
+          TODO: A quick history of how the API came into being and how it evolved.
+        </p>
+      </section>
+      <section>
+        <h3>External resources</h3>
+        <p class="ednote">
+          TODO: links to libraries, validators, user documentation. Our <a href="https://reconciliation-api.github.io/census/">census</a> could be used for that.
+        </p>
+      </section>
+      <section>
+        <h3>Conventions used in this document</h3>
+        <p>
+            The key words MAY, MUST, MUST NOT, RECOMMENDED, SHOULD, and SHOULD NOT in this document are to be interpreted as described in
+            <a href="https://tools.ietf.org/html/bcp14">BCP 14</a> [[RFC2119]] [[RFC8174]] when, and only when, they appear in all capitals, as shown here.
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Core concepts</h2>
+      <p>
+        This section documents the data model behind the reconciliation API.
+        A reconciliation service lets users match their data against <a>entities</a>
+        exposed by the service. Matching can be refined by filtering by <a>type</a>
+        or <a>properties</a> with <a>property values</a>.
+        The purpose of this section is to define these notions.
+      </p>
+      <section>
+        <h3 data-link-for="entities">Entities</h3>
+        <p>
+           An <dfn>entity</dfn> is ...
+        </p>
+      </section>
+      <section>
+        <h3 data-link-for="types">Types</h3>
+        <p>
+          A <dfn>type</dfn> is ...
+        </p>
+      </section>
+      <section>
+        <h3 data-link-for="properties">Properties</h3>
+        <p>
+          A <dfn>property</dfn> is ...
+        </p>
+      </section>
+      <section>
+        <h3 data-link-for="property values">Property values</h3> 
+        <p>
+          A <dfn>property value</dfn> is ...
+        </p>
+      </section>
+      <section>
+        <h3 data-link-for="spaces">Identifier and schema spaces</h3>
+        <p>
+          The <dfn>identifier space</dfn> is ...
+        </p>
+        <p>
+          The <dfn>schema space</dfn> is ...
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Service definition</h2>
+      <p>
+        This section documents how reconciliation services are exposed as HTTP(S) services and
+        how they can announce the features of the API they implement.
+      </p>
+      <section>
+        <h3>HTTP(S) access</h3>
+      </section>
+      <section>
+        <h3>Cross-origin access</h3>
+        <p>
+           All HTTP(S) endpoints exposed by the service MUST support JSONP [[RFC6902]], which
+           enables web-based clients to access the service from a different domain.
+        </p>
+        <p class="note">
+           As of version 3.2, OpenRefine uses JSONP to access reconciliation services
+           from its user interface. This applies to the service manifest and the suggest
+           services. Calls to the preview service are made via an <code>&lt;iframe&gt;</code>
+           from the front-end and do not require cross-origin control.
+           Other calls (reconciliation queries and data extension queries) are made from the back-end
+           and therefore do not require cross-origin control either. Still, this document states
+           that all endpoints MUST support JSONP, since the service should not rely on the
+           client's architecture.
+        </p>
+        <p>
+           In addition, endpoints SHOULD also enable access by CORS [[cors]] to enable
+           newer web-based clients to access the service without exposing themselves to 
+           untrusted third-party code.
+        </p>
+        <p>
+           This can be achieved by adding the following HTTP headers to all HTTP responses
+           produced by the service:
+           <pre>
+             Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+             Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token
+             Access-Control-Allow-Origin: *
+           </pre>
+        </p>
+        <p class="note">
+           CORS provides a safer way to expose cross-origin web services and SHOULD therefore be 
+           supported by reconciliation services, in the interest of other clients and potentially
+           of newer versions of OpenRefine.
+        </p>
+      </section>
+      <section>
+        <h3>Service manifest</h3>
+      </section>
+    </section>
+    <section>
+      <h2>Reconciliation queries</h2>
+      <p>
+        This section specifies how clients can send reconciliation queries to services and
+        how services respond to them.
+      </p>
+      <section>
+        <h3>Structure of a reconciliation query</h3>
+      </section>
+      <section>
+        <h3>Reconciliation candidates</h3>
+      </section>
+      <section>
+        <h3>Sending reconciliation queries to a service</h3>
+      </section>
+    </section>
+    <section>
+      <h2>Preview service</h2>
+      <p>
+        This section specifies how reconciliation services can provide embeddable HTML previews
+        of their entities, which clients can display in their user interface.
+      </p>
+    </section>
+    <section>
+      <h2>Suggest services</h2>
+      <p>
+        This section specifies how reconciliation services can provide auto-complete
+        endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
+      </p>
+
+    </section>
+    <section>
+      <h2>Data extension service</h2>
+      <p>
+        This section specifies how reconciliation services can let clients fetch the values
+        of some <a>properties</a> on a selection of <a>entities</a>.
+      </p>
+
+    </section>
+    <section class="appendix">
+      <h2>JSON schemas</h2>
+        <p>
+          This appendix provides JSON schemas [[json-schema]] which can be used to validate the JSON serialization
+          of various elements as specified by these specifications.
+        </p>
+      <section>
+        <h3>Manifest schema</a>
+      </section>
+      <section>
+        <h3>Reconciliation query schema</h3>
+      </section>
+      <section>
+        <h3>Reconciliation response schema</h3>
+      </section>
+      <section>
+        <h3>Data extension query schema</h3>
+      </section>
+      <section>
+        <h3>Data extension response schema</h3>
+      </section>
+    </section>
+  </body>
+</html>
