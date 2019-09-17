@@ -25,13 +25,16 @@
             companyURL: "https://www.ox.ac.uk/"
           },
           // add yourself here!
+          {
+            name: "Add Yourself Here!"
+          }
         ],
       };
     </script>
-    <title>Reconciliation service API</title>
+    <title>Reconciliation Service API</title>
   </head>
   <body>
-    <h1>Reconciliation service API</h1>
+    <h1>Reconciliation Service API</h1>
     <section id='abstract'>
       <p>
         This document describes the reconciliation service API as supported by OpenRefine 3.x.
@@ -57,25 +60,25 @@
     <section class="informative">
       <h2>Introduction</h2>
       <section>
-        <h3>Data matching on the web</h3> 
+        <h3>Data Matching on the Web</h3> 
         <p class="ednote">
           TODO: We could write a quick introduction to the problem the API intends to solve. Rule out similar use cases such as text annotation.
         </p>
       </section>
       <section>
-        <h3>History of the reconciliation API</h3>
+        <h3>History of the Reconciliation API</h3>
         <p class="ednote">
           TODO: A quick history of how the API came into being and how it evolved.
         </p>
       </section>
       <section>
-        <h3>External resources</h3>
+        <h3>External Resources</h3>
         <p class="ednote">
           TODO: links to libraries, validators, user documentation. Our <a href="https://reconciliation-api.github.io/census/">census</a> could be used for that.
         </p>
       </section>
       <section>
-        <h3>Conventions used in this document</h3>
+        <h3>Conventions Used in this Document</h3>
         <p>
             The key words MAY, MUST, MUST NOT, RECOMMENDED, SHOULD, and SHOULD NOT in this document are to be interpreted as described in
             <a href="https://tools.ietf.org/html/bcp14">BCP 14</a> [[RFC2119]] [[RFC8174]] when, and only when, they appear in all capitals, as shown here.
@@ -83,7 +86,7 @@
       </section>
     </section>
     <section>
-      <h2>Core concepts</h2>
+      <h2>Core Concepts</h2>
       <p>
         This section documents the data model behind the reconciliation API.
         A reconciliation service lets users match their data against <a>entities</a>
@@ -91,32 +94,59 @@
         or <a>properties</a> with <a>property values</a>.
         The purpose of this section is to define these notions.
       </p>
+      <p class="ednote">
+        We could have a UML diagram to explain the relations between the concepts.
+      </p>  
       <section>
         <h3 data-link-for="entities">Entities</h3>
         <p>
-           An <dfn>entity</dfn> is ...
+           An <dfn>entity</dfn> is a record in the data source exposed by the service.
+           It comprises the following fields:
+           <ul>
+              <li>an <emph>identifier</emph>, which is a non-empty string. This identifier must be unique among all entities;</li>
+              <li>a <emph>name</emph>, which is also a non-empty string;</li>
+              <li>a list of <a>types</a>, possibly empty;</li>
+              <li>for each <a>property</a>, a set of <a>property values</a>, possibly empty.</li>
+           </ul>
+        </p>
+        <p>
+           Reconciliation services can define in their <a>manifest</a> a <dfn>view template</dfn> which
+           associates to each entity a corresponding URI, by inserting its identifier in the template.
+           A view template is a string which contains the <code>{{id}<!-- -->}</code> substring.
+           For each entity, replacing <code>{{id}<!-- -->}</code> in the template by the entity's identifier
+           MUST result in a valid URI [[RFC2396]].
         </p>
       </section>
       <section>
         <h3 data-link-for="types">Types</h3>
         <p>
-          A <dfn>type</dfn> is ...
+          A <dfn>type</dfn> represents a category of <dfn>entities</dfn>.
+          It comprises the following fields:
+          <ul>
+             <li>an <emph>identifier</emph>, which is a non-empty string. This identifier must be unique among all types;</li>
+             <li>a <emph>name</emph>, which is a non-empty string.</li>
+          </ul>
         </p>
       </section>
       <section>
         <h3 data-link-for="properties">Properties</h3>
         <p>
-          A <dfn>property</dfn> is ...
+          A <dfn>property</dfn> represents a type of attribute that entities can have in the data source.
+          It comprises the following fields:
+          <ul>
+            <li>an <emph>identifier</emph>, which is a non-empty string. This identifier must be unique among all properties;</li>
+            <li>a <emph>name</emph>, which is a non-empty string.</li>
+          </ul>
         </p>
       </section>
       <section>
-        <h3 data-link-for="property values">Property values</h3> 
+        <h3 data-link-for="property values">Property Values</h3> 
         <p>
           A <dfn>property value</dfn> is ...
         </p>
       </section>
       <section>
-        <h3 data-link-for="spaces">Identifier and schema spaces</h3>
+        <h3 data-link-for="spaces">Identifier and Schema Spaces</h3>
         <p>
           The <dfn>identifier space</dfn> is ...
         </p>
@@ -126,16 +156,16 @@
       </section>
     </section>
     <section>
-      <h2>Service definition</h2>
+      <h2>Service Definition</h2>
       <p>
         This section documents how reconciliation services are exposed as HTTP(S) services and
         how they can announce the features of the API they implement.
       </p>
       <section>
-        <h3>HTTP(S) access</h3>
+        <h3>HTTP(S) Access</h3>
       </section>
       <section>
-        <h3>Cross-origin access</h3>
+        <h3>Cross-Origin Access</h3>
         <p>
            All HTTP(S) endpoints exposed by the service MUST support JSONP [[RFC6902]], which
            enables web-based clients to access the service from a different domain.
@@ -171,34 +201,35 @@
         </p>
       </section>
       <section>
-        <h3>Service manifest</h3>
+        <h3>Service Manifest</h3>
+        <p>A <dfn>manifest</dfn> is ...</p>
       </section>
     </section>
     <section>
-      <h2>Reconciliation queries</h2>
+      <h2>Reconciliation Queries</h2>
       <p>
         This section specifies how clients can send reconciliation queries to services and
         how services respond to them.
       </p>
       <section>
-        <h3>Structure of a reconciliation query</h3>
+        <h3>Structure of a Reconciliation Query</h3>
       </section>
       <section>
-        <h3>Reconciliation candidates</h3>
+        <h3>Reconciliation Candidates</h3>
       </section>
       <section>
-        <h3>Sending reconciliation queries to a service</h3>
+        <h3>Sending Reconciliation Queries to a Service</h3>
       </section>
     </section>
     <section>
-      <h2>Preview service</h2>
+      <h2>Preview Service</h2>
       <p>
         This section specifies how reconciliation services can provide embeddable HTML previews
         of their entities, which clients can display in their user interface.
       </p>
     </section>
     <section>
-      <h2>Suggest services</h2>
+      <h2>Suggest Services</h2>
       <p>
         This section specifies how reconciliation services can provide auto-complete
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
@@ -206,7 +237,7 @@
 
     </section>
     <section>
-      <h2>Data extension service</h2>
+      <h2>Data Extension Service</h2>
       <p>
         This section specifies how reconciliation services can let clients fetch the values
         of some <a>properties</a> on a selection of <a>entities</a>.
@@ -214,25 +245,25 @@
 
     </section>
     <section class="appendix">
-      <h2>JSON schemas</h2>
+      <h2>JSON Schemas</h2>
         <p>
           This appendix provides JSON schemas [[json-schema]] which can be used to validate the JSON serialization
           of various elements as specified by these specifications.
         </p>
       <section>
-        <h3>Manifest schema</a>
+        <h3>Manifest Schema</a>
       </section>
       <section>
-        <h3>Reconciliation query schema</h3>
+        <h3>Reconciliation Query Schema</h3>
       </section>
       <section>
-        <h3>Reconciliation response schema</h3>
+        <h3>Reconciliation Response Schema</h3>
       </section>
       <section>
-        <h3>Data extension query schema</h3>
+        <h3>Data Extension Query Schema</h3>
       </section>
       <section>
-        <h3>Data extension response schema</h3>
+        <h3>Data Extension Response Schema</h3>
       </section>
     </section>
   </body>
