@@ -78,7 +78,7 @@
         </p>
       </section>
       <section>
-        <h3>Conventions Used in this Document</h3>
+        <h3>Conventions Used in This Document</h3>
         <p>
             The key words MAY, MUST, MUST NOT, RECOMMENDED, SHOULD, and SHOULD NOT in this document are to be interpreted as described in
             <a href="https://tools.ietf.org/html/bcp14">BCP 14</a> [[RFC2119]] [[RFC8174]] when, and only when, they appear in all capitals, as shown here.
@@ -142,7 +142,14 @@
       <section>
         <h3 data-link-for="property values">Property Values</h3> 
         <p>
-          A <dfn>property value</dfn> is ...
+          A <dfn>property value</dfn> can be any of the following:
+          <ul>
+             <li>A string;</li>
+             <li>A boolean;</li>
+             <li>An integer;</li>
+             <li>A floating-point value;</li>
+             <li>A reconciled value, consisting of an identifier and a name, both being strings.</li>
+          </ul>
         </p>
       </section>
       <section>
@@ -161,8 +168,14 @@
         This section documents how reconciliation services are exposed as HTTP(S) services and
         how they can announce the features of the API they implement.
       </p>
+      <p>
+        A <dfn>reconciliation service</dfn> consists of…
+      </p>
       <section>
         <h3>HTTP(S) Access</h3>
+        <p class="ednote">
+          Points to specify here: GET/POST, HTTP status codes, HSTS, redirects…
+        </p>
       </section>
       <section>
         <h3>Cross-Origin Access</h3>
@@ -213,9 +226,30 @@
       </p>
       <section>
         <h3>Structure of a Reconciliation Query</h3>
+        <p>
+          A <dfn>reconciliation query</dfn> consists of:
+          <ul>
+            <li>A query string, consisting of a non-empty string, which is mandatory;</li>
+            <li>Optionally, a list of <a>types</a>;</li>
+            <li>Optionally, a limit, consisting of a positive integer;</li>
+            <li>Optionally, a list of pairs of <a>properties</a> and <a>property values</a>;</li>
+            <li>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, … </li>
+          </ul>
+        </p>
+        <p class="ednote">
+           List all the possible values for type strictness
+        </p> 
       </section>
       <section>
         <h3>Reconciliation Candidates</h3>
+        <p>
+          A <dfn>reconciliation candidate</dfn> consists of:
+          <ul>
+            <li>An <a>entity</a>;</li>
+            <li>A <dfn>reconciliation score</dfn>, which is a floating-point value or integer;</li>
+            <li>A matching decision, which is a boolean.</li>
+          </ul>
+        </p>
       </section>
       <section>
         <h3>Sending Reconciliation Queries to a Service</h3>
