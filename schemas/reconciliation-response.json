@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/shema#",
+    "$id": "https://reconciliation-api.github.io/specs/schemas/reconciliation-response.json",
+    "type": "array",
+    "description": "This schema validates lists of reconciliation candidates",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string",
+                "description": "Entity identifier of the candidate"
+            },
+            "name": {
+                "type": "string",
+                "description": "Entity name of the candidate"
+            },
+            "score": {
+                "type": "number",
+                "description": "Number indicating how likely it is that the candidate matches the query"
+            },
+            "type": {
+                "type": "array",
+                "description": "Types the candidate entity belongs to",
+                "items": {
+                    "oneOf": [
+                        {
+                            "type": "object",
+                            "description": "A type can be given by id and name",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["id"]
+                        },
+                        {
+                            "type": "string",
+                            "description": "Alternatively, if only a string is given, it is treated as the id"
+                        }
+                    ]
+                }
+            }
+        },
+        "required": ["id", "name", "score"]
+    }
+}

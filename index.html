@@ -253,6 +253,9 @@
       </section>
       <section>
         <h3>Sending Reconciliation Queries to a Service</h3>
+        <p>
+          A <dfn>reconciliation response</dfn> is a set of reconciliation candidates.
+        </p>
       </section>
     </section>
     <section>
@@ -276,7 +279,23 @@
         This section specifies how reconciliation services can let clients fetch the values
         of some <a>properties</a> on a selection of <a>entities</a>.
       </p>
-
+      <section>
+        <h3>Data Extension Settings</h3>
+        <p>
+        </p>
+      </section>
+      <section>
+        <h3>Data Extension Queries</h3>
+        <p>
+          A <dfn>data extension query</dfn> is ...
+        </p>
+      </section>
+      <section>
+        <h3>Data Extension Responses</h3>
+        <p>
+          A <dfn>data extension response</dfn> is ...
+        </p>
+      </section>
     </section>
     <section class="appendix">
       <h2>JSON Schemas</h2>
@@ -285,25 +304,40 @@
           of various elements as specified by these specifications.
         </p>
       <section>
-        <h3>Manifest Schema</a>
+        <h3>Manifest Schema</h3>
+        <p>
+          The <a href="schemas/manifest.json">manifest schema</a> can be used to validate a service <a>manifest</a>.
+        </p>
+        <pre data-include="schemas/manifest.json" />
       </section>
       <section>
         <h3 id="reconciliation-query-json-schema">Reconciliation Query Schema</h3>
-	<p>
-		The following schema can be used to validate
-		the JSON serialization of any <a>reconciliation query</a>.
-	</p>
-	<pre data-include="schemas/reconciliation-query.json">
-	</pre>
+	    <p>
+	      The <a href="schemas/reconciliation-query.json">reconciliation query schema</a> can be used to validate
+	      the JSON serialization of any <a>reconciliation query</a>.
+	   </p>
+	   <pre data-include="schemas/reconciliation-query.json" />
       </section>
       <section>
         <h3>Reconciliation Response Schema</h3>
+	    <p>
+          The <a href="schemas/reconciliation-response.json">reconciliation response schema</a> can be used to validate the JSON serialization of any <a>reconciliation response</a>.
+        </p>
+        <pre data-include="schemas/reconciliation-response.json" />
       </section>
       <section>
         <h3>Data Extension Query Schema</h3>
+        <p>
+          The <a href="schemas/data-extension-query.json">data extension query schema</a> validates <a>data extension queries</a>.
+        </p>
+        <pre data-include="schemas/data-extension-query.json" />
       </section>
       <section>
         <h3>Data Extension Response Schema</h3>
+        <p>
+          The <a href="schemas/data-extension-response.json">data extension response schema</a> validates <a>data extension responses</a>.
+        </p>
+        <pre data-include="schemas/data-extension-response.json" />
       </section>
     </section>
   </body>

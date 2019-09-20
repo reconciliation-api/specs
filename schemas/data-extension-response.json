@@ -1,0 +1,105 @@
+
+{
+    "$schema": "http://json-schema.org/schema#",
+    "$id": "https://reconciliation-api.github.io/specs/schemas/data-extension-response.json",
+    "type": "object",
+    "description": "This schema validates a data extension response",
+    "properties": {
+        "meta": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["id"]
+                    }
+                },
+                "required": ["id", "name"]
+            }
+        },
+        "rows": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": ["id", "name"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "str": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": ["str"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "float": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "required": ["float"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "int": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "required": ["int"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "date": {
+                                                "type": "string",
+                                                "description": "Date and time formatted in ISO format",
+                                                "pattern": "^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?$"
+                                            }
+                                        },
+                                        "required": ["date"]
+                                    }
+
+                               ]
+                            }
+                        }
+                    }
+                }
+            }      
+        }
+    },
+    "required": ["rows", "meta"]
+}
