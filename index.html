@@ -233,11 +233,11 @@
             <li>Optionally, a list of <a>types</a>;</li>
             <li>Optionally, a limit, consisting of a positive integer;</li>
             <li>Optionally, a list of pairs of <a>properties</a> and <a>property values</a>;</li>
-            <li>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, … </li>
+            <li>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</li>
           </ul>
         </p>
-        <p class="ednote">
-           List all the possible values for type strictness
+        <p>
+          A <a href="#reconciliation-query-json-schema">JSON schema to validate the serialization of reconciliation queries</a> is available.
         </p> 
       </section>
       <section>
@@ -288,7 +288,13 @@
         <h3>Manifest Schema</a>
       </section>
       <section>
-        <h3>Reconciliation Query Schema</h3>
+        <h3 id="reconciliation-query-json-schema">Reconciliation Query Schema</h3>
+	<p>
+		The following schema can be used to validate
+		the JSON serialization of any <a>reconciliation query</a>.
+	</p>
+	<pre data-include="schemas/reconciliation-query.json">
+	</pre>
       </section>
       <section>
         <h3>Reconciliation Response Schema</h3>
