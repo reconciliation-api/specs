@@ -18,3 +18,16 @@ for editor metadata).
 
 This specification is developed using [ReSpec](https://github.com/w3c/respec) and help about
 its markup can be found in its [user guide](https://github.com/w3c/respec/wiki/ReSpec-Editor's-Guide).
+
+Local setup
+-----------
+
+To edit and preview the `index.html` file locally, clone the repo and change into the `specs` directory:
+
+`git clone https://github.com/reconciliation-api/specs.git ; cd specs`
+
+Run a web server in the `specs` directory (for [`data-include`](https://github.com/w3c/respec/wiki/ReSpec-Editor's-Guide#inclusions--transformations) support):
+
+`python3 -m http.server`
+
+You can then view the specs at [http://localhost:8000](http://localhost:8000).
