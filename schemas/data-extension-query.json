@@ -10,8 +10,8 @@
             "description": "The list of entity identifiers to fetch property values from",
             "items": {
                 "type": "string"
-              }
-            },
+            }
+        },
         "properties": {
             "type": "array",
             "description": "The list of properties to fetch, with their optional configuration",
