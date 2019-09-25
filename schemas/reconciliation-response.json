@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/shema#",
+    "$schema": "http://json-schema.org/schema#",
     "$id": "https://reconciliation-api.github.io/specs/schemas/reconciliation-response.json",
     "type": "array",
     "description": "This schema validates lists of reconciliation candidates",
