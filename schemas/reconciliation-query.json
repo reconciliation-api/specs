@@ -3,6 +3,9 @@
     "$id": "https://reconciliation-api.github.io/specs/schemas/reconciliation-query.json",
     "type": "object",
     "description": "This schema validates a single reconciliation query",
+    "patternProperties": {
+      "^.*$": {
+        "type": "object",
     "properties": {
         "query": {
             "type": "string",
@@ -48,7 +51,10 @@
                },
                "required": ["pid", "v"]
             }
-        },
+        }
+      },
+      "required": ["query"]
+    },
         "limit": {
             "type": "number",
             "description": "The maximum number of candidates to return"
@@ -72,6 +78,5 @@
             "description": "A classification of the type matching strategy when multiple types are supplied",
             "enum": ["any", "should", "all"]
         }
-    },
-    "required": ["query"]
+    }
 }
