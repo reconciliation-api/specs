@@ -2,7 +2,7 @@
     "$schema":"http://json-schema.org/schema#",
     "$id":"https://reconciliation-api.github.io/specs/schemas/reconciliation-query.json",
     "type":"object",
-    "description":"This schema validates a single reconciliation query",
+    "description":"This schema validates the JSON serialization of any reconciliation query batch, i.e. the payload of a GET/POST to a reconciliation endpoint.",
     "patternProperties":{
         "^.*$":{
             "type":"object",
