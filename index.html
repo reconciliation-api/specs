@@ -60,7 +60,7 @@
     <section class="informative">
       <h2>Introduction</h2>
       <section>
-        <h3>Data Matching on the Web</h3> 
+        <h3>Data Matching on the Web</h3>
         <p class="ednote">
           TODO: We could write a quick introduction to the problem the API intends to solve. Rule out similar use cases such as text annotation.
         </p>
@@ -96,7 +96,7 @@
       </p>
       <p class="ednote">
         We could have a UML diagram to explain the relations between the concepts.
-      </p>  
+      </p>
       <section>
         <h3 data-link-for="entities">Entities</h3>
         <p>
@@ -140,7 +140,7 @@
         </p>
       </section>
       <section>
-        <h3 data-link-for="property values">Property Values</h3> 
+        <h3 data-link-for="property values">Property Values</h3>
         <p>
           A <dfn>property value</dfn> can be any of the following:
           <ul>
@@ -195,7 +195,7 @@
         </p>
         <p>
            In addition, endpoints SHOULD also enable access by CORS [[cors]] to enable
-           newer web-based clients to access the service without exposing themselves to 
+           newer web-based clients to access the service without exposing themselves to
            untrusted third-party code.
         </p>
         <p>
@@ -208,7 +208,7 @@
            </pre>
         </p>
         <p class="note">
-           CORS provides a safer way to expose cross-origin web services and SHOULD therefore be 
+           CORS provides a safer way to expose cross-origin web services and SHOULD therefore be
            supported by reconciliation services, in the interest of other clients and potentially
            of newer versions of OpenRefine.
         </p>
@@ -237,8 +237,11 @@
           </ul>
         </p>
         <p>
-          A <a href="#reconciliation-query-json-schema">JSON schema to validate the serialization of reconciliation queries</a> is available.
-        </p> 
+          A <dfn>reconciliation query batch</dfn> is a set of <a>reconciliation queries</a> indexed by string identifiers.
+        </p>
+        <p>
+          A <a href="#reconciliation-query-batch-json-schema">JSON schema to validate the serialization of a query batch</a> is available.
+        </p>
       </section>
       <section>
         <h3>Reconciliation Candidates</h3>
@@ -311,10 +314,10 @@
         <pre data-include="schemas/manifest.json" />
       </section>
       <section>
-        <h3 id="reconciliation-query-json-schema">Reconciliation Query Schema</h3>
+        <h3 id="reconciliation-query-batch-json-schema">Reconciliation Query Batch Schema</h3>
 	    <p>
-	      The <a href="schemas/reconciliation-query.json">reconciliation query schema</a> can be used to validate
-	      the JSON serialization of any <a>reconciliation query</a>.
+	      The <a href="schemas/reconciliation-query-batch.json">reconciliation query batch schema</a> can be used to validate
+	      the JSON serialization of any <a>reconciliation query batch</a>.
 	   </p>
 	   <pre data-include="schemas/reconciliation-query.json" />
       </section>
