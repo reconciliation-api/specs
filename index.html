@@ -24,6 +24,13 @@
             company: "University of Oxford",
             companyURL: "https://www.ox.ac.uk/"
           },
+          {
+            name: "Adrian Pohl",
+            url: "https://lobid.org/team/ap",
+            orcid: "0000-0001-9083-7442",
+            company: "hbz, Cologne",
+            companyURL: "https://www.hbz-nrw.de/"
+          },
           // add yourself here!
           {
             name: "Add Yourself Here!"
@@ -257,7 +264,13 @@
       <section>
         <h3>Sending Reconciliation Queries to a Service</h3>
         <p>
-          A <dfn>reconciliation response</dfn> is a set of reconciliation candidates.
+          A <dfn>reconciliation result</dfn> is a set of reconciliation candidates.
+        </p>
+        <p>
+          A <dfn>reconciliation result batch</dfn> is a set of <a>reconciliation results</a> indexed by string identifiers of the corresponding <a>reconciliation query batch</a>.
+        </p>
+        <p>
+          A <a href="#reconciliation-result-batch-json-schema">JSON schema to validate the serialization of a reconciliation result batch</a> is available.
         </p>
       </section>
     </section>
@@ -322,11 +335,11 @@
 	   <pre data-include="schemas/reconciliation-query.json" />
       </section>
       <section>
-        <h3>Reconciliation Response Schema</h3>
+        <h3 id="reconciliation-result-batch-json-schema">Reconciliation Result Batch Schema</h3>
 	    <p>
-          The <a href="schemas/reconciliation-response.json">reconciliation response schema</a> can be used to validate the JSON serialization of any <a>reconciliation response</a>.
+          The <a href="schemas/reconciliation-result-batch.json">reconciliation result batch schema</a> can be used to validate the JSON serialization of any <a>reconciliation result batch</a>.
         </p>
-        <pre data-include="schemas/reconciliation-response.json" />
+        <pre data-include="schemas/reconciliation-result-batch.json" />
       </section>
       <section>
         <h3>Data Extension Query Schema</h3>
