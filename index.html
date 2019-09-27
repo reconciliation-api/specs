@@ -232,6 +232,24 @@
         how services respond to them.
       </p>
       <section>
+        <h3>Reconciliation HTTP Requests</h3>
+        <p>
+          A reconciliation service MUST support HTTP POST requests with
+          <code>application/x-www-form-urlencoded</code> bodies containing a
+          <a>reconciliation query batch</a> in a form element named <code>queries</code>.
+        </p>
+        <p>
+          <pre class="example nohighlight">POST / queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
+        </p>
+        <p>
+          A reconciliation service SHOULD support HTTP GET requests with a
+          <a>reconciliation query batch</a> in a query string parameter named <code>queries</code>.
+        </p>
+        <p>
+          <pre class="example nohighlight">GET /?queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
+        </p>
+      </section>
+      <section>
         <h3>Structure of a Reconciliation Query</h3>
         <p>
           A <dfn>reconciliation query</dfn> consists of:
@@ -245,6 +263,14 @@
         </p>
         <p>
           A <dfn>reconciliation query batch</dfn> is a set of <a>reconciliation queries</a> indexed by string identifiers.
+        </p>
+        <p>
+          Minimal example of a <a>reconciliation query batch</a> with mandatory fields only:
+          <pre data-include="examples/reconciliation-query-batch-example-min.json" class="example json"></pre>
+        </p>
+        <p>
+          Full example of a <a>reconciliation query batch</a> with all optional fields:
+          <pre data-include="examples/reconciliation-query-batch-example-full.json" class="example json"></pre>
         </p>
         <p>
           A <a href="#reconciliation-query-batch-json-schema">JSON schema to validate the serialization of a query batch</a> is available.
