@@ -9,4 +9,5 @@ for schema_file in `ls schemas`; do
         schema_name=$(echo "$schema_file" | cut -f 1 -d '.')
         ajv test -s schemas/$schema_file -d "examples/$schema_name/valid/*.json" --valid
         ajv test -s schemas/$schema_file -d "examples/$schema_name/invalid/*.json" --invalid
+        echo ""
 done
