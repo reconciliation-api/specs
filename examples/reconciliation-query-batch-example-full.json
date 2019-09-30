@@ -2,6 +2,7 @@
   "q0": {
     "query": "Christel Hanewinckel",
     "type": "DifferentiatedPerson",
+    "limit": 5,
     "properties": [
       {
         "pid": "professionOrOccupation",
@@ -17,6 +18,7 @@
   "q1": {
     "query": "Franz Thönnes",
     "type": "DifferentiatedPerson",
+    "limit": 5,
     "properties": [
       {
         "pid": "professionOrOccupation",
