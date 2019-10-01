@@ -32,3 +32,10 @@ Run a web server in the `specs` directory (for [`data-include`](https://github.c
 `python3 -m http.server`
 
 You can then view the specs at [http://localhost:8000](http://localhost:8000).
+
+Testing
+-------
+
+You can check the JSON schemas used in the specifications against a set of valid and invalid examples. This relies on the `ajv` schema validator that can be installed with `npm install -g ajv-cli` (this requires the Node package manager `npm`). You can then run the tests with:
+
+`./test.sh`
