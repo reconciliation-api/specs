@@ -11,6 +11,24 @@
                     "type":"string",
                     "description":"A string to be matched against the name of the entities"
                 },
+                "type":{
+                  "description":"Either a single type identifier or a list of type identifiers",
+                  "oneOf":[
+                    {
+                      "type":"string"
+                    },
+                    {
+                      "type":"array",
+                      "items":{
+                        "type":"string"
+                      }
+                    }
+                  ]
+                },
+                "limit":{
+                  "type":"number",
+                  "description":"The maximum number of candidates to return"
+                },
                 "properties":{
                     "type":"array",
                     "description":"An optional list of property mappings to refine the query",
@@ -52,42 +70,25 @@
                             }
                         },
                         "required":[
-                            "pid",
-                            "v"
+                          "pid",
+                          "v"
                         ]
                     }
-                }
-            },
-            "required":[
-                "query"
-            ]
-        },
-        "limit":{
-            "type":"number",
-            "description":"The maximum number of candidates to return"
-        },
-        "type":{
-            "description":"Either a single type identifier or a list of type identifiers",
-            "oneOf":[
-                {
-                    "type":"string"
                 },
-                {
-                    "type":"array",
-                    "items":{
-                        "type":"string"
-                    }
+                "type_strict":{
+                  "type":"string",
+                  "description":"A classification of the type matching strategy when multiple types are supplied",
+                  "enum":[
+                    "any",
+                    "should",
+                    "all"
+                  ]
                 }
-            ]
-        },
-        "type_strict":{
-            "type":"string",
-            "description":"A classification of the type matching strategy when multiple types are supplied",
-            "enum":[
-                "any",
-                "should",
-                "all"
-            ]
+              },
+                "required":[
+                  "query"
+                ],
+                "additionalProperties": false
         }
     }
 }
