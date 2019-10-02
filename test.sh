@@ -11,3 +11,8 @@ for schema_file in `ls schemas`; do
         ajv test -s schemas/$schema_file -d "examples/$schema_name/invalid/*.json" --invalid
         echo ""
 done
+
+if [ $? -eq 0 ]
+then
+  echo -e "All tests \033[0;32mPASSED\033[0m\n"
+fi

@@ -328,21 +328,90 @@
         This section specifies how reconciliation services can let clients fetch the values
         of some <a>properties</a> on a selection of <a>entities</a>.
       </p>
+      <p>
+        A data extension service MUST support <a>data extension query requests</a>.
+      </p>
+      <p>
+        A data extension service SHOULD provide <a>data extension property proposals</a>.
+      </p>
+      <p>
+        A data extension service MAY support <a>data extension property settings</a>.
+      </p>
       <section>
-        <h3>Data Extension Settings</h3>
+        <h3>Data Extension Metadata</h3>
         <p>
+          The <dfn>data extension metadata</dfn> consists of:
+          <ul>
+            <li>An object in the service <a>manifest</a> in the <code>extend</code> field;</li>
+            <li>Optionally, the <code>service_url</code> and <code>service_path</code> for <a>data extension property proposals</a>;</li>
+            <li>Optionally, a list of <a>data extension property settings</a>.</li>
+          </ul>
+        </p>
+        <p>
+          A <dfn>data extension property setting</dfn> consists of:
+          <ul>
+            <li>A name;</li>
+            <li>A label;</li>
+            <li>A default value;</li>
+            <li>A help text;</li>
+            <li>A type, which can be one of the strings <code>"number"</code>, <code>"text"</code>, <code>"checkbox"</code>, or <code>"select"</code>;</li>
+            <li>If <code>type</code> is <code>select</code>, a list of property setting choices.</li>
+          </ul>
+        </p>
+        <p>
+          Example of <a>data extension metadata</a> with all optional fields:
+          <pre data-include="examples/data-extension-metadata/valid/example-full.json" class="example json"></pre>
         </p>
       </section>
       <section>
-        <h3>Data Extension Queries</h3>
+        <h3>Data Extension Property Proposals</h3>
         <p>
-          A <dfn>data extension query</dfn> is ...
+          A <dfn>data extension property proposal</dfn> is ...
+        </p>
+      </section>
+      <section>
+        <h3>Data Extension Query Requests</h3>
+        <p>
+         A <dfn>data extension query request</dfn> lets clients fetch the values
+         of some <a>properties</a> on a selection of <a>entities</a>.
+        </p>
+        <p>
+          A data extension service MUST declare <a>data extension metadata</a> in the service <a>manifest</a>.
+        <p>
+          A data extension service MUST support HTTP POST requests with
+          <code>application/x-www-form-urlencoded</code> bodies containing a
+          <a>data extension query</a> in a form element named <code>extend</code>.
+        </p>
+        <p>
+          <pre class="example nohighlight">POST / extend=&lt;URL-encoded data extension query&gt;</pre>
+        </p>
+        <p>
+          A data extension service SHOULD support HTTP GET requests with a
+          <a>data extension query</a> in a query string parameter named <code>extend</code>.
+        </p>
+        <p>
+          <pre class="example nohighlight">GET /?extend=&lt;URL-encoded data extension query&gt;</pre>
+        </p>
+        <p>
+          A <dfn>data extension query</dfn> consists of:
+          <ul>
+            <li>A list of <a>entity</a> identifiers;</li>
+            <li>A list of <a>properties</a> with optional <a href="#data+extension+property+setting">settings</a>.</li>
+          </ul>
+        </p>
+        <p>
+          Example of a <a>data extension query</a>:
+          <pre data-include="examples/data-extension-query/valid/example-full.json" class="example json"></pre>
         </p>
       </section>
       <section>
         <h3>Data Extension Responses</h3>
         <p>
           A <dfn>data extension response</dfn> is ...
+        </p>
+        <p>
+          Response example for the <a>data extension query</a> from the previous example:
+          <pre data-include="examples/data-extension-response/valid/example-full.json" class="example json"></pre>
         </p>
       </section>
     </section>
