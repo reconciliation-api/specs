@@ -366,7 +366,31 @@
       <section>
         <h3>Data Extension Property Proposals</h3>
         <p>
-          A <dfn>data extension property proposal</dfn> is ...
+          A <dfn>data extension property proposal</dfn> service returns <a>properties</a> for a given <a>type</a> identifier.
+        </p>
+        <p>
+          The service MUST support HTTP GET requests with a `type` query string parameter.
+        </p>
+        <p>
+          The service SHOULD support an optional `limit` query string parameter to control the number of proposed properties.
+        </p>
+        <p>
+          The service URL and path are declared in the <a>data extension metadata</a> of the service <a>manifest</a>.
+        </p>
+        <p>
+          <pre class="example nohighlight">GET /properties?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
+        </p>
+        <p>
+          A <dfn>data extension property proposal response</dfn> consists of:
+          <ul>
+            <li>Optionally, the requested limit;</li>
+            <li>The requested <a>type</a> identifier;</li>
+            <li>An array of proposed <a>properties</a>.</li>
+          </ul>
+        </p>
+        <p>
+          Example of a <a>data extension property proposal</a> response:
+          <pre data-include="examples/data-extension-property-proposal/valid/response.json" class="example json"></pre>
         </p>
       </section>
       <section>
