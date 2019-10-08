@@ -162,7 +162,7 @@
              <li>A boolean;</li>
              <li>An integer;</li>
              <li>A floating-point value;</li>
-             <li>A reconciled value, consisting of an identifier and a name, both being strings.</li>
+             <li>A <dfn>reconciled value</dfn>, consisting of an identifier and a name, both being strings.</li>
           </ul>
         </p>
       </section>
@@ -407,7 +407,19 @@
       <section>
         <h3>Data Extension Responses</h3>
         <p>
-          A <dfn>data extension response</dfn> is ...
+          A <dfn>data extension response</dfn> consists of <a href="#data+extension+response+metadata">metadata</a>
+          and <a href="#data+extension+response+rows">rows</a>.
+        </p>
+        <p>
+          The <dfn id="data+extension+response+metadata">metadata</dfn> contains the <a>properties</a> used for data
+          extension, as requested in the <a>data extension query</a>. If properties represent <a>reconciled values</a>,
+          they MAY specify a <a>type</a> in the metadata.
+        </p>
+        <p>
+          The <dfn id="data+extension+response+rows">rows</dfn> object contains, for each <a>entity</a> identifier in the
+          <a>data extension query</a>, for each <a>property</a> identifier in the
+          <a href="#data+extension+response+metadata">metadata</a>, the <a>property values</a> of that property in that entity.
+          If the property values are <a>reconciled values</a>, their identifiers MUST be in the service's <a>identifier space</a>.
         </p>
         <p>
           Response example for the <a>data extension query</a> from the previous example:

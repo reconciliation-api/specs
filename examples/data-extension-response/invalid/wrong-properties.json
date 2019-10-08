@@ -6,11 +6,7 @@
     },
     {
       "id": "geographicAreaCode",
-      "name": "Ländercode",
-      "type": {
-        "id": "GeographicAreaCodeValue",
-        "name": "GeographicAreaCodeValue"
-      }
+      "name": "Ländercode"
     },
     {
       "id": "professionOrOccupation",
