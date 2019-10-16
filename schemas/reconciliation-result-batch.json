@@ -57,7 +57,8 @@
                 "required": ["id", "name", "score"]
             }
           }
-        }
+        },
+        "required": ["result"]
       }
     }
 }
