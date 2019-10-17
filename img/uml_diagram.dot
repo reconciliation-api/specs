@@ -1,0 +1,222 @@
+digraph model_graph {
+  fontname = "Roboto"
+  fontsize = 8
+  splines  = true
+
+  node [
+    fontname = "Roboto"
+    fontsize = 8
+    shape = "plaintext"
+  ]
+
+  edge [
+    fontname = "Roboto"
+    fontsize = 8
+  ]
+
+  // Labels
+
+
+  model_Entity [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Entity
+    </B></FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>String</B></FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">name</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">String</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">types</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">List&lt;Type&gt;</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
+  model_Type [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Type
+    </B></FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>String</B></FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">name</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">String</FONT>
+    </TD></TR>
+ 
+    </TABLE>
+    >]
+
+  model_Property [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Property
+    </B></FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>String</B></FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">name</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">String</FONT>
+    </TD></TR>
+ 
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">type</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">Type</FONT>
+    </TD></TR>
+ 
+    </TABLE>
+    >]
+
+  model_PropertyValue [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    PropertyValue
+    </B></FONT></TD></TR>
+    </TABLE>
+    >]
+
+   model_Statement [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Statement
+    </B></FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">entity</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">Entity</FONT>
+    </TD></TR>
+ 
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">property</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">Property</FONT>
+    </TD></TR>
+ 
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">value</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">PropertyValue</FONT>
+    </TD></TR>
+ 
+    </TABLE>
+       
+   >]
+
+  model_String [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    String
+    </B></FONT></TD></TR>
+    </TABLE>
+    >]
+
+  model_Number [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Number
+    </B></FONT></TD></TR>
+    </TABLE>
+    >]
+
+  model_Boolean [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Boolean
+    </B></FONT></TD></TR>
+    </TABLE>
+    >]
+
+  model_Date [label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Date
+    </B></FONT></TD></TR>
+    </TABLE>
+    >]
+
+
+  // Relations
+
+  model_Property -> model_Type
+  [label=" type"] [arrowhead=none, arrowtail=dot, dir=both];
+
+  model_Statement -> model_Entity
+  [label=" entity"] [arrowhead=none, arrowtail=dot, dir=both];
+
+  model_Statement -> model_Property
+  [label=" property"] [arrowhead=none, arrowtail=dot, dir=both];
+
+  model_Statement -> model_PropertyValue
+  [label=" value"] [arrowhead=none, arrowtail=dot, dir=both];
+
+  // store_models_Edit -> store_models_Batch
+  // [label=" batch (edits)"] [arrowhead=none, arrowtail=dot, dir=both];
+
+
+  // revert_models_RevertTask -> store_models_Batch
+  // [label=" batch (revert_tasks)"] [arrowhead=none, arrowtail=dot, dir=both];
+  // django_contrib_auth_models_User [label=<
+  // <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  // <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  // <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">User</FONT>
+  // </TD></TR>
+  // </TABLE>
+  // >]
+  // revert_models_RevertTask -> django_contrib_auth_models_User
+  // [label=" user (reverttask)"] [arrowhead=none, arrowtail=dot, dir=both];
+
+  model_Number -> model_PropertyValue
+  [arrowhead=empty, arrowtail=none, dir=both];
+
+  model_String -> model_PropertyValue
+  [arrowhead=empty, arrowtail=none, dir=both];
+
+  model_Boolean -> model_PropertyValue
+  [arrowhead=empty, arrowtail=none, dir=both];
+
+  model_Entity -> model_PropertyValue
+  [arrowhead=empty, arrowtail=none, dir=both];
+
+  model_Date -> model_PropertyValue
+  [arrowhead=empty, arrowtail=none, dir=both];
+
+  model_Entity -> model_Type
+  [label=" types"] [arrowhead=dot arrowtail=dot, dir=both];
+
+
+}
