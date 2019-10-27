@@ -1,0 +1,15 @@
+{
+  "defaultTypes": [
+    {
+      "id": "/people/person",
+      "name": "Person"
+    }
+  ],
+  "name": "GODOT (Graph of Dated Objects and Texts) Reconciliation Service - Roman Consulates",
+  "preview": {
+    "url": "https://godot.date/reconcile/preview={{id}}"
+  },
+  "view": {
+    "url": "https://godot.date/id/{{id}}"
+  }
+}

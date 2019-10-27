@@ -1,0 +1,19 @@
+{
+  "name": "findthatcharity",
+  "identifierSpace": "http://rdf.freebase.com/ns/type.object.id",
+  "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
+  "view": {
+    "url": "https://findthatcharity.uk/charity/{{id}}"
+  },
+  "preview": {
+    "url": "https://findthatcharity.uk/preview/charity/{{id}}",
+    "width": 430,
+    "height": 300
+  },
+  "defaultTypes": [
+    {
+      "id": "/charity",
+      "name": "charity"
+    }
+  ]
+}

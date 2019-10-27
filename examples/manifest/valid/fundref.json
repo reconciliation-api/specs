@@ -1,0 +1,11 @@
+{
+  "name": "Open Funder Registry Reconciliation Service",
+  "identifierSpace": "http://openfunder.crossref.org/openfunder",
+  "schemaSpace": "http://openfunder.crossref.org/ns/type.object.id",
+  "defaultTypes": [
+    {
+      "id": "/fundref/funder_name",
+      "name": "Open Funder ID"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "defaultTypes": [
+    {
+      "id": "/ulan",
+      "name": "ULAN search"
+    },
+    {
+      "id": "/tgn",
+      "name": "TGN search"
+    },
+    {
+      "id": "/aat",
+      "name": "AAT search"
+    },
+    {
+      "id": "/all",
+      "name": "Search all Vocabs"
+    }
+  ],
+  "identifierSpace": "http://vocab.getty.edu/doc/#GVP_URLs_and_Prefixes",
+  "name": "Getty Vocabularies Reconciliation Service",
+  "preview": {
+    "height": 200,
+    "url": "https://services.getty.edu/vocab/reconcile/preview?id={{id}}",
+    "width": 350
+  },
+  "schemaSpace": "http://vocab.getty.edu/doc/#The_Getty_Vocabularies_and_LOD",
+  "suggest": {
+    "property": {
+      "service_path": "/suggest/property",
+      "service_url": "https://services.getty.edu/vocab/reconcile"
+    }
+  },
+  "view": {
+    "url": "http://vocab.getty.edu/page/{{id}}"
+  }
+}
