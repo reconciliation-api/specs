@@ -1,0 +1,26 @@
+{
+  "name": "ROR Reconciliation Service",
+  "identifierSpace": "http://ror.org/organization",
+  "schemaSpace": "http://ror.org/ns/type.object.id",
+  "defaultTypes": [
+    {
+      "id": "/ror/organization",
+      "name": "Organization"
+    }
+  ],
+  "view": {
+    "url": "https://reconcile.ror.org/reconcile"
+  },
+  "suggest": {
+    "entity": {
+      "flyout_service_path": "/flyout?id=${id}",
+      "service_path": "/suggest",
+      "service_url": "https://reconcile.ror.org"
+    }
+  },
+  "preview": {
+    "width": 400,
+    "height": 100,
+    "url": "https://reconcile.ror.org/preview/{{id}}"
+  }
+}

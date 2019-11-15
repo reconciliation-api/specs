@@ -1,0 +1,100 @@
+{
+  "name": "Wikidata (en)",
+  "preview": {
+    "url": "https://tools.wmflabs.org/openrefine-wikidata/en/preview?id={{id}}",
+    "width": 400,
+    "height": 100
+  },
+  "schemaSpace": "http://www.wikidata.org/prop/direct/",
+  "extend": {
+    "property_settings": [
+      {
+        "name": "limit",
+        "label": "Limit",
+        "help_text": "Maximum number of values to return per row (0 for no limit)",
+        "type": "number",
+        "default": 0
+      },
+      {
+        "name": "rank",
+        "label": "Ranks",
+        "type": "select",
+        "help_text": "Filter statements by rank",
+        "choices": [
+          {
+            "name": "Any rank",
+            "value": "any"
+          },
+          {
+            "name": "Only the best rank",
+            "value": "best"
+          },
+          {
+            "name": "Preferred and normal ranks",
+            "value": "no_deprecated"
+          }
+        ],
+        "default": "best"
+      },
+      {
+        "name": "references",
+        "label": "References",
+        "type": "select",
+        "help_text": "Filter statements by their references",
+        "choices": [
+          {
+            "name": "Any statement",
+            "value": "any"
+          },
+          {
+            "name": "At least one reference",
+            "value": "referenced"
+          },
+          {
+            "name": "At least one non-wiki reference",
+            "value": "no_wiki"
+          }
+        ],
+        "default": "any"
+      },
+      {
+        "name": "count",
+        "label": "Return counts instead of values",
+        "help_text": "The number of values will be returned.",
+        "type": "checkbox",
+        "default": false
+      }
+    ],
+    "propose_properties": {
+      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
+      "service_path": "/en/propose_properties"
+    }
+  },
+  "defaultTypes": [
+    {
+      "name": "entity",
+      "id": "Q35120"
+    }
+  ],
+  "view": {
+    "url": "https://www.wikidata.org/wiki/{{id}}"
+  },
+  "suggest": {
+    "type": {
+      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
+      "service_path": "/en/suggest/type",
+      "flyout_service_path": "/en/flyout/type?id=${id}"
+    },
+    "entity": {
+      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
+      "service_path": "/en/suggest/entity",
+      "flyout_service_path": "/en/flyout/entity?id=${id}"
+    },
+    "property": {
+      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
+      "service_path": "/en/suggest/property",
+      "flyout_service_path": "/en/flyout/property?id=${id}"
+    }
+  },
+  "identifierSpace": "http://www.wikidata.org/entity/"
+}

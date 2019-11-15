@@ -1,0 +1,8 @@
+{
+  "name": "Code-Point Open Reconciliation API",
+  "identifierSpace": "http://data.ordnancesurvey.co.uk/id/data/code-point-open",
+  "schemaSpace": "http://data.ordnancesurvey.co.uk/id/data/code-point-open",
+  "view": {
+    "url": "{{id}}"
+  }
+}
