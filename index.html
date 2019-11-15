@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <script src='https://www.w3.org/Tools/respec/respec-w3c' async class='remove'></script>
+    <script src='libs/respec-w3c.js' async class='remove'></script>
     <script class='remove'>
       var respecConfig = {
         specStatus: "unofficial",
@@ -43,6 +43,10 @@
             name: "Add Yourself Here!"
           }
         ],
+        localBiblio: {
+          "beek-2018": {"aliasOf": "doi:10.1007/978-3-319-93417-4_5"},
+          "christen-2012": {"aliasOf": "doi:10.1007/978-3-642-31164-2"},
+        }
       };
     </script>
     <title>Reconciliation Service API</title>
@@ -75,8 +79,28 @@
       <h2>Introduction</h2>
       <section>
         <h3>Data Matching on the Web</h3>
-        <p class="ednote">
-          TODO: We could write a quick introduction to the problem the API intends to solve. Rule out similar use cases such as text annotation.
+        <p>
+          Integrating data from sources which do not share common unique identifiers often requires matching (or <emph>reconciling</emph>, <emph>merging</emph>) records which refer to the same entities.
+          The promises of the Linked Open Data movement rely on being able to identify identities across services: for instance, federated <abbr title="SPARQL Protocol and RDF Query Language">SPARQL</abbr> queries across <abbr title="Resource Description Framework">RDF</abbr> stores become much more useful if these stores share some common <abbr title="Uniform
+Resource Identifier">URI</abbr>s.
+          By design, URIs are meant to provide a universal identifier scheme in which all others can be expressed. But due to its decentralized nature, there is nothing preventing a service from publishing a new URI for a resource or concept which is
+already expressed by another URI.
+          Once a correspondance has been discovered, it can be stated with the <code>owl:sameAs</code> property, but this statement must in turn be findable itself.
+          One can aggregate <code>owl:sameAs</code> statements from various sources to infer identities by transitivity, but this is a subtle art as some data sources can erroneously equate different concepts [[beek-2018]].
+          There exist looser approaches to relate concepts, such as <abbr title="Simple Knowledge Organization System">SKOS</abbr> [[SKOS-PRIMER]], but they suffer from the same issues.
+          After all, any quest towards building a universal identifier system which avoids duplicates is necessarily doomed.
+          Data publishers use different granularities to model the world. Concepts have fluctuating boundaries across languages, cultures and time.
+        </p>
+        <p>
+          In practice, we can determine if two database records refer to the same entity by comparing their attributes.
+          For instance, two entries about cities bearing the same name, in the same country and with the same mayor are likely to refer to the same city.
+          The reconciliation API that we present here makes it easier to discover such matches.
+          It is a protocol that a data provider can implement, enabling its consumers to efficiently match their own data to the entities represented by the provider.
+        </p>
+        <p>
+          By nature, reconciliation is a heuristic process. Different entities can have many identical characteristics, leading to false positives.
+          The same entity can be represented in different ways by two databases, for instance by spelling names differently, leading to false negatives.
+          This problem has been extensively studied and many heuristics have been proposed to tackle it [[christen-2012]].
         </p>
       </section>
       <section>
