@@ -81,13 +81,13 @@
         <h3>Data Matching on the Web</h3>
         <p>
           Integrating data from sources which do not share common unique identifiers often requires matching (or <emph>reconciling</emph>, <emph>merging</emph>) records which refer to the same entities.
-          The promises of the Linked Open Data movement rely on being able to identify identities across services: for instance, federated <abbr title="SPARQL Protocol and RDF Query Language">SPARQL</abbr> queries across <abbr title="Resource Description Framework">RDF</abbr> stores become much more useful if these stores share some common <abbr title="Uniform
-Resource Identifier">URI</abbr>s.
-          By design, URIs are meant to provide a universal identifier scheme in which all others can be expressed. But due to its decentralized nature, there is nothing preventing a service from publishing a new URI for a resource or concept which is
+	  The promises of the Linked Open Data movement, the ability to mix up data from different publishers expressed in a common language (such as <abbr title="Resource Description Framework">RDF</abbr>) rely on being able to identify identities across services.
+	  Due to the Web's decentralized nature, there is nothing preventing a service from publishing a new <abbr title="Universal Resource Identifier">URI</abbr> for a resource or concept which is
 already expressed by another URI.
-          Once a correspondance has been discovered, it can be stated with the <code>owl:sameAs</code> property, but this statement must in turn be findable itself.
+        </p>
+	<p>
+	  Various mechanisms exist to state the equivalence between two URIs: for instance, such a correspondence can be stated with the <code>owl:sameAs</code> property, or using looser notions equivalences defined in <abbr title="Simple Knowledge Organization System">SKOS</abbr>. But such statements must in turn be themselves findable.
           One can aggregate <code>owl:sameAs</code> statements from various sources to infer identities by transitivity, but this is a subtle art as some data sources can erroneously equate different concepts [[beek-2018]].
-          There exist looser approaches to relate concepts, such as <abbr title="Simple Knowledge Organization System">SKOS</abbr> [[SKOS-PRIMER]], but they suffer from the same issues.
           After all, any quest towards building a universal identifier system which avoids duplicates is necessarily doomed.
           Data publishers use different granularities to model the world. Concepts have fluctuating boundaries across languages, cultures and time.
         </p>
@@ -101,13 +101,42 @@ already expressed by another URI.
           By nature, reconciliation is a heuristic process. Different entities can have many identical characteristics, leading to false positives.
           The same entity can be represented in different ways by two databases, for instance by spelling names differently, leading to false negatives.
           This problem has been extensively studied and many heuristics have been proposed to tackle it [[christen-2012]].
+	  The reconciliation API is agnostic about the particulars of the heuristics involved: it lets data providers choose how
+	  they want to determine which of their entities are good candidates for a particular query. What it provides
+	  is a web API to let users obtain these candidate entities without having to implement the underlying reconciliation heuristics
+	  themselves, nor download the entire contents of the target database.
         </p>
       </section>
       <section>
         <h3>History of the Reconciliation API</h3>
-        <p class="ednote">
-          TODO: A quick history of how the API came into being and how it evolved.
+        <p>
+          This API was originally designed by Metaweb as a protocol used between Freebase and Gridworks (now known as OpenRefine).
+	  Freebase was a free crowdsourced knowledge graph, storing data about a broad range of topics and exposed on the web as linked data.
+	  OpenRefine is tool which was originally designed to help populate this knowledge graph by importing data into it.
+	  It supports a range of operations which help the user reshape their data to prepare it for ingestion in a data model such as Freebase's.
+	  One of these operations is <emph>reconciliation</emph>, which matches mentions of entities in the local dataset to records in the target database. The reconciliation API was initially introduced to specify how OpenRefine and Freebase could communicate during that process. 
         </p>
+	<p>
+	  The reconciliation API was then turned into a generic protocol that any database could implement.
+	  This made it possible to register such a database into OpenRefine by adding it as a <emph>Standard Service</emph>.
+	  This API was implemented by various services, either directly by the service provider itself (for instance the Crossref funder database,
+	  Nomisma or the Getty thesaurus) or by a third party as a wrapper sitting on top of other existing web APIs for the service
+	  (such as Wikidata or VIAF).
+	  Software was also developed to expose a reconciliation endpoint out of any tabular file (reconcile-csv) or by wrapping a SPARQL endpoint (in the OpenRefine RDF extension).
+	</p>
+	<p>
+	This API was documented on OpenRefine's wiki as <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation_Service_API">a living document</a> which evolved gradually, as OpenRefine improved.
+	  In addition to its core feature, fetching reconciliation candidates matching a given query, services are optionally able
+	  to implement additional endpoints which ease the integration of the service in OpenRefine's UI, by providing previews
+	  for entities (with a Preview Service) and auto-completion for various inputs (with Suggest Services).
+	  In 2018, a Data Extension Service was added, letting consumers pull data from the target database once they have reconciled
+	  their records.
+        </p>
+        <p>
+          In 2019 the <a href="https://w3c.org/community/reconciliation">W3C Entity Reconciliation Community Group</a> was formed,
+	  with the intention of promoting and improving this API outside the strict scope of the OpenRefine project.
+	  This document is an attempt to better specify this API.
+	</p>
       </section>
       <section>
         <h3>External Resources</h3>
