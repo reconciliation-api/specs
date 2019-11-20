@@ -164,9 +164,6 @@ already expressed by another URI.
         or <a>properties</a> with <a>property values</a>.
         The purpose of this section is to define these notions.
       </p>
-      <p class="ednote">
-        We could have a UML diagram to explain the relations between the concepts.
-      </p>
       <section>
         <h3 data-link-for="entities">Entities</h3>
         <p>
@@ -232,10 +229,24 @@ already expressed by another URI.
       <section>
         <h3 data-link-for="spaces">Identifier and Schema Spaces</h3>
         <p>
-          The <dfn>identifier space</dfn> is ...
+          A reconciliation service MUST define two URIs:
+          <dl>
+            <dt><code>identifierSpace</code></dt>
+            <dd>A URI which identifies the sort of <a>entity</a> identifiers returned by this service. This URI MAY resolve to a page describing these entities and their identifiers;</dd>
+            <dt><code>schemaSpace</code></dt>
+            <dd>A URI which identifies the ontology used by the service, in other words its collection of <a>properties</a>. This URI also MAY resolve to a page describing these properties and their identifiers.</dd>
+          </dl>
         </p>
         <p>
-          The <dfn>schema space</dfn> is ...
+          If two different reconciliation services expose the same entities and properties, then
+          they SHOULD use the same <code>identifierSpace</code> and <code>schemaSpace</code> URIs, signalling that
+          (for instance) the Data Extension service of the first one can be used on reconciliation candidates by the second one.
+        </p>
+        <p class="note">
+          The notions of <dfn>identifier space</dfn> and <dfn>schema space</dfn>
+          have been inherited from the API's original purpose, when it was specific
+          to Freebase. Their original meaning was to be understood within Freebase's
+          own data model.
         </p>
       </section>
     </section>
@@ -389,6 +400,26 @@ already expressed by another URI.
         This section specifies how reconciliation services can provide embeddable HTML previews
         of their entities, which clients can display in their user interface.
       </p>
+      <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
+        <dl>
+          <dt><code>url</code></dt>
+          <dd>A string containing <code>{{id}<!-- -->}</code> such that replacing <code>{{id}<!-- -->}</code> by an <a>entity</a> identifier yields the preview URL for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
+It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimensions are specified by the service in the following fields;</dd>
+          <dt><code>width</code></dt>
+          <dd>The width in pixels of the <code>&lt;iframe&gt;</code> element where to render an entity preview;</dd>
+          <dt><code>height</code></dt>
+          <dd>The height in pixels of the same <code>&lt;iframe&gt;</code>.</dd>
+        </dl>
+      </p>
+      <p>
+        For instance, a service may expose the following <a>preview metadata</a>:
+        <pre data-include="examples/preview-metadata/valid/example.json" class="example json"></pre>
+      </p>
+      <p>
+        It could respond to a preview request as follows:
+       <pre data-include="examples/preview-response/example.html" data-include-format="text" class="example html">
+       </pre>
+      </p>
     </section>
     <section>
       <h2>Suggest Services</h2>
@@ -396,7 +427,7 @@ already expressed by another URI.
         This section specifies how reconciliation services can provide auto-complete
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
       </p>
-
+;
     </section>
     <section>
       <h2>Data Extension Service</h2>
@@ -416,12 +447,13 @@ already expressed by another URI.
       <section>
         <h3>Data Extension Metadata</h3>
         <p>
-          The <dfn>data extension metadata</dfn> consists of:
-          <ul>
-            <li>An object in the service <a>manifest</a> in the <code>extend</code> field;</li>
-            <li>Optionally, the <code>service_url</code> and <code>service_path</code> for <a>data extension property proposals</a>;</li>
-            <li>Optionally, a list of <a>data extension property settings</a>.</li>
-          </ul>
+          The <dfn>data extension metadata</dfn> is an object stored in the <a>service manifest</a> in the <code>extend</code> field. It consists of the following settings, all optional:
+          <dl>
+            <dt><code>propose_properties</code></dt>
+            <dd>A <a>service path</a> object defining a URL which implements <a>data extension property proposal</a>;</dd>
+            <dt><code>property_settings</code></dt>
+            <dd>A list of <a>data extension property settings</a>.</dd>
+          </dl>
         </p>
         <p>
           A <dfn>data extension property setting</dfn> consists of:
@@ -464,11 +496,14 @@ already expressed by another URI.
         </p>
         <p>
           A <dfn>data extension property proposal response</dfn> consists of:
-          <ul>
-            <li>Optionally, the requested limit;</li>
-            <li>The requested <a>type</a> identifier;</li>
-            <li>An array of proposed <a>properties</a>.</li>
-          </ul>
+          <dl>
+            <dt><code>properties</code></dt>
+            <dd>An array of proposed <a>properties</a>. These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query;</dd>
+            <dt><code>type</code></dt>
+            <dd>The <a>type</a> identifier supplied in the query;</dd>
+            <dt><code>limit</code></dt>
+            <dd>Optionally, the requested limit;</dd>
+          </dl>
         </p>
         <p>
           Example of a <a>data extension property proposal</a> response:
