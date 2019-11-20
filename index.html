@@ -172,12 +172,15 @@ already expressed by another URI.
         <p>
            An <dfn>entity</dfn> is a record in the data source exposed by the service.
            It comprises the following fields:
-           <ul>
-              <li>an <emph>identifier</emph>, which is a non-empty string. This identifier must be unique among all entities;</li>
-              <li>a <emph>name</emph>, which is also a non-empty string;</li>
-              <li>a list of <a>types</a>, possibly empty;</li>
-              <li>for each <a>property</a>, a set of <a>property values</a>, possibly empty.</li>
-           </ul>
+           <dl>
+	     <dt><code>id</code></dt>
+             <dd>an identifier, which is a non-empty string. This identifier must be unique among all entities;</dd>
+             <dt><code>name</code></dt>
+             <dd>a <emph>name</emph>, which is also a non-empty string;</dd>
+             <dt><code>type</code></dt>
+             <dd>a list of <a>types</a>, possibly empty;</dd>
+           </dl>
+           Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
         <p>
            Reconciliation services can define in their <a>manifest</a> a <dfn>view template</dfn> which
@@ -192,10 +195,12 @@ already expressed by another URI.
         <p>
           A <dfn>type</dfn> represents a category of <a>entities</a>.
           It comprises the following fields:
-          <ul>
-             <li>an <emph>identifier</emph>, which is a non-empty string. This identifier must be unique among all types;</li>
-             <li>a <emph>name</emph>, which is a non-empty string.</li>
-          </ul>
+          <dl>
+             <dt><code>id</code></dt>
+             <dd>an identifier, which is a non-empty string. This identifier must be unique among all types;</dd>
+	     <dt><code>name</code></dt>
+             <dd>a human-readable name, which is a non-empty string.</dd>
+          </dl>
         </p>
       </section>
       <section>
@@ -203,10 +208,12 @@ already expressed by another URI.
         <p>
           A <dfn>property</dfn> represents a type of attribute that entities can have in the data source.
           It comprises the following fields:
-          <ul>
-            <li>an <emph>identifier</emph>, which is a non-empty string. This identifier must be unique among all properties;</li>
-            <li>a <emph>name</emph>, which is a non-empty string.</li>
-          </ul>
+          <dl>
+	    <dt><code>id</code></dt>
+            <dd>an identifier, which is a non-empty string. This identifier must be unique among all properties;</dd>
+	    <dt><code>name</code></dt>
+            <dd>a human-readable name, which is a non-empty string.</dd>
+          </dl>
         </p>
       </section>
       <section>
@@ -316,13 +323,18 @@ already expressed by another URI.
         <h3>Structure of a Reconciliation Query</h3>
         <p>
           A <dfn>reconciliation query</dfn> consists of:
-          <ul>
-            <li>A query string, consisting of a non-empty string, which is mandatory;</li>
-            <li>Optionally, a list of <a>types</a>;</li>
-            <li>Optionally, a limit, consisting of a positive integer;</li>
-            <li>Optionally, a list of pairs of <a href='#properties'>property</a> identifiers and <a>property values</a>;</li>
-            <li>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</li>
-          </ul>
+          <dl>
+	    <dt><code>query</code></dt>
+            <dd>A query string, consisting of a non-empty string, which is mandatory;</dd>
+	    <dt><code>type</code></dt>
+            <dd>Optionally, a list of <a>types</a>;</dd>
+	    <dt><code>limit</code></dt>
+            <dd>Optionally, a limit on the number of candidates to return, which must be a positive integer;</dd>
+	    <dt><code>properties</code></dt>
+            <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a>;</dd>
+	    <dt><code>type_strict</code></dt>
+            <dd>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
+          </dl>
         </p>
         <p>
           A <dfn>reconciliation query batch</dfn> is a set of <a>reconciliation queries</a> indexed by string identifiers.
@@ -342,12 +354,20 @@ already expressed by another URI.
       <section>
         <h3>Reconciliation Candidates</h3>
         <p>
-          A <dfn>reconciliation candidate</dfn> consists of:
-          <ul>
-            <li>An <a>entity</a>;</li>
-            <li>A <dfn>reconciliation score</dfn>, which is a floating-point value or integer;</li>
-            <li>A matching decision, which is a boolean.</li>
-          </ul>
+	  A <dfn>reconciliation candidate</dfn> represents an <a>entity</a> as a response to a <a>reconciliation query</a>.
+	  It is proposed to the client as a potential matching entity for this query. It contains the following fields:
+          <dl>
+	    <dt><code>id</code></dt>
+	    <dd>The identifier of the candidate entity;</dd>
+	    <dt><code>name</code></dt>
+	    <dd>The name of the candidate entity;</dd>
+	    <dt><code>type</code></dt>
+	    <dd>The types of the candidate entity;</dd>
+	    <dt><code>score</code></dt>
+	    <dd>A numeral indicating how well this candidate entity matches the query: a higher score indicates a better match;</dt>
+	    <dt><code>match</code></dt>
+            <dd>A boolean matching decision, which indicates whether the service considers this candidate good enough to be chosen as a correct match.</dd>
+          </dl>
         </p>
       </section>
       <section>
@@ -405,14 +425,20 @@ already expressed by another URI.
         </p>
         <p>
           A <dfn>data extension property setting</dfn> consists of:
-          <ul>
-            <li>A name;</li>
-            <li>A label;</li>
-            <li>A default value;</li>
-            <li>A help text;</li>
-            <li>A type, which can be one of the strings <code>"number"</code>, <code>"text"</code>, <code>"checkbox"</code>, or <code>"select"</code>;</li>
-            <li>If <code>type</code> is <code>select</code>, a list of property setting choices.</li>
-          </ul>
+          <dl>
+	    <dt><code>name</code></dt>
+            <dd>A name for the setting, which identifies the setting uniquely;</dd>
+            <dt><code>label</code></dt>
+	    <dd>A human-readable label, which is used when presenting the setting to the user in a form;</dd>
+	    <dt><code>type</code></dt>
+            <dd>A data type, which can be one of the strings <code>"number"</code>, <code>"text"</code>, <code>"checkbox"</code>, or <code>"select"</code>. This determines which type of value the property setting gis expected to store: clients SHOULD render this setting with the corresponding HTML element;</li>
+	    <dt><code>default</code></dt>
+	    <dd>A default value for the setting, when not provided or left untouched by the user;</dd>
+	    <dt><code>help_text</code></dt>
+            <dd>A help text, which describes the meaning of the field to the user. This is meant to be a short string that can be displayed alongside the corresponding form field;</dd>
+	    <dt><code>choices</code></dt>
+            <dd>If <code>type</code> is <code>select</code>, a list of property setting choices.</dd>
+          </dl>
         </p>
         <p>
           Example of <a>data extension metadata</a> with all optional fields:
