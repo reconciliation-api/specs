@@ -180,7 +180,7 @@ already expressed by another URI.
            Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
         <p>
-           Reconciliation services can define in their <a>manifest</a> a <dfn>view template</dfn> which
+           Reconciliation services can define in their <a>service manifest</a> a <dfn>view template</dfn> which
            associates to each entity a corresponding URI, by inserting its identifier in the template.
            A view template is a string which contains the <code>{{id}<!-- -->}</code> substring.
            For each entity, replacing <code>{{id}<!-- -->}</code> in the template by the entity's identifier
@@ -229,21 +229,21 @@ already expressed by another URI.
       <section>
         <h3 data-link-for="spaces">Identifier and Schema Spaces</h3>
         <p>
-          A reconciliation service MUST define two URIs:
+          A reconciliation service MUST define two URIs, exposed in its <a>service manifest</a>:
           <dl>
-            <dt><code>identifierSpace</code></dt>
+            <dt><dfn>identifier space</dfn></dt>
             <dd>A URI which identifies the sort of <a>entity</a> identifiers returned by this service. This URI MAY resolve to a page describing these entities and their identifiers;</dd>
-            <dt><code>schemaSpace</code></dt>
+            <dt><dfn>schema space</dfn></dt>
             <dd>A URI which identifies the ontology used by the service, in other words its collection of <a>properties</a>. This URI also MAY resolve to a page describing these properties and their identifiers.</dd>
           </dl>
         </p>
         <p>
           If two different reconciliation services expose the same entities and properties, then
-          they SHOULD use the same <code>identifierSpace</code> and <code>schemaSpace</code> URIs, signalling that
+          they SHOULD use the same identifier and schema space URIs, signalling that
           (for instance) the Data Extension service of the first one can be used on reconciliation candidates by the second one.
         </p>
         <p class="note">
-          The notions of <dfn>identifier space</dfn> and <dfn>schema space</dfn>
+          The notions of identifier and schema space
           have been inherited from the API's original purpose, when it was specific
           to Freebase. Their original meaning was to be understood within Freebase's
           own data model.
@@ -256,9 +256,44 @@ already expressed by another URI.
         This section documents how reconciliation services are exposed as HTTP(S) services and
         how they can announce the features of the API they implement.
       </p>
+      <section>
+        <h3>Service Manifest</h3>
       <p>
-        A <dfn>reconciliation service</dfn> consists of…
+        A <dfn>service manifest</dfn> consists of the following fields:
+        <dl>
+          <dt><code>name</code></dt>
+          <dd>A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
+will help disambiguating it from others;</dd>
+          <dt><code>identifierSpace</code></dt>
+          <dd>The <a>identifier space</a> used by the service, as a URI;</dd>
+          <dt><code>schemaSpace</code></dt>
+          <dd>The <a>schema space</a> used by the service, as a URI;</dd>
+          <dt><code>defaultTypes</code></dt>
+          <dd>A list of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
+database are instances of this type.<dd>
+          <dt><code>view</code></dt>
+          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for the service;</dd>
+          <dt><code>preview</code></dt>
+          <dd>A <a>preview metadata</a>, supplied if the service offers a <a>preview service</a>;</dd>
+          <dt><code>suggest</code></dt>
+          <dd>An optional object which may contain way contain the following fields, depending on which <a>preview services</a> are offered:
+            <dl>
+              <dt><code>entity</code></dt>
+              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>entities</a>;</dd>
+              <dt><code>property</code></dt>
+              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>properties</a>;</dd>
+              <dt><code>type</code></dt>
+              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>types</a>.</dd>
+            </dl>
+          </dd>
+          <dt><code>extend</code></dt>
+          <dd>A <a>data extension metadata</a>, supplied if the service offers a <a>data extension service</a>.</dd>
+        </dl>
       </p>
+      <p>For instance, a service could expose the following minimal service manifest:
+        <pre data-include="examples/manifest/valid/example-min.json" class="example json"></pre>
+      </p>
+      </section>
       <section>
         <h3>HTTP(S) Access</h3>
         <p class="ednote">
@@ -300,10 +335,6 @@ already expressed by another URI.
            supported by reconciliation services, in the interest of other clients and potentially
            of newer versions of OpenRefine.
         </p>
-      </section>
-      <section>
-        <h3>Service Manifest</h3>
-        <p>A <dfn>manifest</dfn> is ...</p>
       </section>
     </section>
     <section>
@@ -395,7 +426,7 @@ already expressed by another URI.
       </section>
     </section>
     <section>
-      <h2>Preview Service</h2>
+      <h2 data-link-for="preview service">Preview Service</h2>
       <p>
         This section specifies how reconciliation services can provide embeddable HTML previews
         of their entities, which clients can display in their user interface.
@@ -422,7 +453,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       </p>
     </section>
     <section>
-      <h2>Suggest Services</h2>
+      <h2 data-link-for="suggest service">Suggest Services</h2>
       <p>
         This section specifies how reconciliation services can provide auto-complete
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
@@ -430,7 +461,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
 ;
     </section>
     <section>
-      <h2>Data Extension Service</h2>
+      <h2 data-link-for="data extension service">Data Extension Service</h2>
       <p>
         This section specifies how reconciliation services can let clients fetch the values
         of some <a>properties</a> on a selection of <a>entities</a>.
@@ -489,7 +520,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           The service SHOULD support an optional `limit` query string parameter to control the number of proposed properties.
         </p>
         <p>
-          The service URL and path are declared in the <a>data extension metadata</a> of the service <a>manifest</a>.
+          The service URL and path are declared in the <a>data extension metadata</a> of the <a>service manifest</a>.
         </p>
         <p>
           <pre class="example nohighlight">GET /properties?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
@@ -517,7 +548,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
          of some <a>properties</a> on a selection of <a>entities</a>.
         </p>
         <p>
-          A data extension service MUST declare <a>data extension metadata</a> in the service <a>manifest</a>.
+          The fact that a reconciliation service offers data extension MUST be announced by including a <a>data extension metadata</a> in the <code>extend</code> field of the <a>service manifest</a>.
         <p>
           A data extension service MUST support HTTP POST requests with
           <code>application/x-www-form-urlencoded</code> bodies containing a
@@ -577,7 +608,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       <section>
         <h3>Manifest Schema</h3>
         <p>
-          The <a href="schemas/manifest.json">manifest schema</a> can be used to validate a service <a>manifest</a>.
+          The <a href="schemas/manifest.json">manifest schema</a> can be used to validate a <a>service manifest</a>.
         </p>
         <pre data-include="schemas/manifest.json" />
       </section>
