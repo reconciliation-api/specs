@@ -276,7 +276,7 @@ database are instances of this type.<dd>
           <dt><code>preview</code></dt>
           <dd>A <a>preview metadata</a>, supplied if the service offers a <a>preview service</a>;</dd>
           <dt><code>suggest</code></dt>
-          <dd>An optional object which may contain way contain the following fields, depending on which <a>preview services</a> are offered:
+          <dd>An optional object which may contain way contain the following fields, depending on which <a>suggest services</a> are offered:
             <dl>
               <dt><code>entity</code></dt>
               <dd>A <a>suggest metadata</a> for auto-suggestion of <a>entities</a>;</dd>
@@ -431,10 +431,12 @@ database are instances of this type.<dd>
         This section specifies how reconciliation services can provide embeddable HTML previews
         of their entities, which clients can display in their user interface.
       </p>
+      <section>
+      <h3>Preview Metadata</h3>
       <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
         <dl>
           <dt><code>url</code></dt>
-          <dd>A string containing <code>{{id}<!-- -->}</code> such that replacing <code>{{id}<!-- -->}</code> by an <a>entity</a> identifier yields the preview URL for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
+          <dd>A string containing <code>{{id}<!-- -->}</code> such that replacing <code>{{id}<!-- -->}</code> by an <a>entity</a> identifier yields the <dfn>preview URL</dfn> for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
 It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimensions are specified by the service in the following fields;</dd>
           <dt><code>width</code></dt>
           <dd>The width in pixels of the <code>&lt;iframe&gt;</code> element where to render an entity preview;</dd>
@@ -446,19 +448,100 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         For instance, a service may expose the following <a>preview metadata</a>:
         <pre data-include="examples/preview-metadata/valid/example.json" class="example json"></pre>
       </p>
+      </section>
+      <section>
+      <h3>Preview Queries</h3>
+      <p>A preview service is queried by resolving the <a>preview URL</a> for an <a>entity</a>. The URL must resolve to an HTML document.
+      </p>
       <p>
-        It could respond to a preview request as follows:
+        For instance, assuming the example preview metadata above, the service could respond to a preview request as follows:
        <pre data-include="examples/preview-response/example.html" data-include-format="text" class="example html">
        </pre>
       </p>
+      </section>
     </section>
     <section>
       <h2 data-link-for="suggest service">Suggest Services</h2>
       <p>
         This section specifies how reconciliation services can provide auto-complete
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
+        A reconciliation service can offer a suggest service for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
+        These suggest services can be used by clients to let users select an entity, property or type manually, at various stages of their reconciliation workflows.
+        Suggest services for entities, properties and types are declared independently
+        in the <a>service manifest</a> by providing a <a>suggest metadata</a> for them.
       </p>
-;
+      <section>
+      <h3>Suggest Metadata</h3>
+      <p>
+        A <dfn>suggest metadata</dfn> object consists of the following fields:
+        <dl>
+          <dt><code>service_url</code></dt>
+          <dd>The base URL for the suggest service;</dd>
+          <dt><code>service_path</code></dt>
+          <dd>A URL path which will be concatenated to the <code>service_url</code> to obtain the full URL of the suggest service;</dd>
+          <dt><code>flyout_service_url</code></dt>
+          <dd>The base URL for the <a>flyout service</a>. If none is provided, it is assumed to be identical to <code>service_url</code>;</dd>
+          <dt><code>flyout_service_path</code></dt>
+          <dd>An optional URL path which will be concatenated to the <code>flyout_service_url</code> to obtain the full URL of the flyout service. The absence of this parameter indicates that no flyout service is associated with this suggest service.</dd>
+        </dl>
+      </p>
+      <p>
+        For instance, a suggest metadata could be as follows:
+        <pre data-include="examples/suggest-metadata/valid/example.json" class="example json"></pre>
+        Such a metadata indicates that a suggest service is available at <code>https://example.com/api/suggest</code> with an associated flyout service at <code>https://example.com/api/suggest/flyout</code>.
+      </p>
+      </section>
+      <section>
+      <h3>Suggest Queries</h3>
+        <p>A suggest service MUST accept GET queries with the following URL-encoded parameters:
+          <dl>
+            <dt><code>prefix</code></dt>
+            <dd>The string input by the user in the auto-suggest-enabled field;</dd>
+            <dt><code>cursor</code></dt>
+            <dd>An optional integer to specify the number of suggestions to skip: this can be used by clients to fetch more suggestions.</dd>
+          </dl>
+        </p>
+      </section>
+      <section>
+        <h3>Suggest Responses</h3>
+        <p>
+          A response to a suggest query consists of the following fields:
+          <dl>
+            <dt><code>result</code></dt>
+            <dd>A list of items, which can be <a>entities</a>, <a>properties</a>
+            or <a>types</a> depending on which of these the service
+            is provided for. Each such object can contain the following fields:
+            <dl>
+              <dt><code>id</code></dt>
+              <dd>The identifier of the entity, property or type suggested;</dd>
+              <dt><code>name</code></dt>
+              <dd>Its corresponding human-readable name, to be displayed prominently to the user;</dd>
+              <dt><code>description</code></dt>
+              <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>.</dd>
+            </dl>
+            </dd>
+          </dl>
+        </p>
+        <p>
+          For instance, a suggest service for <a>entities</a> could return the following response:
+          <pre data-include="examples/suggest-entities-response/valid/example.json" class="example json"></pre>
+        </p>
+        <p>
+          A suggest service for <a>properties</a> could return the following response:
+          <pre data-include="examples/suggest-properties-response/valid/example.json" class="example json"></pre>
+        </p>
+        <p>
+          And a  suggest service for <a>types</a> could return the following response:
+          <pre data-include="examples/suggest-types-response/valid/example.json" class="example json"></pre>
+        </p>
+      </section>
+      <section>
+      <h3>Flyout Services</h3>
+        <p>
+          A <dfn>flyout service</dfn> provides small previews of suggested elements.
+          These previews are designed to be shown when hovering a suggested element.
+        </p>
+      </section>
     </section>
     <section>
       <h2 data-link-for="data extension service">Data Extension Service</h2>
