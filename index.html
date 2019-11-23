@@ -122,10 +122,11 @@ already expressed by another URI.
 	<p>
 	  The reconciliation API was then turned into a generic protocol that any database could implement.
 	  This made it possible to register such a database into OpenRefine by adding it as a <emph>Standard Service</emph>.
-	  This API was implemented by various services, either directly by the service provider itself (for instance the Crossref funder database,
-	  Nomisma or the Getty thesaurus) or by a third party as a wrapper sitting on top of other existing web APIs for the service
-	  (such as Wikidata or VIAF).
-	  Software was also developed to expose a reconciliation endpoint out of any tabular file (reconcile-csv) or by wrapping a SPARQL endpoint (in the OpenRefine RDF extension).
+	  This API was implemented by various services, either directly by the service provider itself (for instance the <a href="https://www.crossref.org/labs/fundref-reconciliation-service/">Crossref funder database</a>,
+	  <a href="http://numishare.blogspot.com/2017/10/nomisma-launches-openrefine.html">Nomisma</a> or the <a href="http://www.getty.edu/research/tools/vocabularies/obtain/openrefine.html">Getty thesaurus</a>) or by a third party as a wrapper sitting on top of other existing web APIs for the service
+	  (such as <a href="https://tools.wmflabs.org/openrefine-wikidata/">Wikidata</a> or <a href="http://refine.codefork.com/">VIAF</a>).
+	  Software was also developed to expose a reconciliation endpoint out of any tabular file (<a href="http://www.okfnlabs.org/reconcile-csv/">reconcile-csv</a>) or by wrapping a SPARQL endpoint (in the <a
+href="https://github.com/stkenny/grefine-rdf-extension">OpenRefine RDF extension</a>).
 	</p>
 	<p>
 	This API was documented on OpenRefine's wiki as <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation_Service_API">a living document</a> which evolved gradually, as OpenRefine improved.
@@ -146,14 +147,12 @@ already expressed by another URI.
         <p class="ednote">
           TODO: links to libraries, validators, user documentation. Our <a href="https://reconciliation-api.github.io/census/">census</a> could be used for that.
         </p>
-      </section>
-      <section>
-        <h3>Conventions Used in This Document</h3>
         <p>
-            The key words MAY, MUST, MUST NOT, RECOMMENDED, SHOULD, and SHOULD NOT in this document are to be interpreted as described in
-            <a href="https://tools.ietf.org/html/bcp14">BCP 14</a> [[RFC2119]] [[RFC8174]] when, and only when, they appear in all capitals, as shown here.
+          A <a href="https://reconciliation-api.github.io/testbench/">list of known public endpoints</a> is maintained by the community. OpenRefine's wiki also hosts a <a
+href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">list of reconciliable data source</a> which also includes non-hosted or discontinued services.
         </p>
       </section>
+      <section id="conformance"></section>
     </section>
     <section>
       <h2>Core Concepts</h2>
@@ -274,9 +273,9 @@ database are instances of this type.<dd>
           <dt><code>view</code></dt>
           <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for the service;</dd>
           <dt><code>preview</code></dt>
-          <dd>A <a>preview metadata</a>, supplied if the service offers a <a>preview service</a>;</dd>
+          <dd>A <a>preview metadata</a>, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
           <dt><code>suggest</code></dt>
-          <dd>An optional object which may contain way contain the following fields, depending on which <a>suggest services</a> are offered:
+          <dd>An optional object which may contain way contain the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
             <dl>
               <dt><code>entity</code></dt>
               <dd>A <a>suggest metadata</a> for auto-suggestion of <a>entities</a>;</dd>
@@ -287,7 +286,7 @@ database are instances of this type.<dd>
             </dl>
           </dd>
           <dt><code>extend</code></dt>
-          <dd>A <a>data extension metadata</a>, supplied if the service offers a <a>data extension service</a>.</dd>
+          <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -426,7 +425,7 @@ database are instances of this type.<dd>
       </section>
     </section>
     <section>
-      <h2 data-link-for="preview service">Preview Service</h2>
+      <h2>Preview Service</h2>
       <p>
         This section specifies how reconciliation services can provide embeddable HTML previews
         of their entities, which clients can display in their user interface.
@@ -461,7 +460,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       </section>
     </section>
     <section>
-      <h2 data-link-for="suggest service">Suggest Services</h2>
+      <h2>Suggest Services</h2>
       <p>
         This section specifies how reconciliation services can provide auto-complete
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
@@ -544,7 +543,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       </section>
     </section>
     <section>
-      <h2 data-link-for="data extension service">Data Extension Service</h2>
+      <h2>Data Extension Service</h2>
       <p>
         This section specifies how reconciliation services can let clients fetch the values
         of some <a>properties</a> on a selection of <a>entities</a>.
