@@ -89,7 +89,8 @@
 already expressed by another URI.
         </p>
 	<p>
-	  Various mechanisms exist to state the equivalence between two URIs: for instance, such a correspondence can be stated with the <code>owl:sameAs</code> property, or using looser notions equivalences defined in <abbr title="Simple Knowledge Organization System">SKOS</abbr>. But such statements must in turn be themselves findable.
+	  Various mechanisms exist to state the equivalence between two URIs: for instance, such a correspondence can be stated with the <code>owl:sameAs</code> property [[owl-features]], or using looser notions equivalences defined in <abbr title="Simple Knowledge
+Organization System">SKOS</abbr> [[skos-primer]]. But such statements must in turn be themselves findable.
           One can aggregate <code>owl:sameAs</code> statements from various sources to infer identities by transitivity, but this is a subtle art as some data sources can erroneously equate different concepts [[beek-2018]].
           After all, any quest towards building a universal identifier system which avoids duplicates is necessarily doomed.
           Data publishers use different granularities to model the world. Concepts have fluctuating boundaries across languages, cultures and time.
@@ -221,7 +222,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
              <li>A boolean;</li>
              <li>An integer;</li>
              <li>A floating-point value;</li>
-             <li>A <dfn>reconciled value</dfn>, consisting of an identifier and a name, both being strings.</li>
+             <li>An <a>entity</a>.</li>
           </ul>
         </p>
       </section>
@@ -291,6 +292,10 @@ database are instances of this type.<dd>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
         <pre data-include="examples/manifest/valid/example-min.json" class="example json"></pre>
+      </p>
+      <p>
+        A more complete example, with some optional services implemented:
+        <pre data-include="examples/manifest/valid/getty.json" class="example json"></pre>
       </p>
       </section>
       <section>
@@ -563,7 +568,15 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           The <dfn>data extension metadata</dfn> is an object stored in the <a>service manifest</a> in the <code>extend</code> field. It consists of the following settings, all optional:
           <dl>
             <dt><code>propose_properties</code></dt>
-            <dd>A <a>service path</a> object defining a URL which implements <a>data extension property proposal</a>;</dd>
+            <dd>A service path object defining a URL which implements <a>data extension property proposal</a>, which consists of:
+              <dl>
+                <dt><code>service_url</code></dt>
+                <dd>The root URL of the service;</dd>
+                <dt><code>service_path</code></dt>
+                <dd>The path to the endpoint for property proposals.</dd>
+              </dl>
+              The full URL for data extension property proposals is obtained by concatenating these two fields.
+            </dd>
             <dt><code>property_settings</code></dt>
             <dd>A list of <a>data extension property settings</a>.</dd>
           </dl>
@@ -666,14 +679,14 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         </p>
         <p>
           The <dfn id="data+extension+response+metadata">metadata</dfn> contains the <a>properties</a> used for data
-          extension, as requested in the <a>data extension query</a>. If properties represent <a>reconciled values</a>,
+          extension, as requested in the <a>data extension query</a>. If properties have <a>entities</a> as values,
           they MAY specify a <a>type</a> in the metadata.
         </p>
         <p>
           The <dfn id="data+extension+response+rows">rows</dfn> object contains, for each <a>entity</a> identifier in the
           <a>data extension query</a>, for each <a>property</a> identifier in the
           <a href="#data+extension+response+metadata">metadata</a>, the <a>property values</a> of that property in that entity.
-          If the property values are <a>reconciled values</a>, their identifiers MUST be in the service's <a>identifier space</a>.
+          If the property values are <a>entities</a>, their identifiers MUST be in the service's <a>identifier space</a>.
         </p>
         <p>
           Response example for the <a>data extension query</a> from the previous example:
