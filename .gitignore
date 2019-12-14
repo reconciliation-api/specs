@@ -1,2 +1,5 @@
 # Eclipse config:
 .project
+# NPM
+node_modules
+package-lock.json

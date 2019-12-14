@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema#",
-  "$id": "https://reconciliation-api.github.io/specs/schemas/reconciliation-result-batch.json",
+  "$id": "https://reconciliation-api.github.io/specs/latest/schemas/reconciliation-result-batch.json",
   "type": "object",
   "description": "This schema can be used to validate the JSON serialization of any reconciliation result batch.",
   "patternProperties": {
