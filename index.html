@@ -145,12 +145,10 @@ href="https://github.com/stkenny/grefine-rdf-extension">OpenRefine RDF extension
       </section>
       <section>
         <h3>External Resources</h3>
-        <p class="ednote">
-          TODO: links to libraries, validators, user documentation. Our <a href="https://reconciliation-api.github.io/census/">census</a> could be used for that.
-        </p>
         <p>
-          A <a href="https://reconciliation-api.github.io/testbench/">list of known public endpoints</a> is maintained by the community. OpenRefine's wiki also hosts a <a
+          A <a href="https://reconciliation-api.github.io/testbench/">list of known public endpoints</a> is maintained by the community, where they can also be tried out interactively. OpenRefine's wiki also hosts a <a
 href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">list of reconciliable data source</a> which also includes non-hosted or discontinued services.
+	  Existing clients to the API, such as <a href="http://openrefine.org">OpenRefine</a> or <a href="https://coli-conc.gbv.de/cocoda/">Cocoda</a> can be used to interact with reconciliation services.
         </p>
       </section>
       <section id="conformance"></section>
@@ -300,9 +298,10 @@ database are instances of this type.<dd>
       </section>
       <section>
         <h3>HTTP(S) Access</h3>
-        <p class="ednote">
-          Points to specify here: GET/POST, HTTP status codes, HSTS, redirects…
-        </p>
+	<p>
+	   In the interest of protecting the data sent as reconciliation queries, all endpoints of reconciliation
+	   services SHOULD be available over HTTPS. This does not apply to locally hosted services.
+	</p>
       </section>
       <section>
         <h3>Cross-Origin Access</h3>
@@ -506,7 +505,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           </dl>
         </p>
       </section>
-      <section>
+      <section id="suggest-responses">
         <h3>Suggest Responses</h3>
         <p>
           A response to a suggest query consists of the following fields:
@@ -521,11 +520,16 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
               <dt><code>name</code></dt>
               <dd>Its corresponding human-readable name, to be displayed prominently to the user;</dd>
               <dt><code>description</code></dt>
-              <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>.</dd>
+              <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>;</dd>
+	      <dt><code>notable</code></dt>
+	      <dd>When suggesting entities only, this field can be used to supply the types of the suggested entity. The value must be an array of either type identifiers (as strings) or type objects, containing a <code>id</code> and <code>name</code> field which represent the type.</dd>
             </dl>
             </dd>
           </dl>
         </p>
+	<p class="note">
+          The key <code>notable</code> comes from a notion of <em>notable types</em> that existed in Freebase.
+	</p>
         <p>
           For instance, a suggest service for <a>entities</a> could return the following response:
           <pre data-include="examples/suggest-entities-response/valid/example.json" class="example json"></pre>
@@ -538,6 +542,9 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           And a  suggest service for <a>types</a> could return the following response:
           <pre data-include="examples/suggest-types-response/valid/example.json" class="example json"></pre>
         </p>
+	<p>
+	  JSON schemas to validate suggest responses are available <a href="#suggest-entities-response-json-schema">for entities</a>, <a href="#suggest-properties-response-json-schema">for properties</a> and <a href="#suggest-types-response-json-schema">for types</a>.
+	</p>
       </section>
       <section>
       <h3>Flyout Services</h3>
@@ -721,6 +728,27 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           The <a href="schemas/reconciliation-result-batch.json">reconciliation result batch schema</a> can be used to validate the JSON serialization of any <a>reconciliation result batch</a>.
         </p>
         <pre data-include="schemas/reconciliation-result-batch.json" />
+      </section>
+      <section>
+        <h3 id="suggest-entities-response-json-schema">Suggest Entities Response Schema</h3>
+	<p>
+          The <a href="schemas/suggest-entities-response.json">suggest entities response schema</a> can be used to validate the JSON serialization of any <a href="#suggest-responses">suggest response</a> for entities.
+        </p>
+        <pre data-include="schemas/suggest-entities-response.json" />
+      </section>
+      <section>
+        <h3 id="suggest-properties-response-json-schema">Suggest Properties Response Schema</h3>
+	<p>
+          The <a href="schemas/suggest-properties-response.json">suggest properties response schema</a> can be used to validate the JSON serialization of any <a href="#suggest-responses">suggest response</a> for properties.
+        </p>
+        <pre data-include="schemas/suggest-types-response.json" />
+      </section>
+      <section>
+        <h3 id="suggest-types-response-json-schema">Suggest Types Response Schema</h3>
+	<p>
+          The <a href="schemas/suggest-types-response.json">suggest types response schema</a> can be used to validate the JSON serialization of any <a href="#suggest-responses">suggest response</a> for types.
+        </p>
+        <pre data-include="schemas/suggest-types-response.json" />
       </section>
       <section>
         <h3>Data Extension Query Schema</h3>
