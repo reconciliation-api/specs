@@ -370,7 +370,7 @@ database are instances of this type.<dd>
 	    <dt><code>limit</code></dt>
             <dd>Optionally, a limit on the number of candidates to return, which must be a positive integer;</dd>
 	    <dt><code>properties</code></dt>
-            <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a>;</dd>
+	    <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>);</dd>
 	    <dt><code>type_strict</code></dt>
             <dd>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
           </dl>
@@ -386,9 +386,19 @@ database are instances of this type.<dd>
           Full example of a <a>reconciliation query batch</a> with all optional fields:
           <pre data-include="examples/reconciliation-query-batch/valid/example-full.json" class="example json"></pre>
         </p>
+	<p>
+	  For a single property it is possible to provide multiple values as a list. The values provided do not need
+	  to have the same type. In the following example a string and a reconciled value are provided as values for the
+	  same property.
+	  <pre data-include="examples/reconciliation-query-batch/valid/multi-values.json" class="example json"></pre>
+	</p>
         <p>
           A <a href="#reconciliation-query-batch-json-schema">JSON schema to validate the serialization of a query batch</a> is available.
         </p>
+	<p class="note">
+          The meaning of the <code>type_strict</code> is unclear, it is inherited from Freebase's API but is not used
+	  or documented in OpenRefine.
+	</p>
       </section>
       <section>
         <h3>Reconciliation Candidates</h3>
