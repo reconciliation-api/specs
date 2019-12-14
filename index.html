@@ -5,16 +5,15 @@
     <script src='libs/respec-w3c.js' async class='remove'></script>
     <script class='remove'>
       var respecConfig = {
-        specStatus: "unofficial",
+        specStatus: "CG-DRAFT",
         subtitle: "A protocol for data matching on the Web",
-        shortName: "reconciliation-api-10",
         pluralize: true,
 	doJsonLd: true,
         wg: "Entity Reconciliation Community Group",
         wgPublicList: "public-reconciliation",
         wgURI: "https://www.w3.org/community/reconciliation/",
 	canonicalURI: "https://reconciliation-api.github.io/specs/",
-	license: "cc0",
+	license: "w3c-software-doc",
         github: {
            repoURL: "https://github.com/reconciliation-api/specs",
            branch: "master"
@@ -65,12 +64,6 @@
       </p>
     </section>
     <section id='sotd'>
-      <p>
-        This report was published by the <a href="http://www.w3.org/community/reconciliation/">Entity Reconciliation Community Group</a>.
-        It is not a W3C Standard nor is it on the W3C Standards Track.
-        Please note that under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
-        Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.
-      </p>
       <p>
         Members of the Community Group are encouraged to contribute to this document by
         documenting the current behaviour of the reconciliation API.
@@ -418,7 +411,8 @@ database are instances of this type.<dd>
       <section>
         <h3>Sending Reconciliation Queries to a Service</h3>
         <p>
-          A <dfn>reconciliation result</dfn> is a set of reconciliation candidates.
+	  A <dfn>reconciliation result</dfn> is a set of <a>reconciliation candidates</a>. It is serialized in JSON
+	  as an array of such reconciliation candidate objects. This list SHOULD be sorted by decreasing score. 
         </p>
         <p>
           A <dfn>reconciliation result batch</dfn> is a set of <a>reconciliation results</a> indexed by string identifiers of the corresponding <a>reconciliation query batch</a>.
@@ -692,7 +686,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           A <dfn>data extension query</dfn> consists of:
           <ul>
             <li>A list of <a>entity</a> identifiers;</li>
-            <li>A list of <a>properties</a> with optional <a href="#data+extension+property+setting">settings</a>.</li>
+            <li>A list of <a>properties</a> with optional <a href="#dfn-data-extension-property-setting">settings</a>.</li>
           </ul>
         </p>
         <p>
