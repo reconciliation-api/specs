@@ -299,7 +299,7 @@ database are instances of this type.<dd>
         <h3>HTTP(S) Access</h3>
 	<p>
 	   In the interest of protecting the data sent as reconciliation queries, all endpoints of reconciliation
-	   services SHOULD be available over HTTPS. This does not apply to locally hosted services.
+	   services SHOULD be available over HTTPS [[RFC7230]] [[SECURING-WEB]]. This does not apply to locally hosted services.
 	</p>
       </section>
       <section>
@@ -309,14 +309,10 @@ database are instances of this type.<dd>
            enables web-based clients to access the service from a different domain.
         </p>
         <p class="note">
-           As of version 3.2, OpenRefine uses JSONP to access reconciliation services
-           from its user interface. This applies to the service manifest and the suggest
-           services. Calls to the preview service are made via an <code>&lt;iframe&gt;</code>
-           from the front-end and do not require cross-origin control.
-           Other calls (reconciliation queries and data extension queries) are made from the back-end
-           and therefore do not require cross-origin control either. Still, this document states
-           that all endpoints MUST support JSONP, since the service should not rely on the
-           client's architecture.
+           Some clients might only require cross-origin access on some particular endpoints,
+	   which are called directly by a web UI.
+	   Since this depends on the architecture of the client, this cannot be relied upon
+	   and cross-origin access MUST be implemented for all endpoints in a uniform way.
         </p>
         <p>
            In addition, endpoints SHOULD also enable access by CORS [[cors]] to enable
@@ -346,36 +342,24 @@ database are instances of this type.<dd>
         how services respond to them.
       </p>
       <section>
-        <h3>Reconciliation HTTP Requests</h3>
-        <p>
-          A reconciliation service MUST support HTTP POST requests with
-          <code>application/x-www-form-urlencoded</code> bodies containing a
-          <a>reconciliation query batch</a> in a form element named <code>queries</code>.
-        </p>
-        <p>
-          <pre class="example nohighlight">POST / queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
-        </p>
-        <p>
-          A reconciliation service SHOULD support HTTP GET requests with a
-          <a>reconciliation query batch</a> in a query string parameter named <code>queries</code>.
-        </p>
-        <p>
-          <pre class="example nohighlight">GET /?queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
-        </p>
-      </section>
-      <section>
         <h3>Structure of a Reconciliation Query</h3>
         <p>
           A <dfn>reconciliation query</dfn> consists of:
           <dl>
 	    <dt><code>query</code></dt>
-            <dd>A query string, consisting of a non-empty string, which is mandatory;</dd>
+            <dd>A query string, consisting of a non-empty string, which is mandatory.
+	    	By supplying such a string, a client intends to search for entities with similar
+	    	names. The specifics of how this similarity is defined are determined by the service.</dd>
 	    <dt><code>type</code></dt>
-            <dd>Optionally, a list of <a>types</a>;</dd>
+            <dd>Optionally, a list of <a>types</a>. Supplying such types allows users to restrict
+	    	the search to entities which bear those types. Whether this restriction should be a
+	    	hard constraint or simply induce a change on the reconciliation scores can be
+	    	determined by the service. In particular, services MAY return candidates which
+	    	do not belong to any of the supplied types;</dd>
 	    <dt><code>limit</code></dt>
             <dd>Optionally, a limit on the number of candidates to return, which must be a positive integer;</dd>
 	    <dt><code>properties</code></dt>
-	    <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>);</dd>
+	    <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>). Those are used to refine the set of candidates, by allowing clients to specify other attributes of entities, beyond their name in the <code>query</code> field;</dd>
 	    <dt><code>type_strict</code></dt>
             <dd>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
           </dl>
@@ -436,6 +420,53 @@ database are instances of this type.<dd>
         <p>
           A <a href="#reconciliation-result-batch-json-schema">JSON schema to validate the serialization of a reconciliation result batch</a> is available.
         </p>
+        <p>
+	  The primary role of a reconciliation service is to translate <a>reconciliation query batches</a> to
+	  <a>reconciliation result batches</a> over HTTP.
+	</p>
+	<p>
+          A reconciliation service MUST support HTTP POST requests with
+          <code>application/x-www-form-urlencoded</code> bodies containing a
+          <a>reconciliation query batch</a> (serialized in JSON) in a form element named <code>queries</code>.
+        </p>
+        <p>
+          <pre class="example nohighlight">POST / queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
+        </p>
+        <p>
+          Similarly, a reconciliation service SHOULD support HTTP GET requests with a
+          <a>reconciliation query batch</a> in a query string parameter named <code>queries</code>.
+        </p>
+        <p>
+          <pre class="example nohighlight">GET /?queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
+        </p>
+	<p>
+	   In both cases, the service returns the corresponding query batch serialized in JSON.
+	</p>
+	<p class="note">
+	   The POST method is the primary way to send reconciliation queries to a service since 
+	   it does not restrict the length of the query batches. The GET method is useful for
+	   interactive debugging of reconciliation queries in a web browser, for instance.
+	</p>
+      </section>
+      <section class="informative">
+	<h3>A Note on Scoring</h3>
+	<p>
+	  The way candidates are retrieved from the underlying database and scored against the query is left
+	  entirely at the discretion of the service.
+	  However services should retrieve and score the candidates of each query in a batch independently
+	  of the other queries in the same batch, or in previous ones.
+	</p>
+	<p>
+	  Deciding on a scoring method is one of the main difficulties in developing a reconciliation service.
+	  Many scoring strategies used in data matching [[christen-2012]] cannot be implemented easily in
+	  the context of this reconciliation API due to the separation of responsibilities between the client
+	  and the server.
+	</p>
+	<p class="note">
+	  Many open source reconciliation services are available and these might provide some inspiration
+	  concerning indexing and scoring methods when developing new services.
+	  See <a href="#external-resources">External Resources</a> for some examples.
+	</p>
       </section>
     </section>
     <section>
