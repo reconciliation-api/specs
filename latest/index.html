@@ -63,9 +63,11 @@
     <h1>Reconciliation Service API</h1>
     <section id='abstract'>
       <p>
-        This document describes the reconciliation service API as supported by OpenRefine 3.x.
+        This document describes the reconciliation service API, as implemented in OpenRefine 2.8 to 3.2.
         It is intended as a comprehensive and definitive specification of this API in its given state.
-        Further improvements to the API, to be discussed in the W3C Entity Reconciliation Community Group,
+	Various aspects of this API need to be improved, as hinted by notes throughout this document.
+	Further improvements to the API, to be discussed in the
+	<a href="https://www.w3c.org/community/reconciliation/">W3C Entity Reconciliation Community Group</a>,
         will be specified in the next iteration of this document.
       </p>
     </section>
@@ -129,7 +131,7 @@ Organization System">SKOS</abbr> [[skos-primer]]. But such statements must in tu
 href="https://github.com/stkenny/grefine-rdf-extension">OpenRefine RDF extension</a>).
 	</p>
 	<p>
-	This API was documented on OpenRefine's wiki as <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation_Service_API">a living document</a> which evolved gradually, as OpenRefine improved.
+	This API was documented on OpenRefine's wiki as <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-API">a living document</a> which evolved gradually, as OpenRefine improved.
 	  In addition to its core feature, fetching reconciliation candidates matching a given query, services are optionally able
 	  to implement additional endpoints which ease the integration of the service in OpenRefine's UI, by providing previews
 	  for entities (with a Preview Service) and auto-completion for various inputs (with Suggest Services).
