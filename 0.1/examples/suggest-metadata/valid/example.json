@@ -1,0 +1,5 @@
+{
+  "service_url": "https://example.com/api",
+  "service_path": "/suggest",
+  "flyout_service_path": "/suggest/flyout/${id}"
+}

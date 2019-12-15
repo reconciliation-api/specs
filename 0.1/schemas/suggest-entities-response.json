@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "https://reconciliation-api.github.io/specs/0.1/schemas/suggest-entities-response.json",
+  "type": "object",
+  "description": "This schema can be used to validate the JSON response of a suggest service for entities.",
+  "properties": {
+    "result": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identifier of the suggested entity"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the suggested entity"
+          },
+          "description": {
+            "type": "string",
+            "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
+          },
+          "notable": {
+            "type": "array",
+            "description": "Types the suggest entity belongs to",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "description": "A type can be given by id and name",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "description": "Alternatively, if only a string is given, it is treated as the id"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  },
+  "required": [
+    "result"
+  ]
+}

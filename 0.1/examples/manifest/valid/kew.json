@@ -1,0 +1,39 @@
+{
+  "name": "IPNI Name Reconciliation Service",
+  "identifierSpace": "http://ipni.org/urn:lsid:ipni.org:names:",
+  "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
+  "view": {
+    "url": "http://ipni.org/urn:lsid:ipni.org:names:{{id}}"
+  },
+  "preview": {
+    "url": "http://ipni.org/urn:lsid:ipni.org:names:{{id}}",
+    "width": 400,
+    "height": 400
+  },
+  "suggest": {
+    "type": {
+      "service_url": "http://data1.kew.org",
+      "service_path": "/reconciliation/reconcile/IpniName/suggestType",
+      "flyout_service_url": "http://data1.kew.org",
+      "flyout_service_path": "/reconciliation/reconcile/IpniName/flyoutType/${id}"
+    },
+    "property": {
+      "service_url": "http://data1.kew.org",
+      "service_path": "/reconciliation/reconcile/IpniName/suggestProperty",
+      "flyout_service_url": "http://data1.kew.org",
+      "flyout_service_path": "/reconciliation/reconcile/IpniName/flyoutProperty/${id}"
+    },
+    "entity": {
+      "service_url": "http://data1.kew.org",
+      "service_path": "/reconciliation/reconcile/IpniName",
+      "flyout_service_url": "http://data1.kew.org",
+      "flyout_service_path": "/reconciliation/reconcile/IpniName/flyout/${id}"
+    }
+  },
+  "defaultTypes": [
+    {
+      "id": "/biology/organism_classification/scientific_name",
+      "name": "Scientific name"
+    }
+  ]
+}

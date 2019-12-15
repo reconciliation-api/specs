@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "https://reconciliation-api.github.io/specs/0.1/schemas/reconciliation-result-batch.json",
+  "type": "object",
+  "description": "This schema can be used to validate the JSON serialization of any reconciliation result batch.",
+  "patternProperties": {
+    "^.*$": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Entity identifier of the candidate"
+              },
+              "name": {
+                "type": "string",
+                "description": "Entity name of the candidate"
+              },
+              "score": {
+                "type": "number",
+                "description": "Number indicating how likely it is that the candidate matches the query"
+              },
+              "match": {
+                "type": "boolean",
+                "description": "Boolean value indicating whether the candiate is a certain match or not."
+              },
+              "type": {
+                "type": "array",
+                "description": "Types the candidate entity belongs to",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "description": "A type can be given by id and name",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "description": "Alternatively, if only a string is given, it is treated as the id"
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "score"
+            ]
+          }
+        }
+      },
+      "required": [
+        "result"
+      ]
+    }
+  }
+}

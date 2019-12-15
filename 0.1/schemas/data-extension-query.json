@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "https://reconciliation-api.github.io/specs/0.1/schemas/data-extension-query.json",
+  "type": "object",
+  "description": "This schema validates a data extension query",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "description": "The list of entity identifiers to fetch property values from",
+      "items": {
+        "type": "string"
+      }
+    },
+    "properties": {
+      "type": "array",
+      "description": "The list of properties to fetch, with their optional configuration",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "settings": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      }
+    }
+  },
+  "required": [
+    "ids",
+    "properties"
+  ]
+}

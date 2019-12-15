@@ -1,0 +1,74 @@
+{
+  "q1": {
+    "result": [
+      {
+        "id": "120333937",
+        "name": "Urbaniak, Regina",
+        "score": 53.015232,
+        "match": false,
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      },
+      {
+        "id": "1127147390",
+        "name": "Urbaniak, Jan",
+        "score": 52.357353,
+        "match": false,
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      }
+    ]
+  },
+  "q2": {
+    "result": [
+      {
+        "id": "123064325",
+        "name": "Schwanhold, Ernst",
+        "score": 86.43497,
+        "match": true,
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      },
+      {
+        "id": "116362988X",
+        "name": "Schwanhold, Nadine",
+        "score": 62.04763,
+        "match": false,
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      }
+    ]
+  }
+}

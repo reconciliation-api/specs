@@ -1,0 +1,32 @@
+{
+  "result": [
+    {
+      "name": "cumulonimbus",
+      "description": "genus of clouds, dense towering vertical cloud associated with thunderstorms and atmospheric instability",
+      "id": "Q182311",
+      "notable": [
+	 {
+	   "name": "cloud genera",
+	   "id": "Q1840368"
+	 }
+      ]
+    },
+    {
+      "name": "Cumulopuntia",
+      "description": "genus of plants",
+      "id": "Q310599",
+      "notable": [
+	 {
+	   "name": "taxon",
+	   "id": "Q16521"
+	 }
+      ]
+    },
+    {
+      "name": "cumulonimbus incus",
+      "description": "variety of cloud",
+      "id": "Q1358304",
+      "notable": []
+    }
+  ]
+}

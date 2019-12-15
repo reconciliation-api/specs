@@ -1,0 +1,38 @@
+{
+  "view": {
+    "url": "http://vivo.med.cornell.edu/individual?uri={{id}}"
+  },
+  "identifierSpace": "http://vivo.med.cornell.edu/individual/",
+  "name": "VIVO Reconciliation Service",
+  "defaultTypes": [
+    {
+      "name": "core:Role",
+      "id": "http://vivoweb.org/ontology/core#Role"
+    },
+    {
+      "name": "core:Academic Degree",
+      "id": "http://vivoweb.org/ontology/core#AcademicDegree"
+    },
+    {
+      "name": "event:Event",
+      "id": "http://purl.org/NET/c4dm/event.owl#Event"
+    },
+    {
+      "name": "core:Location",
+      "id": "http://vivoweb.org/ontology/core#Location"
+    },
+    {
+      "name": "foaf:Organization",
+      "id": "http://xmlns.com/foaf/0.1/Organization"
+    },
+    {
+      "name": "foaf:Person",
+      "id": "http://xmlns.com/foaf/0.1/Person"
+    },
+    {
+      "name": "obo:IAO_0000030",
+      "id": "http://purl.obolibrary.org/obo/IAO_0000030"
+    }
+  ],
+  "schemaSpace": "http://vivo.med.cornell.edu/individual/"
+}

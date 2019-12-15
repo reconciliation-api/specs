@@ -1,0 +1,279 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "https://reconciliation-api.github.io/specs/0.1/schemas/manifest.json",
+  "type": "object",
+  "description": "This validates a service manifest, describing the features supported by the endpoint.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "A human-readable name for the service or data source"
+    },
+    "identifierSpace": {
+      "type": "string",
+      "description": "A URI describing the entity identifiers used in this service"
+    },
+    "schemaSpace": {
+      "type": "string",
+      "description": "A URI describing the schema used in this service"
+    },
+    "view": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "A template to transform an entity identifier into the corresponding URI",
+          "pattern": ".*\\{\\{id\\}\\}.*"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    },
+    "defaultTypes": {
+      "type": "array",
+      "description": "A list of default types that are considered good generic choices for reconciliation",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "suggest": {
+      "type": "object",
+      "description": "Settings for the suggest protocol, to auto-complete entities, properties and types",
+      "definitions": {
+        "service_definition": {
+          "type": "object",
+          "properties": {
+            "service_url": {
+              "type": "string"
+            },
+            "service_path": {
+              "type": "string"
+            },
+            "flyout_service_url": {
+              "type": "string"
+            },
+            "flyout_service_path": {
+              "type": "string",
+              "pattern": ".*\\$\\{id\\}.*"
+            }
+          },
+          "required": []
+        }
+      },
+      "properties": {
+        "entity": {
+          "$ref": "#/properties/suggest/definitions/service_definition"
+        },
+        "property": {
+          "$ref": "#/properties/suggest/definitions/service_definition"
+        },
+        "type": {
+          "$ref": "#/properties/suggest/definitions/service_definition"
+        }
+      }
+    },
+    "preview": {
+      "type": "object",
+      "description": "Settings for the preview protocol, for HTML previews of entities",
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": ".*\\{\\{id\\}\\}.*",
+          "description": "A URL pattern which transforms the entity ID into a preview URL for it"
+        },
+        "width": {
+          "type": "integer",
+          "description": "The width of the iframe where to include the HTML preview"
+        },
+        "height": {
+          "type": "integer",
+          "description": "The height of the iframe where to include the HTML preview"
+        }
+      },
+      "required": [
+        "url",
+        "width",
+        "height"
+      ]
+    },
+    "extend": {
+      "type": "object",
+      "description": "Settings for the data extension protocol, to fetch property values",
+      "properties": {
+        "propose_properties": {
+          "type": "object",
+          "description": "Location of the endpoint to propose properties to fetch for a given type",
+          "properties": {
+            "service_url": {
+              "type": "string"
+            },
+            "service_path": {
+              "type": "string"
+            }
+          }
+        },
+        "property_settings": {
+          "type": "array",
+          "description": "Definition of the settings configurable by the user when fetching a property",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "description": "Defines a numerical setting on a property",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "number"
+                    ]
+                  },
+                  "default": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "help_text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "label",
+                  "name"
+                ]
+              },
+              {
+                "type": "object",
+                "description": "Defines a string setting on a property",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "text"
+                    ]
+                  },
+                  "default": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "help_text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "label",
+                  "name"
+                ]
+              },
+              {
+                "type": "object",
+                "description": "Defines a boolean setting on a property",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "checkbox"
+                    ]
+                  },
+                  "default": {
+                    "type": "boolean"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "help_text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "label",
+                  "name"
+                ]
+              },
+              {
+                "type": "object",
+                "description": "Defines a setting with a fixed set of choices",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "select"
+                    ]
+                  },
+                  "default": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "help_text": {
+                    "type": "string"
+                  },
+                  "choices": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "name"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "label",
+                  "name",
+                  "choices"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "identifierSpace",
+    "schemaSpace"
+  ]
+}

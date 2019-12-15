@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "https://reconciliation-api.github.io/specs/0.1/schemas/suggest-types-response.json",
+  "type": "object",
+  "description": "This schema can be used to validate the JSON response of a suggest service for types.",
+  "properties": {
+    "result": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identifier of the suggested type"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the suggested type"
+          },
+          "description": {
+            "type": "string",
+            "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  },
+  "required": [
+    "result"
+  ]
+}

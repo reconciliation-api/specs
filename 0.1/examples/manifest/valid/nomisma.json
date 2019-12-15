@@ -1,0 +1,114 @@
+{
+  "name": "Nomisma.org",
+  "view": {
+    "url": "http://nomisma.org/id/{{id}}"
+  },
+  "identifierSpace": "http://nomisma.org/id/",
+  "schemaSpace": "http://nomisma.org/ontology",
+  "defaultTypes": [
+    {
+      "id": "nmo:CoinWear",
+      "name": "CoinWear"
+    },
+    {
+      "id": "nmo:Collection",
+      "name": "Collection"
+    },
+    {
+      "id": "skos:Concept",
+      "name": "Concept"
+    },
+    {
+      "id": "nmo:Denomination",
+      "name": "Denomination"
+    },
+    {
+      "id": "crm:E4_Period",
+      "name": "E4_Period"
+    },
+    {
+      "id": "nmo:Ethnic",
+      "name": "Ethnic"
+    },
+    {
+      "id": "rdac:Family",
+      "name": "Family"
+    },
+    {
+      "id": "nmo:FieldOfNumismatics",
+      "name": "FieldOfNumismatics"
+    },
+    {
+      "id": "nmo:FindType",
+      "name": "FindType"
+    },
+    {
+      "id": "foaf:Group",
+      "name": "Group"
+    },
+    {
+      "id": "nmo:Hoard",
+      "name": "Hoard"
+    },
+    {
+      "id": "nmo:Manufacture",
+      "name": "Manufacture"
+    },
+    {
+      "id": "nmo:Material",
+      "name": "Material"
+    },
+    {
+      "id": "nmo:Mint",
+      "name": "Mint"
+    },
+    {
+      "id": "nmo:NumismaticTerm",
+      "name": "NumismaticTerm"
+    },
+    {
+      "id": "nmo:ObjectType",
+      "name": "ObjectType"
+    },
+    {
+      "id": "foaf:Organization",
+      "name": "Organization"
+    },
+    {
+      "id": "foaf:Person",
+      "name": "Person"
+    },
+    {
+      "id": "nmo:ReferenceWork",
+      "name": "ReferenceWork"
+    },
+    {
+      "id": "nmo:Region",
+      "name": "Region"
+    },
+    {
+      "id": "org:Role",
+      "name": "Role"
+    },
+    {
+      "id": "nmo:TypeSeries",
+      "name": "TypeSeries"
+    },
+    {
+      "id": "un:Uncertainty",
+      "name": "Uncertainty"
+    }
+  ],
+  "preview": {
+    "url": "http://nomisma.org/apis/reconcile/preview?id={{id}}",
+    "height": 90,
+    "width": 320
+  },
+  "suggest": {
+    "entity": {
+      "service_url": "http://nomisma.org/apis/reconcile",
+      "service_path": "/suggest/entity",
+      "flyout_service_path": "/flyout?id=${id}"
+    }
+  }
+}
