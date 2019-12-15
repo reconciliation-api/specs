@@ -40,7 +40,11 @@
             orcid: "0000-0001-8829-1989",
             company: "hbz, Cologne",
             companyURL: "https://www.hbz-nrw.de/"
-          }
+          },
+	  {
+	    name: "Thad Guidry Sr.",
+	    url: "https://www.linkedin.com/in/thadguidry/"
+	  }
         ],
         localBiblio: {
           "beek-2018": {"aliasOf": "doi:10.1007/978-3-319-93417-4_5"},
@@ -358,7 +362,8 @@ database are instances of this type.<dd>
 	    <dt><code>limit</code></dt>
             <dd>Optionally, a limit on the number of candidates to return, which must be a positive integer;</dd>
 	    <dt><code>properties</code></dt>
-	    <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>). Those are used to refine the set of candidates, by allowing clients to specify other attributes of entities, beyond their name in the <code>query</code> field;</dd>
+	    <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>). These are used to further filter the set of candidates (similar to a WHERE clause in SQL, by allowing clients to specify other attributes of entities that should match, beyond their name in the <code>query</code> field.
+		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service;</dd>
 	    <dt><code>type_strict</code></dt>
             <dd>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
           </dl>
