@@ -459,12 +459,16 @@ database are instances of this type.<dd>
 	</p>
       </section>
       <section class="informative">
-	<h3>A Note on Scoring</h3>
+	<h3>A Note on Candidate Retrieval and Scoring</h3>
 	<p>
 	  The way candidates are retrieved from the underlying database and scored against the query is left
 	  entirely at the discretion of the service.
 	  However services should retrieve and score the candidates of each query in a batch independently
 	  of the other queries in the same batch, or in previous ones.
+          It is also expected that reconciliation queries where <code>query</code> matches exactly the name
+          of an entity in the database and with no other constraint should return at least this entity, unless
+          it is hidden by many namesakes. Similarly, supplying an entity identifier as <code>query</code>
+          should return the corresponding entity as a candidate, with a high score.
 	</p>
 	<p>
 	  Deciding on a scoring method is one of the main difficulties in developing a reconciliation service.
@@ -597,6 +601,17 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
 	  JSON schemas to validate suggest responses are available <a href="#suggest-entities-response-json-schema">for entities</a>, <a href="#suggest-properties-response-json-schema">for properties</a> and <a href="#suggest-types-response-json-schema">for types</a>.
 	</p>
       </section>
+      <section class="informative">
+        <h3>General Expectations about Suggest Services</h3>
+        <p>
+          It is generally expected by users that an entity suggest query where <code>prefix</code> is the name of an entity should return this entity in the suggest response, unless that entity is hidden behind many other namesakes.
+          Similarly, supplying an entity identifier as <code>prefix</code> should return this entity in the suggest response. 
+          Similar expectations apply for property and type suggest services.
+        </p>
+        <p>
+          As the <code>prefix</code> name suggests, suggest services are expected to perform prefix search on their database of records, such that a suggest service can be used to provide auto-completion as users type names or identifiers in a field.
+        </p>
+      </section>      
       <section>
       <h3>Flyout Services</h3>
         <p>
