@@ -47,6 +47,13 @@
             url: "https://www.linkedin.com/in/thadguidry/",
             orcid: "0000-0001-7446-501X"
           },
+          {
+            name: "Osma Suominen",
+            url: "https://fi.linkedin.com/in/osmasuominen",
+            orcid: "0000-0003-0042-0745",
+            company: "National Library of Finland",
+            companyURL: "https://www.kansalliskirjasto.fi/en"
+          },
           // add yourself here!
           {
             name: "Add Yourself Here!"
@@ -313,8 +320,9 @@ database are instances of this type.<dd>
       <section>
         <h3>Cross-Origin Access</h3>
         <p>
-           All HTTP(S) endpoints exposed by the service MUST support JSONP [[JSONP]], which
-           enables web-based clients to access the service from a different domain.
+           All HTTP(S) endpoints exposed by the service MUST enable access by CORS [[cors]] to enable
+           web-based clients to access the service from a different domain without exposing themselves to
+           untrusted third-party code.
         </p>
         <p class="note">
            Some clients might only require cross-origin access on some particular endpoints,
@@ -322,24 +330,9 @@ database are instances of this type.<dd>
 	   Since this depends on the architecture of the client, this cannot be relied upon
 	   and cross-origin access MUST be implemented for all endpoints in a uniform way.
         </p>
-        <p>
-           In addition, endpoints SHOULD also enable access by CORS [[cors]] to enable
-           newer web-based clients to access the service without exposing themselves to
-           untrusted third-party code.
-        </p>
-        <p>
-           This can be achieved by adding the following HTTP headers to all HTTP responses
-           produced by the service:
-           <pre>
-             Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
-             Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token
-             Access-Control-Allow-Origin: *
-           </pre>
-        </p>
-        <p class="note">
-           CORS provides a safer way to expose cross-origin web services and SHOULD therefore be
-           supported by reconciliation services, in the interest of other clients and potentially
-           of newer versions of OpenRefine.
+	<p>
+           In addition, endpoints exposed by the service MAY support JSONP [[JSONP]], which
+           enables older web-based clients to access the service from a different domain.
         </p>
       </section>
     </section>
