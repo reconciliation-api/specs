@@ -1,0 +1,14 @@
+{
+  "view": {
+    "url": "http://vivo.med.cornell.edu/individual?uri={{id}}"
+  },
+  "identifierSpace": "http://vivo.med.cornell.edu/individual/",
+  "name": "VIVO Reconciliation Service",
+  "schemaSpace": "http://vivo.med.cornell.edu/individual/",
+  "authentication": {
+    "tokenName": "Client secret",
+    "required": false,
+    "documentation": "https://vivo.med.cornell.edu/reconciliation/authentication",
+    "format": "[A-Z]{4}[0-9]{7}"
+  }
+}

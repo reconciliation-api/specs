@@ -16,6 +16,37 @@
       "type": "string",
       "description": "A URI describing the schema used in this service"
     },
+    "authentication": {
+      "type": "object",
+      "description": "An authentication specification, provided if the service supports authentication",
+      "properties": {
+        "tokenName": {
+          "type": "string",
+          "description": "A human readable name which describes the type of authentication token in the service's own terminology",
+          "examples": [
+              "Client secret",
+              "API key",
+              "User token"
+          ]
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Whether authentication is required to use the service"
+        },
+        "format": {
+          "type": "string",
+          "description": "An optional regular expression validating the format of authentication tokens"
+        },
+        "documentation": {
+          "type": "string",
+          "description": "An optional URL pointing to a documentation page for the authentication mechanism in this service"
+        }
+      },
+      "required": [
+        "tokenName",
+        "required"
+      ]
+    },
     "view": {
       "type": "object",
       "properties": {
