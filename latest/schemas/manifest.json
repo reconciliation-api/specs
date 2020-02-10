@@ -10,7 +10,9 @@
       "items": {
         "type": "string"
       },
-      "minItems": 1
+      "contains": {
+        "enum": ["0.2"]
+      }
     },
     "name": {
       "type": "string",
