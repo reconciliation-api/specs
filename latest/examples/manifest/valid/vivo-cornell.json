@@ -1,4 +1,5 @@
 {
+  "versions": ["0.2"],
   "view": {
     "url": "http://vivo.med.cornell.edu/individual?uri={{id}}"
   },

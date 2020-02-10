@@ -1,4 +1,5 @@
 {
+  "versions": ["0.2"],
   "name": "GND reconciliation for OpenRefine",
   "identifierSpace": "https://lobid.org/gnd/",
   "schemaSpace": "https://d-nb.info/standards/elementset/gnd#AuthorityResource",

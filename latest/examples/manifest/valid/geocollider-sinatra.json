@@ -1,4 +1,5 @@
 {
+  "versions": ["0.2"],
   "name": "Pleiades Reconciliation for OpenRefine",
   "schemaSpace": "https://pleiades.stoa.org/places/",
   "identifierSpace": "https://pleiades.stoa.org/places/vocab#",

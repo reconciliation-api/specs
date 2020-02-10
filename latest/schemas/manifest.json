@@ -4,6 +4,14 @@
   "type": "object",
   "description": "This validates a service manifest, describing the features supported by the endpoint.",
   "properties": {
+    "versions": {
+      "type": "array",
+      "description": "The list of API versions supported by this service.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
     "name": {
       "type": "string",
       "description": "A human-readable name for the service or data source"
@@ -272,6 +280,7 @@
     }
   },
   "required": [
+    "versions",
     "name",
     "identifierSpace",
     "schemaSpace"

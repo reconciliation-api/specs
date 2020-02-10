@@ -1,4 +1,5 @@
 {
+  "versions": ["0.2"],
   "name": "IPNI Name Reconciliation Service",
   "identifierSpace": "http://ipni.org/urn:lsid:ipni.org:names:",
   "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
