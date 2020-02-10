@@ -302,6 +302,8 @@ database are instances of this type.<dd>
           </dd>
           <dt><code>extend</code></dt>
           <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
+          <dt><code>authentication</code></dt>
+          <dd>An <a>authentication specification</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -335,6 +337,35 @@ database are instances of this type.<dd>
 	<p>
            In addition, endpoints exposed by the service MAY support JSONP [[JSONP]], which
            enables older web-based clients to access the service from a different domain.
+        </p>
+      </section>
+      <section>
+        <h3>Authentication</h3>
+        <p>
+           Services MAY request users to provide an authentication token when making queries.
+           They can do so by adding an <dfn>authentication specification</dfn> to their manifest. An authentication specification consists of:
+           <dl>
+             <dt><code>tokenName</code></dt>
+             <dd>A human readable name, such as <code>"API key"</code>, <code>"User token"</code> or <code>"Client secret"</code> which describes the type of authentication token in the service's own terminology. This helps users determine which token to
+provide when setting up the service;</dd>
+             <dt><code>required</code></dt>
+             <dd>A boolean value indicating whether authenticating is required to use the service;</dd>
+             <dt><code>format</code></dt>
+             <dd>An optional regular expression which describes the range of allowed values for the authentication token;</dd>
+             <dt><code>documentation</code></dt>
+             <dd>An optional URL describing the authentication mechanism used by the service: how to obtain a token from the service, the benefits of authenticating if it is not required, and any other related information.</dd>
+           </dl>
+        </p>
+        <p>
+           If a service provides an authentication specification with <code>required</code> set to <code>true</code>,
+           then clients MUST add an <code>api_key</code> GET parameter to all HTTP requests made to the service,
+           to the exception of the service manifest which can always be obtained without an authentication token. If
+           <code>required</code> is set to <code>false</code>, then clients MAY supply an <code>api_key</code> in
+           requests.
+        </p>
+        <p>
+           When an invalid authentication token is supplied in any HTTP request, the service MUST return an HTTP 403 error,
+           even if authentication is not required.
         </p>
       </section>
     </section>
