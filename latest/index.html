@@ -408,9 +408,27 @@ database are instances of this type.<dd>
 	    <dd>The types of the candidate entity;</dd>
 	    <dt><code>score</code></dt>
 	    <dd>A numeral indicating how well this candidate entity matches the query: a higher score indicates a better match;</dt>
+            <dt><code>features</code></dt>
+            <dd>An optional array of <a>matching features</a>;</dd>
 	    <dt><code>match</code></dt>
             <dd>A boolean matching decision, which indicates whether the service considers this candidate good enough to be chosen as a correct match.</dd>
           </dl>
+        </p>
+        <p>
+          A <dfn>matching feature</dfn> is a numerical value which can be used to determine how likely it is for the candidate to be the correct entity. It contains the following fields:
+          <dl>
+            <dt><code>id</code></dt>
+            <dd>A string which identifies the feature, such as <code>"name_tfidf"</code> or <code>"pagerank"</code>. This id must be unique among all the matching features returned for a given candidate;</dd>
+            <dt><code>value</code></dt>
+            <dd>The value of the feature for the candidate, which can be any boolean or numerical value.</dd>
+          </dl>
+         Multiple matching features are often used in combination to provide the final matching score (available
+in the <code>score</code> field). By exposing individual features in their responses, services make it possible for clients
+         to compute matching scores which fit their use cases better.
+        </p>
+        <p>
+          Example of a <a>reconciliation candidate</a> with all possible fields:
+          <pre data-include="examples/reconciliation-candidate/valid/example.json" class="example json"></pre>
         </p>
         <p>
 	  A <dfn>reconciliation result</dfn> is a set of <a>reconciliation candidates</a>. It is serialized in JSON
@@ -471,9 +489,19 @@ database are instances of this type.<dd>
 	</p>
 	<p>
 	  Deciding on a scoring method is one of the main difficulties in developing a reconciliation service.
-	  Many scoring strategies used in data matching [[christen-2012]] cannot be implemented easily in
-	  the context of this reconciliation API due to the separation of responsibilities between the client
-	  and the server.
+          Services are encouraged to expose as many <a>matching features</a> as they deem useful, in particular
+          features which require knowledge of global statistics on the database or other attributes. Examples include:
+          <dl>
+            <dt>Name matching</dt>
+            <dd>Similarity metrics to compare the entity name and the query;</dd>
+            <dt>Entity popularity</dt>
+            <dd>Metrics which predict how likely an entity is likely to be refered to, regardless of the query supplied;</dd>
+            <dt>Comparison of attributes to query properties</dt>
+            <dd>Obtained using similarity metrics to compare the supplied properties and measure their discriminative power;</dd>
+            <dt>Type matching</dt>
+            <dd>To quantify how well any type supplied in the query corresponds to the candidate's types.</dd>
+          </dl>
+	  By exposing such features, services make it possible for clients to use a wide range of data matching strategies [[christen-2012]]. This also makes the global candidate scores less opaque.
 	</p>
 	<p class="note">
 	  Many open source reconciliation services are available and these might provide some inspiration
