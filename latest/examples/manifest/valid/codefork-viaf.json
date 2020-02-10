@@ -1,4 +1,5 @@
 {
+  "versions": ["0.2"],
   "name": "VIAF",
   "identifierSpace": "http://rdf.freebase.com/ns/user/hangy/viaf",
   "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
