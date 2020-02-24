@@ -28,34 +28,46 @@
     },
     "authentication": {
       "type": "object",
-      "description": "An authentication specification, provided if the service supports authentication",
+      "description": "A security scheme, provided if the service requires authentication",
+      "oneOf": [
+	{
+	  "type": "object",
+	  "description": "A security scheme for authentication based on API keys",
+	  "properties": {
+	     "type": {
+		"enum": ["apiKey"] 
+	     },
+	     "name": {
+		"type": "string"
+	     },
+	     "in": {
+		"type": "string"
+	     }
+	  },
+	  "required": ["type", "name", "in"]
+	},
+	{
+	   "type": "object",
+	   "description": "A security scheme for authentication based on HTTP auth.",
+	   "properties": {
+               "type": {
+		  "enum": ["http"]
+	       },
+	       "scheme": {
+		  "type": "string"
+	       },
+	       "bearerFormat": {
+		   "type": "string"
+	       }
+           },
+	   "required": ["type", "scheme"]
+	}
+      ],
       "properties": {
-        "tokenName": {
-          "type": "string",
-          "description": "A human readable name which describes the type of authentication token in the service's own terminology",
-          "examples": [
-              "Client secret",
-              "API key",
-              "User token"
-          ]
-        },
-        "required": {
-          "type": "boolean",
-          "description": "Whether authentication is required to use the service"
-        },
-        "format": {
-          "type": "string",
-          "description": "An optional regular expression validating the format of authentication tokens"
-        },
-        "documentation": {
-          "type": "string",
-          "description": "An optional URL pointing to a documentation page for the authentication mechanism in this service"
+        "description": {
+      	  "type": "string"
         }
-      },
-      "required": [
-        "tokenName",
-        "required"
-      ]
+      }
     },
     "view": {
       "type": "object",
