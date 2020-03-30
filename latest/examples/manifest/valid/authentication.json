@@ -9,7 +9,7 @@
   "authentication": {
     "type": "apiKey",
     "description": "Vivo API key",
-    "in": "cookie",
+    "in": "header",
     "name": "apikey"
   }
 }

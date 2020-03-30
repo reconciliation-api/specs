@@ -3,7 +3,7 @@
   "$id": "https://reconciliation-api.github.io/specs/latest/schemas/manifest.json",
   "type": "object",
   "description": "This validates a service manifest, describing the features supported by the endpoint.",
-  "properties": {
+  "properties":{
     "versions": {
       "type": "array",
       "description": "The list of API versions supported by this service.",
@@ -27,47 +27,7 @@
       "description": "A URI describing the schema used in this service"
     },
     "authentication": {
-      "type": "object",
-      "description": "A security scheme, provided if the service requires authentication",
-      "oneOf": [
-	{
-	  "type": "object",
-	  "description": "A security scheme for authentication based on API keys",
-	  "properties": {
-	     "type": {
-		"enum": ["apiKey"] 
-	     },
-	     "name": {
-		"type": "string"
-	     },
-	     "in": {
-		"type": "string"
-	     }
-	  },
-	  "required": ["type", "name", "in"]
-	},
-	{
-	   "type": "object",
-	   "description": "A security scheme for authentication based on HTTP auth.",
-	   "properties": {
-               "type": {
-		  "enum": ["http"]
-	       },
-	       "scheme": {
-		  "type": "string"
-	       },
-	       "bearerFormat": {
-		   "type": "string"
-	       }
-           },
-	   "required": ["type", "scheme"]
-	}
-      ],
-      "properties": {
-        "description": {
-      	  "type": "string"
-        }
-      }
+      "$ref": "http://swagger.io/v2/schema.json#/definitions/securityDefinitions/additionalProperties"
     },
     "view": {
       "type": "object",
