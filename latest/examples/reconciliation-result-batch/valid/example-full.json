@@ -6,6 +6,24 @@
         "name": "Urbaniak, Regina",
         "score": 53.015232,
         "match": false,
+        "features": [
+          {
+            "id": "name_tfidf",
+            "value": 378.239
+          },
+          {
+            "id": "pagerank",
+            "value": -3.1209
+          },
+          {
+            "id": "type_match",
+            "value": 10.329
+          },
+          {
+            "id": "deprecated",
+            "value": false
+          }
+        ],
         "type": [
           {
             "id": "AuthorityResource",
@@ -41,6 +59,24 @@
         "id": "123064325",
         "name": "Schwanhold, Ernst",
         "score": 86.43497,
+        "features": [
+          {
+            "id": "name_tfidf",
+            "value": 334.188
+          },
+          {
+            "id": "pagerank",
+            "value": -4.1581
+          },
+          {
+            "id": "type_match",
+            "value": 13.78
+          },
+          {
+            "id": "deprecated",
+            "value": false
+          }
+        ],
         "match": true,
         "type": [
           {

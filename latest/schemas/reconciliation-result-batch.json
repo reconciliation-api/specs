@@ -24,6 +24,30 @@
                 "type": "number",
                 "description": "Number indicating how likely it is that the candidate matches the query"
               },
+              "features": {
+                "type": "array",
+                "description": "A list of features which can be used to derive a matching score",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "A unique string identifier for the feature"
+                    },
+                    "value": {
+                      "description": "The value of the feature for this reconciliation candidate",
+                      "oneOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
               "match": {
                 "type": "boolean",
                 "description": "Boolean value indicating whether the candiate is a certain match or not."
