@@ -3,7 +3,7 @@
   "$id": "https://reconciliation-api.github.io/specs/latest/schemas/manifest.json",
   "type": "object",
   "description": "This validates a service manifest, describing the features supported by the endpoint.",
-  "properties":{
+  "properties": {
     "versions": {
       "type": "array",
       "description": "The list of API versions supported by this service.",
