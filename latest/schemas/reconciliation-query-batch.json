@@ -100,7 +100,7 @@
           ]
         }
       },
-      "oneOf": [
+      "anyOf": [
         {
           "required": [
             "query"
