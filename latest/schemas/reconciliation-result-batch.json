@@ -20,6 +20,10 @@
                 "type": "string",
                 "description": "Entity name of the candidate"
               },
+              "description": {
+                "type": "string",
+                "description": "Optional description of the candidate entity"
+              },
               "score": {
                 "type": "number",
                 "description": "Number indicating how likely it is that the candidate matches the query"
