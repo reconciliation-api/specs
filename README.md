@@ -6,6 +6,8 @@ This repository hosts the specifications of the reconciliation API, which can be
 
 https://reconciliation-api.github.io/specs/latest/
 
+General discussion about this protocol can be held on the [`public-reconciliation@w3.org` mailing list](https://lists.w3.org/Archives/Public/public-reconciliation/).
+
 Initially, the aim is to document the existing state of the API,
 as witnessed by the existing clients and servers, and the [original documentation
 on OpenRefine's wiki](https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-API).
