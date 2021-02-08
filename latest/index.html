@@ -293,8 +293,16 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         This section documents how reconciliation services are exposed as HTTP(S) services and
         how they can announce the features of the API they implement.
       </p>
+      <p>
+        The <dfn>endpoint</dfn> of a reconciliation service is a URL from which the reconciliation
+        service is offered.
+      </p>
       <section>
         <h3>Service Manifest</h3>
+        <p>
+           When the reconciliation service <a>endpoint</a> is queried with a HTTP GET query without
+           parameters, the <a>service manifest</a> MUST be returned.
+        </p>
       <p>
         A <dfn>service manifest</dfn> consists of the following fields:
         <dl>
@@ -481,7 +489,7 @@ in the <code>score</code> field). By exposing individual features in their respo
 	  <a>reconciliation result batches</a> over HTTP.
 	</p>
 	<p>
-          A reconciliation service MUST support HTTP POST requests with
+          A reconciliation service MUST support HTTP POST requests on its <a>endpoint</a> with
           <code>application/x-www-form-urlencoded</code> bodies containing a
           <a>reconciliation query batch</a> (serialized in JSON) in a form element named <code>queries</code>.
         </p>
