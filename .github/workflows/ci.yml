@@ -22,5 +22,5 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install ajv-cli@3.0.0
+    - run: npm install -g ajv-cli@3.0.0
     - run: ./test.sh
