@@ -1,6 +1,6 @@
 Reconciliation API specifications
 =================================
-[![Build Status](https://travis-ci.org/reconciliation-api/specs.svg?branch=master)](https://travis-ci.org/reconciliation-api/specs)
+[![Continuous integration](https://github.com/reconciliation-api/specs/actions/workflows/ci.yml/badge.svg)](https://github.com/reconciliation-api/specs/actions/workflows/ci.yml)
 
 This repository hosts the specifications of the reconciliation API, which can be viewed at:
 
