@@ -100,8 +100,23 @@
           ]
         }
       },
-      "required": [
-        "query"
+      "anyOf": [
+        {
+          "required": [
+            "query"
+          ]
+        },
+        {
+          "required": [
+            "properties"
+          ],
+          "properties": {
+            "properties": {
+              "type": "array",
+              "minItems": 1
+            }
+          }
+        }
       ],
       "additionalProperties": false
     }
