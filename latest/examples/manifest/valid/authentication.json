@@ -1,0 +1,15 @@
+{
+  "versions": [ "0.2" ],
+  "view": {
+    "url": "http://vivo.med.cornell.edu/individual?uri={{id}}"
+  },
+  "identifierSpace": "http://vivo.med.cornell.edu/individual/",
+  "name": "VIVO Reconciliation Service",
+  "schemaSpace": "http://vivo.med.cornell.edu/individual/",
+  "authentication": {
+    "type": "apiKey",
+    "description": "Vivo API key",
+    "in": "header",
+    "name": "apikey"
+  }
+}

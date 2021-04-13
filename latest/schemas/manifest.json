@@ -26,6 +26,9 @@
       "type": "string",
       "description": "A URI describing the schema used in this service"
     },
+    "authentication": {
+      "$ref": "http://swagger.io/v2/schema.json#/definitions/securityDefinitions/additionalProperties"
+    },
     "view": {
       "type": "object",
       "properties": {
