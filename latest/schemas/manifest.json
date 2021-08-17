@@ -63,6 +63,9 @@
           },
           "name": {
             "type": "string"
+          },
+          "broader": {
+            "type": "string"
           }
         },
         "required": [

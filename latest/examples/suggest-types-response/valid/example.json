@@ -6,7 +6,8 @@
     },
     {
       "id": "MusicalWork",
-      "name": "Werk der Musik"
+      "name": "Werk der Musik",
+      "broader": "Work"
     },
     {
       "id": "BuildingOrMemorial",
