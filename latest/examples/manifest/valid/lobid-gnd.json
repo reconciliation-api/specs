@@ -31,7 +31,7 @@
     {
       "id": "DifferentiatedPerson",
       "name": "Individualisierte Person",
-      "broader": "Person"
+      "broader": ["Person"]
     },
     {
       "id": "Family",

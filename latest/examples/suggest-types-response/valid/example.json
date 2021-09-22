@@ -7,7 +7,7 @@
     {
       "id": "MusicalWork",
       "name": "Werk der Musik",
-      "broader": "Work"
+      "broader": ["Work"]
     },
     {
       "id": "BuildingOrMemorial",

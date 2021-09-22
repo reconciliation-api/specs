@@ -65,7 +65,7 @@
             "type": "string"
           },
           "broader": {
-            "type": "string"
+            "type": "array"
           }
         },
         "required": [
