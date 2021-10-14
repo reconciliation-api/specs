@@ -402,7 +402,8 @@ database are instances of this type.<dd>
 	    <dt><code>properties</code></dt>
 	    <dd>A map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>). These are used to further filter the set of candidates (similar to a WHERE clause in SQL),
 		by allowing clients to specify other attributes of entities that should match, beyond their name in the <code>query</code> field.
-		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service;</dd>
+		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service.
+		A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties;</dd>
 	    <dt><code>type_strict</code></dt>
             <dd>A type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
           </dl>
@@ -590,7 +591,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       <p>
         This section specifies how reconciliation services can provide auto-complete
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
-        A reconciliation service can offer a suggest service for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
+        A reconciliation service can offer a <dfn>suggest service</dfn> for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
         These suggest services can be used by clients to let users select an entity, property or type manually, at various stages of their reconciliation workflows.
         Suggest services for entities, properties and types are declared independently
         in the <a>service manifest</a> by providing a <a>suggest metadata</a> for them.
