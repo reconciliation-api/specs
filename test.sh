@@ -9,8 +9,8 @@ for version in "0.1" "latest"; do
 	for schema_file in `ls $version/schemas`; do
 		echo "Testing $schema_file"
 		schema_name=$(echo "$schema_file" | cut -f 1 -d '.')
-		ajv test -s $version/schemas/$schema_file -d "$version/examples/$schema_name/valid/*.json" --valid
-		ajv test -s $version/schemas/$schema_file -d "$version/examples/$schema_name/invalid/*.json" --invalid
+		ajv test -s $version/schemas/$schema_file -r latest/schemas/type.json -d "$version/examples/$schema_name/valid/*.json" --valid
+		ajv test -s $version/schemas/$schema_file -r latest/schemas/type.json -d "$version/examples/$schema_name/invalid/*.json" --invalid
 		echo ""
 	done
 done

@@ -55,21 +55,7 @@
     "defaultTypes": {
       "type": "array",
       "description": "A list of default types that are considered good generic choices for reconciliation",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "name"
-        ]
-      },
+      "items": { "$ref": "type.json" },
       "uniqueItems": true
     },
     "suggest": {

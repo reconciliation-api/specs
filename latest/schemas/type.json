@@ -1,0 +1,29 @@
+{
+    "$id": "https://reconciliation-api.github.io/specs/latest/schemas/type.json",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "Identifier of the suggested type"
+        },
+        "name": {
+            "type": "string",
+            "description": "Name of the suggested type"
+        },
+        "description": {
+            "type": "string",
+            "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
+        },
+        "broader": {
+            "type": "array",
+            "description": "An optional array of types, each representing a direct (i.e., immediate) broader category of entities.",
+            "items": {
+                "$ref": "type.json"
+            }
+        }
+    },
+    "required": [
+        "id",
+        "name"
+    ]
+}

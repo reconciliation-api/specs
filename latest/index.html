@@ -233,8 +233,10 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <dl>
              <dt><code>id</code></dt>
              <dd>an identifier, which is a non-empty string. This identifier must be unique among all types;</dd>
-	     <dt><code>name</code></dt>
-             <dd>a human-readable name, which is a non-empty string.</dd>
+             <dt><code>name</code></dt>
+             <dd>a human-readable name, which is a non-empty string;</dd>
+             <dt><code>broader</code></dt>
+             <dd>an optional array of <a>types</a>, each representing a direct (i.e., immediate) <a href="https://www.w3.org/TR/skos-reference/#semantic-relations">broader</a> [[skos-reference]] category of <a>entities</a>.</dd>
           </dl>
         </p>
       </section>
