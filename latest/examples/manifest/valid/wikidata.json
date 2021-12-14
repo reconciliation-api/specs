@@ -97,5 +97,9 @@
       "flyout_service_path": "/en/flyout/property?id=${id}"
     }
   },
-  "identifierSpace": "http://www.wikidata.org/entity/"
+  "identifierSpace": "http://www.wikidata.org/entity/",
+  "serverLimits": {
+    "batchRate": 10,
+    "maxConnections": 4
+  }
 }
