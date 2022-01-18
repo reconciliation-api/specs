@@ -207,7 +207,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
              <dt><code>description</code></dt>
              <dd>an optional <emph>description</emph> as a human-readable string;</dd>
              <dt><code>type</code></dt>
-             <dd>a list of <a>types</a>, possibly empty;</dd>
+             <dd>an array of <a>types</a>, possibly empty;</dd>
            </dl>
            Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
@@ -310,7 +310,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         A <dfn>service manifest</dfn> consists of the following fields:
         <dl>
           <dt><code>versions</code></dt>
-          <dd>The list of API versions supported by the endpoint, such as <code>["0.1", "0.2"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
+          <dd>The array of API versions supported by the endpoint, such as <code>["0.1", "0.2"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
           <dt><code>name</code></dt>
           <dd>A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
 will help disambiguating it from others;</dd>
@@ -319,7 +319,7 @@ will help disambiguating it from others;</dd>
           <dt><code>schemaSpace</code></dt>
           <dd>The <a>schema space</a> used by the service, as a URI;</dd>
           <dt><code>defaultTypes</code></dt>
-          <dd>A list of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
+          <dd>An array of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
 database are instances of this type.<dd>
           <dt><code>view</code></dt>
           <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for <a>entities</a>;</dd>
@@ -394,7 +394,7 @@ database are instances of this type.<dd>
 	    	By supplying such a string, a client intends to search for entities with similar
 	    	names. The specifics of how this similarity is defined are determined by the service.</dd>
 	    <dt><code>type</code></dt>
-            <dd>A list of <a>types</a>. Supplying such types allows users to restrict
+            <dd>An array of <a>types</a>. Supplying such types allows users to restrict
 	    	the search to entities which bear those types. Whether this restriction should be a
 	    	hard constraint or simply induce a change on the reconciliation scores can be
 	    	determined by the service. In particular, services MAY return candidates which
@@ -402,7 +402,8 @@ database are instances of this type.<dd>
 	    <dt><code>limit</code></dt>
             <dd>A limit on the number of candidates to return, which must be a positive integer;</dd>
 	    <dt><code>properties</code></dt>
-	    <dd>A map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>). These are used to further filter the set of candidates (similar to a WHERE clause in SQL),
+	    <dd>An array of objects, where each object maps a <a href='#properties'>property</a> identifier (in the <code>pid</code> field) 
+        to one or more <a>property values</a> (in the <code>v</code> field). These are used to further filter the set of candidates (similar to a WHERE clause in SQL),
 		by allowing clients to specify other attributes of entities that should match, beyond their name in the <code>query</code> field.
 		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service.
 		A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties;</dd>
@@ -422,7 +423,7 @@ database are instances of this type.<dd>
           <pre data-include="examples/reconciliation-query-batch/valid/example-full.json" class="example json"></pre>
         </p>
 	<p>
-	  For a single property it is possible to provide multiple values as a list. The values provided do not need
+	  For a single property it is possible to provide multiple values as an array. The values provided do not need
 	  to have the same type. In the following example a string and a reconciled value are provided as values for the
 	  same property.
 	  <pre data-include="examples/reconciliation-query-batch/valid/multi-values.json" class="example json"></pre>
@@ -475,7 +476,7 @@ in the <code>score</code> field). By exposing individual features in their respo
         </p>
         <p>
 	  A <dfn>reconciliation result</dfn> is a set of <a>reconciliation candidates</a>. It is serialized in JSON
-	  as an array of such reconciliation candidate objects. This list SHOULD be sorted by decreasing score. 
+	  as an array of such reconciliation candidate objects. This array SHOULD be sorted by decreasing score.
         </p>
         <p>
           A <dfn>reconciliation result batch</dfn> is a set of <a>reconciliation results</a> indexed by string identifiers of the corresponding <a>reconciliation query batch</a>.
@@ -636,7 +637,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           A response to a suggest query consists of the following fields:
           <dl>
             <dt><code>result</code></dt>
-            <dd>A list of items, which can be <a>entities</a>, <a>properties</a>
+            <dd>An array of items, which can be <a>entities</a>, <a>properties</a>
             or <a>types</a> depending on which of these the service
             is provided for. Each such object can contain the following fields:
             <dl>
@@ -743,7 +744,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
               The full URL for data extension property proposals is obtained by concatenating these two fields.
             </dd>
             <dt><code>property_settings</code></dt>
-            <dd>A list of <a>data extension property settings</a>.</dd>
+            <dd>An array of <a>data extension property settings</a>.</dd>
           </dl>
         </p>
         <p>
@@ -760,7 +761,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
 	    <dt><code>help_text</code></dt>
             <dd>A help text, which describes the meaning of the field to the user. This is meant to be a short string that can be displayed alongside the corresponding form field;</dd>
 	    <dt><code>choices</code></dt>
-            <dd>If <code>type</code> is <code>select</code>, a list of property setting choices.</dd>
+            <dd>If <code>type</code> is <code>select</code>, an array of property setting choices.</dd>
           </dl>
         </p>
         <p>
@@ -827,8 +828,8 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <p>
           A <dfn>data extension query</dfn> consists of:
           <ul>
-            <li>A list of <a>entity</a> identifiers;</li>
-            <li>A list of <a>properties</a> with optional <a href="#dfn-data-extension-property-setting">settings</a>.</li>
+            <li>An array of <a>entity</a> identifiers;</li>
+            <li>An array of <a>properties</a> with optional <a href="#dfn-data-extension-property-setting">settings</a>.</li>
           </ul>
         </p>
         <p>
