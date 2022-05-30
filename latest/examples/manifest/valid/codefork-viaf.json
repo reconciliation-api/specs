@@ -4,7 +4,7 @@
   "identifierSpace": "http://rdf.freebase.com/ns/user/hangy/viaf",
   "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
   "view": {
-    "url": "http://viaf.org/viaf/{{id}}"
+    "url": "http://viaf.org/viaf/{id}"
   },
   "defaultTypes": [
     {

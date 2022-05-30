@@ -32,7 +32,7 @@
         "url": {
           "type": "string",
           "description": "A template to transform an entity identifier into the corresponding URI",
-          "pattern": ".*\\{\\{id\\}\\}.*"
+          "pattern": ".*\\{.*id.*\\}.*"
         }
       },
       "required": [
@@ -45,7 +45,7 @@
         "url": {
           "type": "string",
           "description": "A template to transform a matching feature identifier into the corresponding URI",
-          "pattern": ".*\\{\\{id\\}\\}.*"
+          "pattern": ".*\\{.*id.*\\}.*"
         }
       },
       "required": [
@@ -76,7 +76,7 @@
             },
             "flyout_service_path": {
               "type": "string",
-              "pattern": ".*\\$\\{id\\}.*"
+              "pattern": ".*\\{.*id.*\\}.*"
             }
           },
           "required": []
@@ -100,7 +100,7 @@
       "properties": {
         "url": {
           "type": "string",
-          "pattern": ".*\\{\\{id\\}\\}.*",
+          "pattern": ".*\\{.*id.*\\}.*",
           "description": "A URL pattern which transforms the entity ID into a preview URL for it"
         },
         "width": {

@@ -22,7 +22,7 @@
   "name": "Getty Vocabularies Reconciliation Service",
   "preview": {
     "height": 200,
-    "url": "https://services.getty.edu/vocab/reconcile/preview?id={{id}}",
+    "url": "https://services.getty.edu/vocab/reconcile/preview{?id}",
     "width": 350
   },
   "schemaSpace": "http://vocab.getty.edu/doc/#The_Getty_Vocabularies_and_LOD",
@@ -33,6 +33,6 @@
     }
   },
   "view": {
-    "url": "http://vocab.getty.edu/page/{{id}}"
+    "url": "http://vocab.getty.edu/page/{id}"
   }
 }
