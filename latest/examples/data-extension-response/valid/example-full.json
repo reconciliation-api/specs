@@ -15,6 +15,11 @@
         "id": "SubjectHeading",
         "name": "Schlagwort"
       }
+    },
+    {
+      "id": "wikidataId",
+      "name": "Wikidata ID",
+      "service": "https://www.wikidata.org/api/reconcile"
     }
   ],
   "rows": {
@@ -42,6 +47,12 @@
           "id": "4033430-2",
           "name": "Künstlerin"
         }
+      ],
+      "wikidataId": [
+        {
+          "id": "Q3874347",
+          "name": "Gerda Stryi-Leitgeb"
+        }
       ]
     },
     "1064905412": {
@@ -57,6 +68,12 @@
         {
           "id": "4002844-6",
           "name": "Architekt"
+        }
+      ],
+      "wikidataId": [
+        {
+          "id": "Q3874347",
+          "name": "Gerda Stryi-Leitgeb"
         }
       ]
     }
