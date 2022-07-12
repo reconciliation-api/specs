@@ -26,6 +26,18 @@
       "type": "string",
       "description": "A URI describing the schema used in this service"
     },
+    "documentation": {
+      "type": "string",
+      "description": "A URI which hosts documentation about this service"
+    },
+    "serviceVersion": {
+      "type": "string",
+      "description": "A string representing the version of the software which exposes this service"
+    },
+    "logo": {
+      "type": "string",
+      "description": "A URI to a square image which can be used as logo for this service"
+    },
     "view": {
       "type": "object",
       "properties": {
