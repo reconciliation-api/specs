@@ -374,6 +374,17 @@ database are instances of this type.<dd>
            enables older web-based clients to access the service from a different domain.
         </p>
       </section>
+      <section>
+        <h3>Error Handling and Rate-limiting</h3>
+        <p>
+           Services SHOULD use the broad spectrum of HTTP status codes [[RFC2616]] [[RFC6585]] to
+           expose errors, for instance due to malformed or too frequent queries.
+        </p>
+        <p class="note">
+           The response body of such error responses is not specified so far.
+        </p>
+      </section>
+
     </section>
     <section>
       <h2>Reconciliation Queries</h2>
