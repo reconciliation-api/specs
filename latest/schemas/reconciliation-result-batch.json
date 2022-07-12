@@ -20,9 +20,37 @@
                 "type": "string",
                 "description": "Entity name of the candidate"
               },
+              "description": {
+                "type": "string",
+                "description": "Optional description of the candidate entity"
+              },
               "score": {
                 "type": "number",
                 "description": "Number indicating how likely it is that the candidate matches the query"
+              },
+              "features": {
+                "type": "array",
+                "description": "A list of features which can be used to derive a matching score",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "A unique string identifier for the feature"
+                    },
+                    "value": {
+                      "description": "The value of the feature for this reconciliation candidate",
+                      "oneOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  }
+                }
               },
               "match": {
                 "type": "boolean",

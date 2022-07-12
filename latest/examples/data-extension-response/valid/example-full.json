@@ -35,7 +35,8 @@
       "professionOrOccupation": [
         {
           "id": "4037223-6",
-          "name": "Malerin"
+          "name": "Malerin",
+          "description": "Beruf"
         },
         {
           "id": "4033430-2",

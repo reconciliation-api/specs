@@ -1,7 +1,0 @@
-language: node_js
-
-before_script:
-        npm install ajv-cli@3.0.0
-
-script:
-        ./test.sh

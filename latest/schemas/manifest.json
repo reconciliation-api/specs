@@ -42,24 +42,23 @@
         "url"
       ]
     },
+    "feature_view": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "A template to transform a matching feature identifier into the corresponding URI",
+          "pattern": ".*\\{\\{id\\}\\}.*"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    },
     "defaultTypes": {
       "type": "array",
       "description": "A list of default types that are considered good generic choices for reconciliation",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "name"
-        ]
-      },
+      "items": { "$ref": "type.json" },
       "uniqueItems": true
     },
     "suggest": {
