@@ -292,20 +292,6 @@
           }
         }
       }
-    },
-    "serverLimits": {
-      "type": "object",
-      "description": "Resource constraints imposed by the service on clients",
-      "properties": {
-	"batchRate": {
-          "type": "integer",
-          "description": "The number of reconciliation query batch requests which can safely be sent to this service per second per IP address."
-	},
-	"maxConnections": {
-          "type": "integer",
-          "description": "The number of TCP connections which can be concurrently kept open from a single IP address."
-	}
-      }
     }
   },
   "required": [

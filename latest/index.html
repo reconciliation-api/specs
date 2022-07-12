@@ -339,18 +339,7 @@ database are instances of this type.<dd>
           <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
           <dt><code>batchSize</code></dt>
           <dd>The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
-          <dt><code>serverLimits</code></dt>
-	  <dd>An optional <a>server limits</a> object specifying some resource constraints on the service.</dd>
         </dl>
-      </p>
-      <p>
-      	A <dfn>server limits</dfn> object can contain the following fields, all optional. If those constraints are not respected, the service MAY respond to requests above this rate with a 503 HTTP error status code [[RFC7231]].
-	<dl>
-	  <dt><code>batchRate</code></dt>
-          <dd>The number of <a>reconciliation query batch</a> requests which can safely be sent to this service per second per IP address.</dd>
-	  <dt><code>maxConnections</code></dt>
-	  <dd>The maximum number of TCP connections to the service a client should keep open.</dd>
-	</dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
         <pre data-include="examples/manifest/valid/example-min.json" class="example json"></pre>
