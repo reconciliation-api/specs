@@ -340,6 +340,8 @@ database are instances of this type.<dd>
           </dd>
           <dt><code>extend</code></dt>
           <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
+          <dt><code>batchSize</code></dt>
+          <dd>The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
           <dt><code>authentication</code></dt>
           <dd>An <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
         </dl>
@@ -378,6 +380,16 @@ database are instances of this type.<dd>
         </p>
       </section>
       <section>
+        <h3>Error Handling and Rate-limiting</h3>
+        <p>
+           Services SHOULD use the broad spectrum of HTTP status codes [[RFC2616]] [[RFC6585]] to
+           expose errors, for instance due to malformed or too frequent queries.
+        </p>
+        <p class="note">
+           The response body of such error responses is not specified so far.
+        </p>
+      </section>
+      
         <h3>Authentication</h3>
         <p>
            Services MAY request users to provide an authentication token when making queries.

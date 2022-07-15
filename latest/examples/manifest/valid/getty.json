@@ -20,6 +20,7 @@
   ],
   "identifierSpace": "http://vocab.getty.edu/doc/#GVP_URLs_and_Prefixes",
   "name": "Getty Vocabularies Reconciliation Service",
+  "batchSize": 50,
   "preview": {
     "height": 200,
     "url": "https://services.getty.edu/vocab/reconcile/preview?id={{id}}",
