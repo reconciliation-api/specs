@@ -19,6 +19,9 @@
     },
     {
       "id": "professionOrOccupation"
+    },
+    {
+      "id": "wikidataId"
     }
   ]
 }

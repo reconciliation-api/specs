@@ -346,6 +346,10 @@ database are instances of this type.<dd>
           </dd>
           <dt><code>extend</code></dt>
           <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
+          <dt><code>batchSize</code></dt>
+          <dd>The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
+          <dt><code>authentication</code></dt>
+          <dd>An <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -379,6 +383,37 @@ database are instances of this type.<dd>
 	<p>
            In addition, endpoints exposed by the service MAY support JSONP [[JSONP]], which
            enables older web-based clients to access the service from a different domain.
+        </p>
+      </section>
+      <section>
+        <h3>Error Handling and Rate-limiting</h3>
+        <p>
+           Services SHOULD use the broad spectrum of HTTP status codes [[RFC2616]] [[RFC6585]] to
+           expose errors, for instance due to malformed or too frequent queries.
+        </p>
+        <p class="note">
+           The response body of such error responses is not specified so far.
+        </p>
+      </section>
+      
+        <h3>Authentication</h3>
+        <p>
+           Services MAY request users to provide an authentication token when making queries.
+           They can do so by adding a <dfn>security scheme</dfn> to their manifest. Security schemes are defined in [[OPENAPIS]] and
+           support authentication by API key, HTTP Authentication [[RFC7617]], OAuth 2 [[RFC6749]] and <a href="https://tools.ietf.org/html/draft-ietf-oauth-discovery-06">OpenID Connect</a>.
+        </p>
+        <p>
+           For instance, the following security scheme indicates that basic HTTP authentication is required on this endpoint:
+           <pre data-include="examples/security-scheme/valid/http_basic_auth.json" class="example json"></pre>
+        </p>
+        <p>
+           Requiring an API key passed as a query parameter can be expressed as follows:
+           <pre data-include="examples/security-scheme/valid/api_key.json" class="example json"></pre>
+        </p>
+        <p>
+           If a security scheme is provided in the service manifest, all queries to the service MUST provide
+           the corresponding credentials, except for retrieving the service manifest itself.
+           When invalid authentication is supplied in any HTTP request, the service MUST return an HTTP 401 error.
         </p>
       </section>
     </section>
@@ -858,7 +893,9 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           The <dfn id="data+extension+response+rows">rows</dfn> object contains, for each <a>entity</a> identifier in the
           <a>data extension query</a>, for each <a>property</a> identifier in the
           <a href="#data+extension+response+metadata">metadata</a>, the <a>property values</a> of that property in that entity.
-          If the property values are <a>entities</a>, their identifiers MUST be in the service's <a>identifier space</a>.
+          If the property values are <a>entities</a>, their identifiers are expected to be in the service's <a>identifier space</a>.
+          If that is not the case, the service MUST specify in the <code>meta</code> section the endpoint of another reconciliation service whose <a>identifier space</a>
+          contains the returned entities. This endpoint is specified on a column-per-column basis.
         </p>
         <p>
           Response example for the <a>data extension query</a> from the previous example:
