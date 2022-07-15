@@ -26,6 +26,9 @@
       "type": "string",
       "description": "A URI describing the schema used in this service"
     },
+    "authentication": {
+      "$ref": "http://swagger.io/v2/schema.json#/definitions/securityDefinitions/additionalProperties"
+    },
     "view": {
       "type": "object",
       "properties": {
@@ -55,21 +58,7 @@
     "defaultTypes": {
       "type": "array",
       "description": "A list of default types that are considered good generic choices for reconciliation",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "name"
-        ]
-      },
+      "items": { "$ref": "type.json" },
       "uniqueItems": true
     },
     "suggest": {

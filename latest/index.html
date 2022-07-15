@@ -207,7 +207,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
              <dt><code>description</code></dt>
              <dd>an optional <emph>description</emph> as a human-readable string;</dd>
              <dt><code>type</code></dt>
-             <dd>a list of <a>types</a>, possibly empty;</dd>
+             <dd>an array of <a>types</a>, possibly empty;</dd>
            </dl>
            Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
@@ -216,7 +216,8 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
            which associates to each entity a corresponding URI, by inserting its identifier in the template.
            A view template is a string which contains the <code>{{id}<!-- -->}</code> substring.
            For each entity, replacing <code>{{id}<!-- -->}</code> in the template by the entity's identifier
-           MUST result in a valid URI [[RFC2396]].
+           MUST result in a valid URI. To guarantee the correctness of the formed URI, clients MUST percent-encode
+           component-delimiting reserved characters in the identifier, i.e. encode it as a URI component [[RFC3986]].
         </p>
         <p>
            Similarly, it is possible to associate to each <a>matching feature</a> a URL where documentation about
@@ -232,8 +233,10 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <dl>
              <dt><code>id</code></dt>
              <dd>an identifier, which is a non-empty string. This identifier must be unique among all types;</dd>
-	     <dt><code>name</code></dt>
-             <dd>a human-readable name, which is a non-empty string.</dd>
+             <dt><code>name</code></dt>
+             <dd>a human-readable name, which is a non-empty string;</dd>
+             <dt><code>broader</code></dt>
+             <dd>an optional array of <a>types</a>, each representing a direct (i.e., immediate) <a href="https://www.w3.org/TR/skos-reference/#semantic-relations">broader</a> [[skos-reference]] category of <a>entities</a>.</dd>
           </dl>
         </p>
       </section>
@@ -269,9 +272,9 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           A reconciliation service MUST define two URIs, exposed in its <a>service manifest</a>:
           <dl>
             <dt><dfn>identifier space</dfn></dt>
-            <dd>A URI which identifies the sort of <a>entity</a> identifiers returned by this service. This URI MAY resolve to a page describing these entities and their identifiers;</dd>
+            <dd>The URI namespace (i.e. prefix) for the identifiers of an <a>entity</a> returned by the reconciliation service, for example <code>http://www.wikidata.org/entity/</code> or <code>https://d-nb.info/gnd/</code>. This URI MAY resolve to a page describing these entities and their identifiers;</dd>
             <dt><dfn>schema space</dfn></dt>
-            <dd>A URI which identifies the ontology used by the service, in other words its collection of <a>properties</a>. This URI also MAY resolve to a page describing these properties and their identifiers.</dd>
+            <dd>A URI which identifies the type of an <a>entity</a> returned by the reconciliation service, for example <code>http://www.w3.org/2004/02/skos/core#Concept</code> or <code>https://schema.org/Thing</code>. This URI MAY resolve to a page describing this type.</dd>
           </dl>
         </p>
         <p>
@@ -307,7 +310,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         A <dfn>service manifest</dfn> consists of the following fields:
         <dl>
           <dt><code>versions</code></dt>
-          <dd>The list of API versions supported by the endpoint, such as <code>["0.1", "0.2"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
+          <dd>The array of API versions supported by the endpoint, such as <code>["0.1", "0.2"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
           <dt><code>name</code></dt>
           <dd>A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
 will help disambiguating it from others;</dd>
@@ -316,7 +319,7 @@ will help disambiguating it from others;</dd>
           <dt><code>schemaSpace</code></dt>
           <dd>The <a>schema space</a> used by the service, as a URI;</dd>
           <dt><code>defaultTypes</code></dt>
-          <dd>A list of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
+          <dd>An array of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
 database are instances of this type.<dd>
           <dt><code>view</code></dt>
           <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for <a>entities</a>;</dd>
@@ -339,6 +342,8 @@ database are instances of this type.<dd>
           <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
           <dt><code>batchSize</code></dt>
           <dd>The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
+          <dt><code>authentication</code></dt>
+          <dd>An <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -384,7 +389,27 @@ database are instances of this type.<dd>
            The response body of such error responses is not specified so far.
         </p>
       </section>
-
+      
+        <h3>Authentication</h3>
+        <p>
+           Services MAY request users to provide an authentication token when making queries.
+           They can do so by adding a <dfn>security scheme</dfn> to their manifest. Security schemes are defined in [[OPENAPIS]] and
+           support authentication by API key, HTTP Authentication [[RFC7617]], OAuth 2 [[RFC6749]] and <a href="https://tools.ietf.org/html/draft-ietf-oauth-discovery-06">OpenID Connect</a>.
+        </p>
+        <p>
+           For instance, the following security scheme indicates that basic HTTP authentication is required on this endpoint:
+           <pre data-include="examples/security-scheme/valid/http_basic_auth.json" class="example json"></pre>
+        </p>
+        <p>
+           Requiring an API key passed as a query parameter can be expressed as follows:
+           <pre data-include="examples/security-scheme/valid/api_key.json" class="example json"></pre>
+        </p>
+        <p>
+           If a security scheme is provided in the service manifest, all queries to the service MUST provide
+           the corresponding credentials, except for retrieving the service manifest itself.
+           When invalid authentication is supplied in any HTTP request, the service MUST return an HTTP 401 error.
+        </p>
+      </section>
     </section>
     <section>
       <h2>Reconciliation Queries</h2>
@@ -395,26 +420,30 @@ database are instances of this type.<dd>
       <section>
         <h3>Structure of a Reconciliation Query</h3>
         <p>
-          A <dfn>reconciliation query</dfn> consists of:
+          A <dfn>reconciliation query</dfn> consists of the following fields. 
+	  At least one of <code>query</code> or <code>properties</code> must be supplied, but all other
+	  fields are optional.
           <dl>
 	    <dt><code>query</code></dt>
-            <dd>A query string, consisting of a non-empty string, which is mandatory.
+            <dd>A query string, consisting of a non-empty string.
 	    	By supplying such a string, a client intends to search for entities with similar
 	    	names. The specifics of how this similarity is defined are determined by the service.</dd>
 	    <dt><code>type</code></dt>
-            <dd>Optionally, a list of <a>types</a>. Supplying such types allows users to restrict
+            <dd>An array of <a>types</a>. Supplying such types allows users to restrict
 	    	the search to entities which bear those types. Whether this restriction should be a
 	    	hard constraint or simply induce a change on the reconciliation scores can be
 	    	determined by the service. In particular, services MAY return candidates which
 	    	do not belong to any of the supplied types;</dd>
 	    <dt><code>limit</code></dt>
-            <dd>Optionally, a limit on the number of candidates to return, which must be a positive integer;</dd>
+            <dd>A limit on the number of candidates to return, which must be a positive integer;</dd>
 	    <dt><code>properties</code></dt>
-	    <dd>Optionally, a map from <a href='#properties'>property</a> identifiers to a list of <a>property values</a> (or list of <a>property values</a>). These are used to further filter the set of candidates (similar to a WHERE clause in SQL),
+	    <dd>An array of objects, where each object maps a <a href='#properties'>property</a> identifier (in the <code>pid</code> field) 
+        to one or more <a>property values</a> (in the <code>v</code> field). These are used to further filter the set of candidates (similar to a WHERE clause in SQL),
 		by allowing clients to specify other attributes of entities that should match, beyond their name in the <code>query</code> field.
-		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service;</dd>
+		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service.
+		A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties;</dd>
 	    <dt><code>type_strict</code></dt>
-            <dd>Optionally, a type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
+            <dd>A type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
           </dl>
         </p>
         <p>
@@ -429,7 +458,7 @@ database are instances of this type.<dd>
           <pre data-include="examples/reconciliation-query-batch/valid/example-full.json" class="example json"></pre>
         </p>
 	<p>
-	  For a single property it is possible to provide multiple values as a list. The values provided do not need
+	  For a single property it is possible to provide multiple values as an array. The values provided do not need
 	  to have the same type. In the following example a string and a reconciled value are provided as values for the
 	  same property.
 	  <pre data-include="examples/reconciliation-query-batch/valid/multi-values.json" class="example json"></pre>
@@ -482,7 +511,7 @@ in the <code>score</code> field). By exposing individual features in their respo
         </p>
         <p>
 	  A <dfn>reconciliation result</dfn> is a set of <a>reconciliation candidates</a>. It is serialized in JSON
-	  as an array of such reconciliation candidate objects. This list SHOULD be sorted by decreasing score. 
+	  as an array of such reconciliation candidate objects. This array SHOULD be sorted by decreasing score.
         </p>
         <p>
           A <dfn>reconciliation result batch</dfn> is a set of <a>reconciliation results</a> indexed by string identifiers of the corresponding <a>reconciliation query batch</a>.
@@ -571,7 +600,7 @@ in the <code>score</code> field). By exposing individual features in their respo
       <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
         <dl>
           <dt><code>url</code></dt>
-          <dd>A string containing <code>{{id}<!-- -->}</code> such that replacing <code>{{id}<!-- -->}</code> by an <a>entity</a> identifier yields the <dfn>preview URL</dfn> for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
+          <dd>A string containing <code>{{id}<!-- -->}</code> such that replacing <code>{{id}<!-- -->}</code> by an <a>entity</a> identifier encoded as a URI component yields the <dfn>preview URL</dfn> for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
 It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimensions are specified by the service in the following fields;</dd>
           <dt><code>width</code></dt>
           <dd>The width in pixels of the <code>&lt;iframe&gt;</code> element where to render an entity preview;</dd>
@@ -600,7 +629,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       <p>
         This section specifies how reconciliation services can provide auto-complete
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
-        A reconciliation service can offer a suggest service for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
+        A reconciliation service can offer a <dfn>suggest service</dfn> for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
         These suggest services can be used by clients to let users select an entity, property or type manually, at various stages of their reconciliation workflows.
         Suggest services for entities, properties and types are declared independently
         in the <a>service manifest</a> by providing a <a>suggest metadata</a> for them.
@@ -643,7 +672,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           A response to a suggest query consists of the following fields:
           <dl>
             <dt><code>result</code></dt>
-            <dd>A list of items, which can be <a>entities</a>, <a>properties</a>
+            <dd>An array of items, which can be <a>entities</a>, <a>properties</a>
             or <a>types</a> depending on which of these the service
             is provided for. Each such object can contain the following fields:
             <dl>
@@ -698,7 +727,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         </p>
 	<p>
 	  A preview for a suggested entity, property or type can then be obtained at the flyout endpoint by replacing <code>${id}</code>
-	  by the identifier for the entity, property or type. Upon a GET query to this URL, the service returns a JSON response
+	  by the identifier for the entity, property or type, encoded as a URI component. Upon a GET query to this URL, the service returns a JSON response
 	  consisting of an object with the following fields:
 	  <dl>
 	    <dt><code>id</code></dt>
@@ -750,7 +779,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
               The full URL for data extension property proposals is obtained by concatenating these two fields.
             </dd>
             <dt><code>property_settings</code></dt>
-            <dd>A list of <a>data extension property settings</a>.</dd>
+            <dd>An array of <a>data extension property settings</a>.</dd>
           </dl>
         </p>
         <p>
@@ -767,7 +796,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
 	    <dt><code>help_text</code></dt>
             <dd>A help text, which describes the meaning of the field to the user. This is meant to be a short string that can be displayed alongside the corresponding form field;</dd>
 	    <dt><code>choices</code></dt>
-            <dd>If <code>type</code> is <code>select</code>, a list of property setting choices.</dd>
+            <dd>If <code>type</code> is <code>select</code>, an array of property setting choices.</dd>
           </dl>
         </p>
         <p>
@@ -834,8 +863,8 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <p>
           A <dfn>data extension query</dfn> consists of:
           <ul>
-            <li>A list of <a>entity</a> identifiers;</li>
-            <li>A list of <a>properties</a> with optional <a href="#dfn-data-extension-property-setting">settings</a>.</li>
+            <li>An array of <a>entity</a> identifiers;</li>
+            <li>An array of <a>properties</a> with optional <a href="#dfn-data-extension-property-setting">settings</a>.</li>
           </ul>
         </p>
         <p>
