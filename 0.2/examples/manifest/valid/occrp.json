@@ -1,0 +1,62 @@
+{
+  "versions": ["0.2"],
+  "name": "OCCRP Aleph",
+  "identifierSpace": "http://rdf.freebase.com/ns/type.object.id",
+  "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
+  "view": {
+    "url": "https://aleph.occrp.org/entities/{{id}}"
+  },
+  "preview": {
+    "url": "https://aleph.occrp.org/entities/{{id}}",
+    "width": 800,
+    "height": 400
+  },
+  "suggest": {
+    "entity": {
+      "service_url": "https://aleph.occrp.org",
+      "service_path": "/api/freebase/suggest?api_key=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1IjpudWxsLCJleHAiOjE1NzEzMTQ5MzQsInIiOlsxXSwiYSI6ZmFsc2UsInMiOiIvYXBpL2ZyZWViYXNlL3N1Z2dlc3QifQ.LullhAvG1hGfMnaVpPjOwIUnt-BOpO8_xHxSoGieMeQ"
+    },
+    "type": {
+      "service_url": "https://aleph.occrp.org",
+      "service_path": "/api/freebase/type"
+    },
+    "property": {
+      "service_url": "https://aleph.occrp.org",
+      "service_path": "/api/freebase/property"
+    }
+  },
+  "defaultTypes": [
+    {
+      "id": "Vessel",
+      "name": "Vessel"
+    },
+    {
+      "id": "PublicBody",
+      "name": "Public body"
+    },
+    {
+      "id": "Person",
+      "name": "Person"
+    },
+    {
+      "id": "BankAccount",
+      "name": "Bank Account"
+    },
+    {
+      "id": "LegalEntity",
+      "name": "Legal entity"
+    },
+    {
+      "id": "Airplane",
+      "name": "Airplane"
+    },
+    {
+      "id": "Company",
+      "name": "Company"
+    },
+    {
+      "id": "Organization",
+      "name": "Organization"
+    }
+  ]
+}

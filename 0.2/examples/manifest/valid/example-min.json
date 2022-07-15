@@ -1,0 +1,6 @@
+{
+    "versions": ["0.2"],
+    "name": "VIAF",
+    "identifierSpace": "http://vocab.getty.edu/doc/#GVP_URLs_and_Prefixes",
+    "schemaSpace": "http://vocab.getty.edu/doc/#The_Getty_Vocabularies_and_LOD"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "1117582299",
+  "name": "Urbaniak, Hans-Eberhard",
+  "score": 85.71888,
+  "features": [
+    {
+      "id": "name_tfidf",
+      "value": 378.239
+    },
+    {
+      "id": "pagerank",
+      "value": -3.1209
+    },
+    {
+      "id": "type_match",
+      "value": 10.329
+    },
+    {
+      "id": "deprecated",
+      "value": false
+    }
+  ],
+  "match": true,
+  "type": [
+    {
+      "id": "AuthorityResource",
+      "name": "Normdatenressource"
+    },
+    {
+      "id": "DifferentiatedPerson",
+      "name": "Individualisierte Person",
+      "broader": [
+        {
+          "id": "Person",
+          "name": "Person"
+        }
+      ]
+    }
+  ]
+}

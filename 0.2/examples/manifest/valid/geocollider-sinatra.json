@@ -1,0 +1,21 @@
+{
+  "versions": ["0.2"],
+  "name": "Pleiades Reconciliation for OpenRefine",
+  "schemaSpace": "https://pleiades.stoa.org/places/",
+  "identifierSpace": "https://pleiades.stoa.org/places/vocab#",
+  "view": {
+    "url": "{{id}}"
+  },
+  "suggest": {
+    "property": {
+      "service_url": "https://geocollider-sinatra.herokuapp.com",
+      "service_path": "/suggest"
+    }
+  },
+  "defaultTypes": [
+    {
+      "id": "Place",
+      "name": "Pleiades Place"
+    }
+  ]
+}

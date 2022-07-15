@@ -1,0 +1,19 @@
+{
+  "result": [
+    {
+      "name": "coordinate location",
+      "description": "geocoordinates of the subject. For Earth, please note that only WGS84 coordinating system is supported at the moment",
+      "id": "P625"
+    },
+    {
+      "name": "place of birth",
+      "description": "most specific known (e.g. city instead of country, or hospital instead of city) birth location of a person, animal or fictional character",
+      "id": "P19"
+    },
+    {
+      "name": "located in time zone",
+      "description": "time zone for this item",
+      "id": "P421"
+    }
+  ]
+}

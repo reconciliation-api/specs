@@ -1,0 +1,27 @@
+{
+  "ids": [
+    "10662041X",
+    "1064905412"
+  ],
+  "properties": [
+    {
+      "id": "variantName",
+      "settings": {
+        "limit": "5"
+      }
+    },
+    {
+      "id": "geographicAreaCode",
+      "settings": {
+        "limit": "1",
+        "content": "id"
+      }
+    },
+    {
+      "id": "professionOrOccupation"
+    },
+    {
+      "id": "wikidataId"
+    }
+  ]
+}

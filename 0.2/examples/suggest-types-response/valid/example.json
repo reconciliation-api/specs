@@ -1,0 +1,26 @@
+{
+  "result": [
+    {
+      "id": "Work",
+      "name": "Werk"
+    },
+    {
+      "id": "MusicalWork",
+      "name": "Werk der Musik",
+      "broader": [
+        {
+          "id": "Work",
+          "name": "Werk"
+        }
+      ]
+    },
+    {
+      "id": "BuildingOrMemorial",
+      "name": "Bauwerk oder Denkmal"
+    },
+    {
+      "id": "VersionOfAMusicalWork",
+      "name": "Fassung eines Werks der Musik"
+    }
+  ]
+}

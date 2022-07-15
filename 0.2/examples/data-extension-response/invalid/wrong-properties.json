@@ -1,0 +1,42 @@
+{
+  "meta": [
+    {
+      "id": "variantName",
+      "name": "Varianter Name"
+    },
+    {
+      "id": "geographicAreaCode",
+      "name": "Ländercode"
+    },
+    {
+      "id": "professionOrOccupation",
+      "name": "Beruf oder Beschäftigung",
+      "type": {
+        "id": "SubjectHeading",
+        "name": "Schlagwort"
+      }
+    }
+  ],
+  "rows": {
+    "10662041X": {
+      "variantName": [
+        {
+          "label": "Stryi-Leitgeb, Gerda"
+        }
+      ],
+      "geographicAreaCode": [
+        {
+          "str": "http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE",
+          "label": "Deutschland"
+        }
+      ],
+      "professionOrOccupation": [
+        {
+          "id": "4037223-6",
+          "name": "Malerin",
+          "type": "Person"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "propose_properties": {
+    "service_url": "https://lobid.org",
+    "service_path": "/gnd/reconcile/properties"
+  },
+  "property_settings": [
+    {
+      "name": "limit",
+      "label": "Limit",
+      "type": "number",
+      "default": 0,
+      "help_text": "Maximum number of values to return per row (0 for no limit)"
+    },
+    {
+      "name": "content",
+      "label": "Content",
+      "type": "select",
+      "default": "literal",
+      "help_text": "Content type: ID or literal",
+      "choices": [
+        {
+          "value": "id",
+          "name": "ID"
+        },
+        {
+          "value": "literal",
+          "name": "Literal"
+        }
+      ]
+    }
+  ]
+}

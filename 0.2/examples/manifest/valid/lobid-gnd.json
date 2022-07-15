@@ -1,0 +1,103 @@
+{
+  "versions": ["0.2"],
+  "name": "GND reconciliation for OpenRefine",
+  "identifierSpace": "https://lobid.org/gnd/",
+  "schemaSpace": "https://d-nb.info/standards/elementset/gnd#AuthorityResource",
+  "defaultTypes": [
+    {
+      "id": "AuthorityResource",
+      "name": "Normdatenressource"
+    },
+    {
+      "id": "CorporateBody",
+      "name": "Körperschaft"
+    },
+    {
+      "id": "ConferenceOrEvent",
+      "name": "Konferenz oder Veranstaltung"
+    },
+    {
+      "id": "SubjectHeading",
+      "name": "Schlagwort"
+    },
+    {
+      "id": "Work",
+      "name": "Werk"
+    },
+    {
+      "id": "PlaceOrGeographicName",
+      "name": "Geografikum"
+    },
+    {
+      "id": "DifferentiatedPerson",
+      "name": "Individualisierte Person",
+      "broader": [
+        {
+          "id": "Person",
+          "name": "Person"
+        }
+      ]
+    },
+    {
+      "id": "Family",
+      "name": "Familie"
+    }
+  ],
+  "view": {
+    "url": "https://lobid.org/gnd/{{id}}"
+  },
+  "preview": {
+    "height": 100,
+    "width": 320,
+    "url": "https://lobid.org/gnd/{{id}}.preview"
+  },
+  "extend": {
+    "property_settings": [
+      {
+        "name": "limit",
+        "label": "Limit",
+        "type": "number",
+        "default": 0,
+        "help_text": "Maximum number of values to return per row (0 for no limit)"
+      },
+      {
+        "name": "content",
+        "label": "Content",
+        "type": "select",
+        "default": "literal",
+        "help_text": "Content type: ID or literal",
+        "choices": [
+          {
+            "value": "id",
+            "name": "ID"
+          },
+          {
+            "value": "literal",
+            "name": "Literal"
+          }
+        ]
+      }
+    ],
+    "propose_properties": {
+      "service_url": "https://lobid.org",
+      "service_path": "/gnd/reconcile/properties"
+    }
+  },
+  "suggest": {
+    "property": {
+      "service_url": "https://lobid.org/gnd/reconcile",
+      "service_path": "/suggest/property",
+      "flyout_service_path": "/flyout/property?id=${id}"
+    },
+    "entity": {
+      "service_url": "https://lobid.org/gnd/reconcile",
+      "service_path": "/suggest/entity",
+      "flyout_service_path": "/flyout/entity?id=${id}"
+    },
+    "type": {
+      "service_url": "https://lobid.org/gnd/reconcile",
+      "service_path": "/suggest/type",
+      "flyout_service_path": "/flyout/type?id=${id}"
+    }
+  }
+}

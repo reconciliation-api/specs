@@ -1,0 +1,26 @@
+{
+  "limit": 5,
+  "type": "DifferentiatedPerson",
+  "properties": [
+    {
+      "id": "affiliation",
+      "name": "Affiliation"
+    },
+    {
+      "id": "geographicAreaCode",
+      "name": "Ländercode"
+    },
+    {
+      "id": "preferredName",
+      "name": "Bevorzugter Name"
+    },
+    {
+      "id": "professionOrOccupation",
+      "name": "Beruf oder Beschäftigung"
+    },
+    {
+      "id": "variantName",
+      "name": "Varianter Name"
+    }
+  ]
+}

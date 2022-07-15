@@ -1,0 +1,75 @@
+{
+  "versions": ["0.2"],
+  "name": "Kerameikos.org",
+  "view": {
+    "url": "http://kerameikos.org/id/{{id}}"
+  },
+  "identifierSpace": "http://kerameikos.org/id/",
+  "schemaSpace": "http://kerameikos.org/ontology",
+  "defaultTypes": [
+    {
+      "id": "skos:Concept",
+      "name": "Concept"
+    },
+    {
+      "id": "crm:E40_Legal_Body",
+      "name": "E40_Legal_Body"
+    },
+    {
+      "id": "crm:E4_Period",
+      "name": "E4_Period"
+    },
+    {
+      "id": "crm:E57_Material",
+      "name": "E57_Material"
+    },
+    {
+      "id": "crm:E78_Collection",
+      "name": "E78_Collection"
+    },
+    {
+      "id": "foaf:Organization",
+      "name": "Organization"
+    },
+    {
+      "id": "foaf:Person",
+      "name": "Person"
+    },
+    {
+      "id": "kon:ProductionPlace",
+      "name": "ProductionPlace"
+    },
+    {
+      "id": "org:Role",
+      "name": "Role"
+    },
+    {
+      "id": "kon:Shape",
+      "name": "Shape"
+    },
+    {
+      "id": "kon:Style",
+      "name": "Style"
+    },
+    {
+      "id": "kon:Technique",
+      "name": "Technique"
+    },
+    {
+      "id": "kon:Ware",
+      "name": "Ware"
+    }
+  ],
+  "preview": {
+    "url": "http://kerameikos.org/apis/reconcile/preview?id={{id}}",
+    "height": 90,
+    "width": 320
+  },
+  "suggest": {
+    "entity": {
+      "service_url": "http://kerameikos.org/apis/reconcile",
+      "service_path": "/suggest/entity",
+      "flyout_service_path": "/flyout?id=${id}"
+    }
+  }
+}

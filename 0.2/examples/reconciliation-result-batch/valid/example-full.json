@@ -1,0 +1,114 @@
+{
+  "q1": {
+    "result": [
+      {
+        "id": "120333937",
+        "name": "Urbaniak, Regina",
+        "description": "1969-| Diss. Fachbereich Mathematik",
+        "score": 53.015232,
+        "match": false,
+        "features": [
+          {
+            "id": "name_tfidf",
+            "value": 378.239
+          },
+          {
+            "id": "pagerank",
+            "value": -3.1209
+          },
+          {
+            "id": "type_match",
+            "value": 10.329
+          },
+          {
+            "id": "deprecated",
+            "value": false
+          }
+        ],
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      },
+      {
+        "id": "1127147390",
+        "name": "Urbaniak, Jan",
+        "description": "Universität Wrocław, Niederlandestudien",
+        "score": 52.357353,
+        "match": false,
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      }
+    ]
+  },
+  "q2": {
+    "result": [
+      {
+        "id": "123064325",
+        "name": "Schwanhold, Ernst",
+        "description": "1948-| Mitglied des Deutschen Bundestages, SPD (1993)",
+        "score": 86.43497,
+        "features": [
+          {
+            "id": "name_tfidf",
+            "value": 334.188
+          },
+          {
+            "id": "pagerank",
+            "value": -4.1581
+          },
+          {
+            "id": "type_match",
+            "value": 13.78
+          },
+          {
+            "id": "deprecated",
+            "value": false
+          }
+        ],
+        "match": true,
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      },
+      {
+        "id": "116362988X",
+        "name": "Schwanhold, Nadine",
+        "description": "Dissertation Potsdam, Universität, Mathematik-Naturwissenschaftliche Fakultät, 2017",
+        "score": 62.04763,
+        "match": false,
+        "type": [
+          {
+            "id": "AuthorityResource",
+            "name": "Normdatenressource"
+          },
+          {
+            "id": "DifferentiatedPerson",
+            "name": "Individualisierte Person"
+          }
+        ]
+      }
+    ]
+  }
+}

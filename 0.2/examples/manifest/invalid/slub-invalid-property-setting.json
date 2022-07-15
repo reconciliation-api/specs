@@ -1,0 +1,73 @@
+{
+  "defaultTypes": [
+    {
+      "id": "http://schema.org/CreativeWork",
+      "name": "Titel"
+    },
+    {
+      "id": "http://schema.org/Work",
+      "name": "Werk"
+    },
+    {
+      "id": "http://schema.org/Event",
+      "name": "Konferenz oder Veranstaltung"
+    },
+    {
+      "id": "http://schema.org/Place",
+      "name": "Geografikum"
+    },
+    {
+      "id": "http://schema.org/Person",
+      "name": "Individualisierte Person"
+    },
+    {
+      "id": "http://schema.org/Book",
+      "name": "Buch"
+    },
+    {
+      "id": "http://schema.org/Organization",
+      "name": "Körperschaft"
+    },
+    {
+      "id": "http://schema.org/Topic",
+      "name": "Schlagwort"
+    },
+    {
+      "id": "http://schema.org/CreativeWorkSeries",
+      "name": "Schriftenreihe"
+    }
+  ],
+  "extend": {
+    "property_settings": [
+      {
+        "default": 10,
+        "help_text": "Maximum number of values to return per row (maximum: 1000)",
+        "label": "Limit",
+        "name": "limit",
+        "type": "number"
+      },
+      {
+        "default": "geo,organizations,slub-resources,persons,events,topics,works, ",
+        "help_text": "Which Entity-Type to use, allwed values: http://schema.org/CreativeWork, http://schema.org/Work, http://schema.org/Event, http://schema.org/Place, http://schema.org/Person, http://schema.org/Book, http://schema.org/Organization, http://schema.org/Topic, http://schema.org/CreativeWorkSeries",
+        "label": "Typ",
+        "name": "type",
+        "type": "string"
+      }
+    ],
+    "propose_properties": {
+      "service_path": "/reconcile/properties",
+      "service_url": "http://data.slub-dresden.de"
+    }
+  },
+  "identifierSpace": "http://data.slub-dresden.de",
+  "name": "SLUB LOD reconciliation for OpenRefine",
+  "preview": {
+    "height": 100,
+    "url": "http://data.slub-dresden.de/{{id}}.preview",
+    "width": 320
+  },
+  "schemaSpace": "http://schema.org",
+  "view": {
+    "url": "http://data.slub-dresden.de/{{id}}"
+  }
+}

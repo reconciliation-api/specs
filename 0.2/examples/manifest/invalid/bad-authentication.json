@@ -1,0 +1,8 @@
+{
+  "name": "OpenCorporates Reconciliation Service",
+  "identifierSpace": "http://rdf.freebase.com/ns/type.object.id",
+  "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
+  "authentication": {
+     "foo": "bar"
+  }
+}
