@@ -340,6 +340,8 @@ database are instances of this type.<dd>
           </dd>
           <dt><code>extend</code></dt>
           <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
+          <dt><code>authentication</code></dt>
+          <dd>An <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -373,6 +375,27 @@ database are instances of this type.<dd>
 	<p>
            In addition, endpoints exposed by the service MAY support JSONP [[JSONP]], which
            enables older web-based clients to access the service from a different domain.
+        </p>
+      </section>
+      <section>
+        <h3>Authentication</h3>
+        <p>
+           Services MAY request users to provide an authentication token when making queries.
+           They can do so by adding a <dfn>security scheme</dfn> to their manifest. Security schemes are defined in [[OPENAPIS]] and
+           support authentication by API key, HTTP Authentication [[RFC7617]], OAuth 2 [[RFC6749]] and <a href="https://tools.ietf.org/html/draft-ietf-oauth-discovery-06">OpenID Connect</a>.
+        </p>
+        <p>
+           For instance, the following security scheme indicates that basic HTTP authentication is required on this endpoint:
+           <pre data-include="examples/security-scheme/valid/http_basic_auth.json" class="example json"></pre>
+        </p>
+        <p>
+           Requiring an API key passed as a query parameter can be expressed as follows:
+           <pre data-include="examples/security-scheme/valid/api_key.json" class="example json"></pre>
+        </p>
+        <p>
+           If a security scheme is provided in the service manifest, all queries to the service MUST provide
+           the corresponding credentials, except for retrieving the service manifest itself.
+           When invalid authentication is supplied in any HTTP request, the service MUST return an HTTP 401 error.
         </p>
       </section>
     </section>
