@@ -875,7 +875,9 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           The <dfn id="data+extension+response+rows">rows</dfn> object contains, for each <a>entity</a> identifier in the
           <a>data extension query</a>, for each <a>property</a> identifier in the
           <a href="#data+extension+response+metadata">metadata</a>, the <a>property values</a> of that property in that entity.
-          If the property values are <a>entities</a>, their identifiers MUST be in the service's <a>identifier space</a>.
+          If the property values are <a>entities</a>, their identifiers are expected to be in the service's <a>identifier space</a>.
+          If that is not the case, the service MUST specify in the <code>meta</code> section the endpoint of another reconciliation service whose <a>identifier space</a>
+          contains the returned entities. This endpoint is specified on a column-per-column basis.
         </p>
         <p>
           Response example for the <a>data extension query</a> from the previous example:
