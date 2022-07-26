@@ -7,23 +7,13 @@
     "url": "https://aleph.occrp.org/entities/{{id}}"
   },
   "preview": {
-    "url": "https://aleph.occrp.org/entities/{{id}}",
     "width": 800,
     "height": 400
   },
   "suggest": {
-    "entity": {
-      "service_url": "https://aleph.occrp.org",
-      "service_path": "/api/freebase/suggest?api_key=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1IjpudWxsLCJleHAiOjE1NzEzMTQ5MzQsInIiOlsxXSwiYSI6ZmFsc2UsInMiOiIvYXBpL2ZyZWViYXNlL3N1Z2dlc3QifQ.LullhAvG1hGfMnaVpPjOwIUnt-BOpO8_xHxSoGieMeQ"
-    },
-    "type": {
-      "service_url": "https://aleph.occrp.org",
-      "service_path": "/api/freebase/type"
-    },
-    "property": {
-      "service_url": "https://aleph.occrp.org",
-      "service_path": "/api/freebase/property"
-    }
+    "entity": true,
+    "type": true,
+    "property": true
   },
   "defaultTypes": [
     {

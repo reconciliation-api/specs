@@ -101,15 +101,12 @@
     }
   ],
   "preview": {
-    "url": "http://nomisma.org/apis/reconcile/preview?id={{id}}",
     "height": 90,
     "width": 320
   },
   "suggest": {
-    "entity": {
-      "service_url": "http://nomisma.org/apis/reconcile",
-      "service_path": "/suggest/entity",
-      "flyout_service_path": "/flyout?id=${id}"
-    }
+    "entity": true,
+    "property": false,
+    "type": false
   }
 }

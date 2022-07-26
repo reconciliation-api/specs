@@ -7,10 +7,9 @@
     "url": "{+id}"
   },
   "suggest": {
-    "property": {
-      "service_url": "https://geocollider-sinatra.herokuapp.com",
-      "service_path": "/suggest"
-    }
+    "entity": false,
+    "property": true,
+    "type": false
   },
   "defaultTypes": [
     {

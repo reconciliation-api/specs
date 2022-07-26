@@ -2,7 +2,6 @@
   "versions": ["0.1", "0.2"],
   "name": "Wikidata (en)",
   "preview": {
-    "url": "https://tools.wmflabs.org/openrefine-wikidata/en/preview?id={{id}}",
     "width": 400,
     "height": 100
   },
@@ -69,10 +68,7 @@
         "default": false
       }
     ],
-    "propose_properties": {
-      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
-      "service_path": "/en/propose_properties"
-    }
+    "propose_properties": true
   },
   "defaultTypes": [
     {
@@ -84,21 +80,9 @@
     "url": "https://www.wikidata.org/wiki/{{id}}"
   },
   "suggest": {
-    "type": {
-      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
-      "service_path": "/en/suggest/type",
-      "flyout_service_path": "/en/flyout/type?id=${id}"
-    },
-    "entity": {
-      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
-      "service_path": "/en/suggest/entity",
-      "flyout_service_path": "/en/flyout/entity?id=${id}"
-    },
-    "property": {
-      "service_url": "https://tools.wmflabs.org/openrefine-wikidata",
-      "service_path": "/en/suggest/property",
-      "flyout_service_path": "/en/flyout/property?id=${id}"
-    }
+    "type": true,
+    "entity": true,
+    "property": true
   },
   "identifierSpace": "http://www.wikidata.org/entity/"
 }
