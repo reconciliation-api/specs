@@ -224,16 +224,21 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
            Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
         <p>
-           Reconciliation services can define in their <a>service manifest</a> a <dfn>view template</dfn> for entities,
-           which associates to each entity a corresponding URI, by inserting its identifier in the template.
-           A view template is a string which contains the <code>{{id}<!-- -->}</code> substring.
-           For each entity, replacing <code>{{id}<!-- -->}</code> in the template by the entity's identifier
-           MUST result in a valid URI. To guarantee the correctness of the formed URI, clients MUST percent-encode
-           component-delimiting reserved characters in the identifier, i.e. encode it as a URI component [[RFC3986]].
+           Reconciliation services can define in their <a>service manifest</a> a <dfn>URI template</dfn> for entities,
+           as defined by [[RFC6570]]. This URI template builds a view URI for each entity, and has <code>id</code> as only variable.
+           For each entity, expanding the template with <code>id</code> being set to the entity's identifier
+           MUST result in a valid URI.
+        </p>
+        <p>
+           For example, a service which uses Wikidata identifiers for its entities could use <code>http://www.wikidata.org/entity/{id}</code>
+           as URI template for entities. For an entity with identifier <code>Q5</code>, this would expand to <code>http://www.wikidata.org/entity/Q5</code>.
+           Services for which the entity's identifier is already a full URI can use the <code>{+id}</code> template, which disables the escaping of some characters
+           when inserting the identifier in the template.
+           See [[RFC6570]] for more examples of URI templates.   
         </p>
         <p>
            Similarly, it is possible to associate to each <a>matching feature</a> a URL where documentation about
-           the feature is provided, by means of a view template. Inserting any feature identifier in this template
+           the feature is provided, by means of a URI template. Inserting any feature identifier in this template
            generates the URL for the feature.
         </p>
       </section>
@@ -340,9 +345,9 @@ database are instances of this type.<dd>
           <dt><code>serviceVersion</code></dt>
           <dd>An optional string which describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
           <dt><code>view</code></dt>
-          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for <a>entities</a>;</dd>
+          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
           <dt><code>feature_view</code></td>
-          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for <a>matching features</a>;</dd>
+          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
           <dt><code>preview</code></dt>
           <dd>A <a>preview metadata</a>, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
           <dt><code>suggest</code></dt>
@@ -618,7 +623,7 @@ in the <code>score</code> field). By exposing individual features in their respo
       <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
         <dl>
           <dt><code>url</code></dt>
-          <dd>A string containing <code>{{id}<!-- -->}</code> such that replacing <code>{{id}<!-- -->}</code> by an <a>entity</a> identifier encoded as a URI component yields the <dfn>preview URL</dfn> for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
+          <dd>A URI template containing the <code>id</code> variable such that expanding the template with <code>id</code> set to an <a>entity</a> identifier yields the <dfn>preview URL</dfn> for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
 It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimensions are specified by the service in the following fields;</dd>
           <dt><code>width</code></dt>
           <dd>The width in pixels of the <code>&lt;iframe&gt;</code> element where to render an entity preview;</dd>

@@ -2,7 +2,7 @@
   "versions": ["0.2"],
   "name": "Kerameikos.org",
   "view": {
-    "url": "http://kerameikos.org/id/{{id}}"
+    "url": "http://kerameikos.org/id/{id}"
   },
   "identifierSpace": "http://kerameikos.org/id/",
   "schemaSpace": "http://kerameikos.org/ontology",
@@ -61,7 +61,7 @@
     }
   ],
   "preview": {
-    "url": "http://kerameikos.org/apis/reconcile/preview?id={{id}}",
+    "url": "http://kerameikos.org/apis/reconcile/preview{?id}",
     "height": 90,
     "width": 320
   },
@@ -69,7 +69,7 @@
     "entity": {
       "service_url": "http://kerameikos.org/apis/reconcile",
       "service_path": "/suggest/entity",
-      "flyout_service_path": "/flyout?id=${id}"
+      "flyout_service_path": "/flyout{?id}"
     }
   }
 }

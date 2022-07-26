@@ -4,7 +4,7 @@
   "schemaSpace": "https://pleiades.stoa.org/places/",
   "identifierSpace": "https://pleiades.stoa.org/places/vocab#",
   "view": {
-    "url": "{{id}}"
+    "url": "{+id}"
   },
   "suggest": {
     "property": {
