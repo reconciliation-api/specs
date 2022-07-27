@@ -17,26 +17,26 @@
       }
     }
   ],
-  "rows": {
-    "10662041X": {
-      "variantName": [
+  "rows": [{"id":
+    "10662041X", "properties":[ {
+      "id":"variantName", "values": [
         {
           "label": "Stryi-Leitgeb, Gerda"
         }
-      ],
-      "geographicAreaCode": [
+      ]},
+      {"id":"geographicAreaCode", "values": [
         {
           "str": "http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE",
           "label": "Deutschland"
         }
-      ],
-      "professionOrOccupation": [
+      ]},{"id":
+      "professionOrOccupation", "values": [
         {
           "id": "4037223-6",
           "name": "Malerin",
           "type": "Person"
         }
       ]
-    }
-  }
+    }]
+  }]
 }

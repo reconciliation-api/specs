@@ -1,5 +1,5 @@
-{
-  "q0": {
+[
+  {
     "query": "Christel Hanewinckel",
     "type": "DifferentiatedPerson",
     "limit": 5,
@@ -17,4 +17,4 @@
     ],
     "type_strict": "should"
   }
-}
+]

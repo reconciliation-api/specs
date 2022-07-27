@@ -1,0 +1,11 @@
+{
+  "q0": {
+    "query": "Christel Hanewinckel",
+    "limit": 5
+  },
+  "q1": {
+    "query": "Franz Thönnes",
+    "type": "DifferentiatedPerson",
+    "limit": 5
+  }
+}
