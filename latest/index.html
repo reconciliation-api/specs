@@ -639,9 +639,9 @@ in the <code>score</code> field). By exposing individual features in their respo
       <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
         <dl>
           <dt><code>width</code></dt>
-          <dd>The width in pixels of the <code>&lt;iframe&gt;</code> element where to render an entity preview;</dd>
+          <dd>The width in pixels of the viewport where to render an entity preview;</dd>
           <dt><code>height</code></dt>
-          <dd>The height in pixels of the same <code>&lt;iframe&gt;</code>.</dd>
+          <dd>The height in pixels of the same viewport.</dd>
         </dl>
       </p>
       <p>
@@ -652,7 +652,7 @@ in the <code>score</code> field). By exposing individual features in their respo
       <section>
       <h3>Preview Queries</h3>
       <p>A preview service is queried by resolving the URI template <code>/preview?id={id}</code> relative to the reconciliation endpoint, where <code>id</code> is subsituted by the <a>entity</a> identifier. The URL must resolve to an HTML document,
-        which MUST be viewable in an <code>iframe</code> HTML element whose dimensions are determined by the <a>preview metadata</a>.
+        which MUST be viewable in an HTML viewport whose dimensions are determined by the <a>preview metadata</a>.
       </p>
       <p>
         For instance, assuming that the reconciliation API is running at <code>/api</code> and serves the example preview metadata above, the service could respond to a preview request as follows:
