@@ -1,20 +1,22 @@
-[
-  {
-    "query": "Christel Hanewinckel",
-    "type": "DifferentiatedPerson",
-    "limit": 5,
-    "properties": [
-      {
-        "pid": "professionOrOccupation",
-        "v": [
-          "Politik*",
-          {
-            "id": "wissenschaftler",
-            "name": "Wissenschaftler(in)"
-          }
-        ]
-      }
-    ],
-    "type_strict": "should"
-  }
-]
+{
+  "queries": [
+    {
+      "query": "Christel Hanewinckel",
+      "type": "DifferentiatedPerson",
+      "limit": 5,
+      "properties": [
+        {
+          "pid": "professionOrOccupation",
+          "v": [
+            "Politik*",
+            {
+              "id": "wissenschaftler",
+              "name": "Wissenschaftler(in)"
+            }
+          ]
+        }
+      ],
+      "type_strict": "should"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
-[
-  {
-    "properties": []
-  }
-]
+{
+  "queries": [
+    {
+      "properties": []
+    }
+  ]
+}

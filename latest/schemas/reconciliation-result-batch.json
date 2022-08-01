@@ -1,98 +1,107 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "$id": "https://reconciliation-api.github.io/specs/latest/schemas/reconciliation-result-batch.json",
-  "type": "array",
+  "type": "object",
   "description": "This schema can be used to validate the JSON serialization of any reconciliation result batch.",
-  "items": {
-    "type": "object",
-    "properties": {
-      "result": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string",
-              "description": "Entity identifier of the candidate"
-            },
-            "name": {
-              "type": "string",
-              "description": "Entity name of the candidate"
-            },
-            "description": {
-              "type": "string",
-              "description": "Optional description of the candidate entity"
-            },
-            "score": {
-              "type": "number",
-              "description": "Number indicating how likely it is that the candidate matches the query"
-            },
-            "features": {
-              "type": "array",
-              "description": "A list of features which can be used to derive a matching score",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "A unique string identifier for the feature"
-                  },
-                  "value": {
-                    "description": "The value of the feature for this reconciliation candidate",
+  "required": [
+    "results"
+  ],
+  "properties": {
+    "results": {
+      "type": "array",
+      "description": "The list of results for each reconciliation query, in the same order",
+      "items": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Entity identifier of the candidate"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Entity name of the candidate"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Optional description of the candidate entity"
+                },
+                "score": {
+                  "type": "number",
+                  "description": "Number indicating how likely it is that the candidate matches the query"
+                },
+                "features": {
+                  "type": "array",
+                  "description": "A list of features which can be used to derive a matching score",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "A unique string identifier for the feature"
+                      },
+                      "value": {
+                        "description": "The value of the feature for this reconciliation candidate",
+                        "oneOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "match": {
+                  "type": "boolean",
+                  "description": "Boolean value indicating whether the candiate is a certain match or not."
+                },
+                "type": {
+                  "type": "array",
+                  "description": "Types the candidate entity belongs to",
+                  "items": {
                     "oneOf": [
                       {
-                        "type": "boolean"
+                        "type": "object",
+                        "description": "A type can be given by id and name",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id"
+                        ]
                       },
                       {
-                        "type": "number"
+                        "type": "string",
+                        "description": "Alternatively, if only a string is given, it is treated as the id"
                       }
                     ]
                   }
                 }
-              }
-            },
-            "match": {
-              "type": "boolean",
-              "description": "Boolean value indicating whether the candiate is a certain match or not."
-            },
-            "type": {
-              "type": "array",
-              "description": "Types the candidate entity belongs to",
-              "items": {
-                "oneOf": [
-                  {
-                    "type": "object",
-                    "description": "A type can be given by id and name",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id"
-                    ]
-                  },
-                  {
-                    "type": "string",
-                    "description": "Alternatively, if only a string is given, it is treated as the id"
-                  }
-                ]
-              }
+              },
+              "required": [
+                "id",
+                "name",
+                "score"
+              ]
             }
-          },
-          "required": [
-            "id",
-            "name",
-            "score"
-          ]
-        }
+          }
+        },
+        "required": [
+          "result"
+        ]
       }
-    },
-    "required": [
-      "result"
-    ]
+    }
   }
 }

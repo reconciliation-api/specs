@@ -1,8 +1,10 @@
-[
-  {
-    "query": "Hans-Eberhard Urbaniak"
-  },
-  {
-    "query": "Ernst Schwanhold"
-  }
-]
+{
+  "queries": [
+    {
+      "query": "Hans-Eberhard Urbaniak"
+    },
+    {
+      "query": "Ernst Schwanhold"
+    }
+  ]
+}
