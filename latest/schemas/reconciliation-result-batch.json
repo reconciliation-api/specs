@@ -9,11 +9,11 @@
   "properties": {
     "results": {
       "type": "array",
-      "description": "The list of results for each reconciliation query, in the same order",
+      "description": "The list of candidates for each reconciliation query, in the same order",
       "items": {
         "type": "object",
         "properties": {
-          "result": {
+          "candidates": {
             "type": "array",
             "items": {
               "type": "object",
@@ -99,7 +99,7 @@
           }
         },
         "required": [
-          "result"
+          "candidates"
         ]
       }
     }
