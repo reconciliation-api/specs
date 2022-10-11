@@ -82,6 +82,11 @@
             "publisher": "English Wikipedia",
             "href": "https://en.wikipedia.org/wiki/DoS"
           },
+          "injection": {
+            "title": "Code injection",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/Code_injection"
+          },
         }
       };
     </script>
@@ -942,6 +947,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <h3>Preventing Abuse</h3>
         <ul>
           <li>Reconciliation services SHOULD guard against too frequent requests to prevent [[DoS]] attacks (see <a href="#error-handling-and-rate-limiting">Error Handling and Rate-limiting</a>).</li>
+          <li>Reconciliation services SHOULD guard against malicious code when querying their underlying data store with data from <a>reconciliation queries</a> to avoid code [[injection]].</li>
           <li>Reconciliation services SHOULD NOT parse the JSON requests sent by clients using a code execution mechanism like JavaScript's <code>eval()</code>, since requests could contain malicious code.</li>
           <li>Reconciliation clients that display data from <a href="#preview-service">preview services</a> SHOULD ensure that the data is encoded, sanitized, or isolated to prevent [[XSS]] and [[CSRF]] attacks.</li>
           <li>Reconciliation clients SHOULD provide a configuration option to disallow calls to localhost, with the default set to disallow, as a malicious service could cause the client to make arbitrary POST requests to itself.</li>
@@ -952,8 +958,8 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <h3>Other considerations</h3>
         <ul>
           <li>Reconciliation services and clients MAY support user authentication (see <a href="#authentication">authentication</a>).</li>
-          <li>Reconciliation features don't expose information about the underlying platform to origins, they don't allow origins to send data to the underlying platform, access other devices, device sensors, a user agent's native UI,
-            or enable origins to downgrade default security protections.
+          <li>Reconciliation features don't expose information about the underlying platform to clients or services, they don't allow clients or services to send data to the underlying platform, access other devices, device sensors, 
+            a user agent's native UI, or enable clients or services to downgrade default security protections.
           </li>
         </ul>
       </section>
@@ -966,10 +972,10 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       <section>
         <h3>Network data</h3>
         <ul>
-          <li>All data used for reconciliation (the names, identifiers, and additional properties sent by clients) are visible to the reconciliation service to be processed for returning results to the client.
+          <li>All data in <a>reconciliation queries</a> is visible to the reconciliation service, to be processed for returning <a>reconciliation results</a> to the client.
             To prevent malicious actors from intercepting the data that is sent and received, services SHOULD provide secure HTTPS endpoints for reconciliation.
           </li>
-          <li>User selection of matching reconciliation candidates provide user verified statements about the data. These selections are currently not sent back to the reconciliation service
+          <li>User selections of matching <a>reconciliation candidates</a> provide user-verified statements about the data. These selections are currently not sent back to the reconciliation service
             (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).
           </li>
         </ul>
@@ -978,10 +984,10 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       <section>
         <h3>Persistent data</h3>
         <ul>
-          <li>Reconciliation clients MAY introduce new state for an origin that persists across browsing sessions for persisting reconciliation request data (the names, identifiers, and additional properties sent by clients),
-            the service's response (the reconciliation candidates), and/or the user's selection of matches.</li>
-          <li>Reconciliation clients running in a browser’s <em>Private Browsing</em> or <em>Incognito</em> mode SHOULD NOT store the reconciliation request data, the service's response, or the user's selection of matches.
-          <li>Reconciliation services currently don't introduce new state for an origin that persists across browsing sessions (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).</li>
+          <li>Reconciliation clients MAY introduce new state that persists across browsing sessions for persisting <a>reconciliation queries</a>,
+            the service's <a>reconciliation results</a>, and/or the user's selection of matches.</li>
+          <li>Reconciliation clients running in a browser’s <em>Private Browsing</em> or <em>Incognito</em> mode SHOULD NOT store <a>reconciliation queries</a>, the service's <a>reconciliation results</a>, or the user's selection of matches.
+          <li>Reconciliation services currently don't introduce new state that persists across browsing sessions (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).</li>
           </li>
         </ul>
       </section>
