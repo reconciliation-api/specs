@@ -950,7 +950,6 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           <li>Reconciliation services SHOULD guard against malicious code when querying their underlying data store with data from <a>reconciliation queries</a> to avoid code [[injection]].</li>
           <li>Reconciliation services SHOULD NOT parse the JSON requests sent by clients using a code execution mechanism like JavaScript's <code>eval()</code>, since requests could contain malicious code.</li>
           <li>Reconciliation clients that display data from <a href="#preview-service">preview services</a> SHOULD ensure that the data is encoded, sanitized, or isolated to prevent [[XSS]] and [[CSRF]] attacks.</li>
-          <li>Reconciliation clients SHOULD provide a configuration option to disallow calls to localhost, with the default set to disallow, as a malicious service could cause the client to make arbitrary POST requests to itself.</li>
         </ul>
       </section>
 
