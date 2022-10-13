@@ -985,7 +985,8 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <ul>
           <li>Reconciliation clients MAY introduce new state that persists across browsing sessions for persisting <a>reconciliation queries</a>,
             the service's <a>reconciliation results</a>, and/or the user's selection of matches.</li>
-          <li>Reconciliation clients running in a browser’s <em>Private Browsing</em> or <em>Incognito</em> mode SHOULD NOT store <a>reconciliation queries</a>, the service's <a>reconciliation results</a>, or the user's selection of matches.
+          <li>Reconciliation clients implemented as browser extensions running in <em>Private Browsing</em> or <em>Incognito</em> mode SHOULD NOT store <a>reconciliation queries</a>,
+            the service's <a>reconciliation results</a>, or the user's selection of matches.</li>
           <li>Reconciliation services currently don't introduce new state that persists across browsing sessions (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).</li>
           </li>
         </ul>
