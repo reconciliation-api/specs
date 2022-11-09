@@ -87,9 +87,15 @@
             "publisher": "English Wikipedia",
             "href": "https://en.wikipedia.org/wiki/Code_injection"
           },
+          "accessibility": {
+            "title": "Accessibility",
+            "publisher": "W3C",
+            "href": "https://www.w3.org/standards/webdesign/accessibility"
+          },
         }
       };
     </script>
+    <link rel="stylesheet" type="text/css" href="https://www.w3.org/2006/02/charter-style.css">
     <title>Reconciliation Service API</title>
   </head>
   <body>
@@ -937,6 +943,36 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <p>
           Response example for the <a>data extension query</a> from the previous example:
           <pre data-include="examples/data-extension-response/valid/example-full.json" class="example json"></pre>
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Accessibility Considerations</h2>
+      <p>
+        Reconciliation clients provide user interfaces for creating <a>reconciliation queries</a> and reviewing <a>reconciliation candidates</a>, including <a href="preview-service">preview</a>
+        and <a>suggest services</a>, as well as for interacting with <a href="#data-extension-service">data extension services</a>, including <a href="#dfn-data-extension-property-proposal">property proposals</a> 
+        and configuration of <a href="#dfn-data-extension-property-setting">property settings</a>. These user interfaces SHOULD be implemented ensuring [[accessibility]] for all people, whatever their hardware,
+        software, language <i class="todo">[TODO: Internationalization, see https://github.com/reconciliation-api/specs/issues/52]</i>, location, or ability.
+      </p>
+      <section>
+        <h3>Visual rendering</h3>
+        <p>
+          User interfaces provided by reconciliation clients typically provide visual renderings of the data involved in the reconciliation and data extension process.
+          The <a href="#preview-service">preview</a> and <a>flyout services</a> provide HTML content to reconciliation clients. Reconciliation services SHOULD ensure [[accessibility]] of this HTML content
+          (avoid fixed font sizes, provide alternative text for images etc.) <i class="todo">[TODO: our flyout sample does actually set a somewhat fixed size, we should probably change that]</i>. Except for this
+          HTML content, all data involved in the reconciliation and data extension process is text-based and contains no specifics about visual rendering. <i class="todo">[TODO: the service actually sets an explicit
+          size in the <a>preview metadata</a>, this makes it impossible for the client to get a scaled preview. Can/should we remove the size, and instead support requesting a specific size, e.g. in a header, when calling
+          the <a>preview URL</a>?]</i> Reconciliation clients SHOULD ensure [[accessibility]] for this text content (font resizing, screen reader support etc.) based on the technology of the
+          underlying platform, which will typically implement the details of visual text rendering and user interface customization.
+        </p>
+      </section>
+      <section>
+        <h3>Content semantics</h3>
+        <p>
+          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> fields for identifiable objects, in particular
+          <a>entities</a>, <a>types</a>, and <a>properties</a> <i class="todo">[TODO: <a>matching features</a> don't have names, but probably should]</i>. These SHOULD be used by
+          reconciliation clients to provide useful labels for displaying and linking identifiable entities. The structural semantics of the content provided by reconciliation services allows different presentations
+          (as pages, tables, etc.) in reconciliation clients.
         </p>
       </section>
     </section>
