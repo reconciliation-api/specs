@@ -23,15 +23,13 @@
   "batchSize": 50,
   "preview": {
     "height": 200,
-    "url": "https://services.getty.edu/vocab/reconcile/preview{?id}",
     "width": 350
   },
   "schemaSpace": "http://vocab.getty.edu/doc/#The_Getty_Vocabularies_and_LOD",
   "suggest": {
-    "property": {
-      "service_path": "/suggest/property",
-      "service_url": "https://services.getty.edu/vocab/reconcile"
-    }
+    "entity": false,
+    "property": true,
+    "type": false
   },
   "view": {
     "url": "http://vocab.getty.edu/page/{id}"

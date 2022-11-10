@@ -76,48 +76,26 @@
     "suggest": {
       "type": "object",
       "description": "Settings for the suggest protocol, to auto-complete entities, properties and types",
-      "definitions": {
-        "service_definition": {
-          "type": "object",
-          "properties": {
-            "service_url": {
-              "type": "string"
-            },
-            "service_path": {
-              "type": "string"
-            },
-            "flyout_service_url": {
-              "type": "string"
-            },
-            "flyout_service_path": {
-              "type": "string",
-              "pattern": ".*\\{.*id.*\\}.*"
-            }
-          },
-          "required": []
-        }
-      },
       "properties": {
         "entity": {
-          "$ref": "#/properties/suggest/definitions/service_definition"
+          "type": "boolean",
+          "description": "Whether the service supports suggestion of entities, in which case it should offer a /suggest/entity endpoint"
         },
         "property": {
-          "$ref": "#/properties/suggest/definitions/service_definition"
+          "type": "boolean",
+          "description": "Whether the service supports suggestion of properties, in which case it should offer a /suggest/property endpoint"
         },
         "type": {
-          "$ref": "#/properties/suggest/definitions/service_definition"
+          "type": "boolean",
+          "description": "Whether the service supports suggestion of types, in which case it should offer a /suggest/type endpoint"
         }
-      }
+      },
+      "required": [ "entity", "property", "type" ]
     },
     "preview": {
       "type": "object",
       "description": "Settings for the preview protocol, for HTML previews of entities",
       "properties": {
-        "url": {
-          "type": "string",
-          "pattern": ".*\\{.*id.*\\}.*",
-          "description": "A URL pattern which transforms the entity ID into a preview URL for it"
-        },
         "width": {
           "type": "integer",
           "description": "The width of the iframe where to include the HTML preview"
@@ -128,7 +106,6 @@
         }
       },
       "required": [
-        "url",
         "width",
         "height"
       ]
@@ -138,16 +115,8 @@
       "description": "Settings for the data extension protocol, to fetch property values",
       "properties": {
         "propose_properties": {
-          "type": "object",
-          "description": "Location of the endpoint to propose properties to fetch for a given type",
-          "properties": {
-            "service_url": {
-              "type": "string"
-            },
-            "service_path": {
-              "type": "string"
-            }
-          }
+          "type": "boolean",
+          "description": "Whether the service supports property proposals"
         },
         "property_settings": {
           "type": "array",

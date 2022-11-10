@@ -48,8 +48,7 @@
   },
   "preview": {
     "height": 100,
-    "width": 320,
-    "url": "https://lobid.org/gnd/{{id}}.preview"
+    "width": 320
   },
   "extend": {
     "property_settings": [
@@ -78,26 +77,11 @@
         ]
       }
     ],
-    "propose_properties": {
-      "service_url": "https://lobid.org",
-      "service_path": "/gnd/reconcile/properties"
-    }
+    "propose_properties": true
   },
   "suggest": {
-    "property": {
-      "service_url": "https://lobid.org/gnd/reconcile",
-      "service_path": "/suggest/property",
-      "flyout_service_path": "/flyout/property?id=${id}"
-    },
-    "entity": {
-      "service_url": "https://lobid.org/gnd/reconcile",
-      "service_path": "/suggest/entity",
-      "flyout_service_path": "/flyout/entity?id=${id}"
-    },
-    "type": {
-      "service_url": "https://lobid.org/gnd/reconcile",
-      "service_path": "/suggest/type",
-      "flyout_service_path": "/flyout/type?id=${id}"
-    }
+    "property": true,
+    "entity": true,
+    "type": true
   }
 }

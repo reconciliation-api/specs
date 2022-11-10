@@ -210,9 +210,11 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         </section>
         <section>
           <h4>This Draft</h4>
-          <p>
-            No changes made yet.
-          </p>
+          <p>Collection of changes which make the API conform to the REST principles.</p>
+          <ul>
+            <li>Remove support for flyouts;</li>
+            <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint.</li>
+          </ul>
         </section>
       </section>
       <section id="conformance"></section>
@@ -366,19 +368,19 @@ database are instances of this type.<dd>
           <dd>An optional string which describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
           <dt><code>view</code></dt>
           <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
-          <dt><code>feature_view</code></td>
+          <dt><code>feature_view</code></dt>
           <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
           <dt><code>preview</code></dt>
-          <dd>A <a>preview metadata</a>, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
+          <dd>A <a>preview metadata</a> object, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
           <dt><code>suggest</code></dt>
           <dd>An optional object which may contain the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
             <dl>
               <dt><code>entity</code></dt>
-              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>entities</a>;</dd>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>entities</a>;</dd>
               <dt><code>property</code></dt>
-              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>properties</a>;</dd>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>properties</a>;</dd>
               <dt><code>type</code></dt>
-              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>types</a>.</dd>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>types</a>;</dd>
             </dl>
           </dd>
           <dt><code>extend</code></dt>
@@ -396,6 +398,32 @@ database are instances of this type.<dd>
         A more complete example, with some optional services implemented:
         <pre data-include="examples/manifest/valid/getty.json" class="example json"></pre>
       </p>
+      </section>
+      <section>
+        <h3>Overview of Possible Routes</h3>
+        <p>
+          We give here an overview of the routes that reconciliation services MUST and MAY implement. They are all relative to the root <a>endpoint</a>, which we assume here to be <code>/</code>.
+        </p>
+        <p>
+        <dl>
+           <dt><code>/</code></dt>
+           <dd>The root endpoint, which supports the GET method and returns the service manifest. Services MUST support this route;</dd>
+           <dt><code>/reconcile</code></dt>
+           <dd>The route used to submit <a>reconciliation query batches</a>, with the POST method. Services MUST support this route;</dd>
+           <dt><code>/suggest/entity</code></dt>
+           <dd>The route used for auto-completion of entities, with the GET method. Services MAY support this route, as indicated  in their manifest;</dd>
+           <dt><code>/suggest/property</code></dt>
+           <dd>The route used for auto-completion of properties, with the GET method. Services MAY support this route, as indicated in their manifest;</dd>
+           <dt><code>/suggest/type</code></dt>
+           <dd>The route used for auto-completion of types, with the GET method. Services MAY support this route, as indicated in their manifest;</dd>
+           <dt><code>/preview</code></dt>
+           <dd>The route used to preview an entity, with the GET method. Services MAY support this route, depending on the presence of a <a>preview metadata</a> object in their manifest;</dd>
+           <dt><code>/extend</code></dt>
+           <dd>The route used to submit <a>data extension queries</a>, with the POST method. Services MAY support this route, depending on the presence of a <a>data extension metadata</a> object in their manifest;</dd>
+           <dt><code>/extend/propose</code></dt>
+           <dd>The route used to obtain <a>data extension property proposals</a>, with the GET method. Services MAY support this route, following what their <a>data extension metadata</a> object in their manifest indicates.</dd>
+        </dl>
+       </p>
       </section>
       <section>
         <h3>HTTP(S) Access</h3>
@@ -575,27 +603,15 @@ in the <code>score</code> field). By exposing individual features in their respo
 	  <a>reconciliation result batches</a> over HTTP.
 	</p>
 	<p>
-          A reconciliation service MUST support HTTP POST requests on its <a>endpoint</a> with
-          <code>application/x-www-form-urlencoded</code> bodies containing a
-          <a>reconciliation query batch</a> (serialized in JSON) in a form element named <code>queries</code>.
+          A reconciliation service MUST support HTTP POST requests at the route <code>/reconcile</code> (relative to its <a>endpoint</a>) with
+          <code>application/json</code> bodies containing a
+          <a>reconciliation query batch</a>.
         </p>
         <p>
-          <pre class="example nohighlight">POST / queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
-        </p>
-        <p>
-          Similarly, a reconciliation service SHOULD support HTTP GET requests with a
-          <a>reconciliation query batch</a> in a query string parameter named <code>queries</code>.
-        </p>
-        <p>
-          <pre class="example nohighlight">GET /?queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
+          <pre class="example nohighlight">POST /reconcile &lt;reconciliation query batch&gt;</pre>
         </p>
 	<p>
-	   In both cases, the service returns the corresponding query batch serialized in JSON.
-	</p>
-	<p class="note">
-	   The POST method is the primary way to send reconciliation queries to a service since 
-	   it does not restrict the length of the query batches. The GET method is useful for
-	   interactive debugging of reconciliation queries in a web browser, for instance.
+	   The service returns the corresponding query batch serialized in JSON.
 	</p>
       </section>
       <section class="informative">
@@ -643,13 +659,10 @@ in the <code>score</code> field). By exposing individual features in their respo
       <h3>Preview Metadata</h3>
       <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
         <dl>
-          <dt><code>url</code></dt>
-          <dd>A URI template containing the <code>id</code> variable such that expanding the template with <code>id</code> set to an <a>entity</a> identifier yields the <dfn>preview URL</dfn> for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
-It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimensions are specified by the service in the following fields;</dd>
           <dt><code>width</code></dt>
-          <dd>The width in pixels of the <code>&lt;iframe&gt;</code> element where to render an entity preview;</dd>
+          <dd>The width in pixels of the viewport where to render an entity preview;</dd>
           <dt><code>height</code></dt>
-          <dd>The height in pixels of the same <code>&lt;iframe&gt;</code>.</dd>
+          <dd>The height in pixels of the same viewport.</dd>
         </dl>
       </p>
       <p>
@@ -659,10 +672,11 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       </section>
       <section>
       <h3>Preview Queries</h3>
-      <p>A preview service is queried by resolving the <a>preview URL</a> for an <a>entity</a>. The URL must resolve to an HTML document.
+      <p>A preview service is queried by resolving the URI template <code>/preview?id={id}</code> relative to the reconciliation endpoint, where <code>id</code> is subsituted by the <a>entity</a> identifier. The URL must resolve to an HTML document,
+        which MUST be viewable in an HTML viewport whose dimensions are determined by the <a>preview metadata</a>.
       </p>
       <p>
-        For instance, assuming the example preview metadata above, the service could respond to a preview request as follows:
+        For instance, assuming that the reconciliation API is running at <code>/api</code> and serves the example preview metadata above, the service could respond to a preview request as follows:
        <pre data-include="examples/preview-response/example.html" data-include-format="text" class="example html">
        </pre>
       </p>
@@ -676,27 +690,17 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         A reconciliation service can offer a <dfn>suggest service</dfn> for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
         These suggest services can be used by clients to let users select an entity, property or type manually, at various stages of their reconciliation workflows.
         Suggest services for entities, properties and types are declared independently
-        in the <a>service manifest</a> by providing a <a>suggest metadata</a> for them.
+        in the <a>service manifest</a>.
       </p>
       <section>
-      <h3>Suggest Metadata</h3>
+      <h3>Suggest Endpoints</h3>
       <p>
-        A <dfn>suggest metadata</dfn> object consists of the following fields:
+        When supported, the suggest endpoints are located at the following URIs, relative to the service's root <a>endpoint</a>:
         <dl>
-          <dt><code>service_url</code></dt>
-          <dd>The base URL for the suggest service;</dd>
-          <dt><code>service_path</code></dt>
-          <dd>A URL path which will be concatenated to the <code>service_url</code> to obtain the full URL of the suggest service;</dd>
-          <dt><code>flyout_service_url</code></dt>
-          <dd>The base URL for the <a>flyout service</a>. If none is provided, it is assumed to be identical to <code>service_url</code>;</dd>
-          <dt><code>flyout_service_path</code></dt>
-          <dd>An optional URL path which will be concatenated to the <code>flyout_service_url</code> to obtain the full URL of the flyout service. The absence of this parameter indicates that no flyout service is associated with this suggest service.</dd>
+          <dt><code>/suggest/entity</code></dt>
+          <dt><code>/suggest/property</code></dt>
+          <dt><code>/suggest/type</code></dt>
         </dl>
-      </p>
-      <p>
-        For instance, a suggest metadata could be as follows:
-        <pre data-include="examples/suggest-metadata/valid/example.json" class="example json"></pre>
-	Such a metadata indicates that a suggest service is available at <code>https://example.com/api/suggest</code> with an associated <a>flyout endpoint</a> at <code>https://example.com/api/suggest/flyout/${id}</code>.
       </p>
       </section>
       <section>
@@ -762,35 +766,6 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           As the <code>prefix</code> name suggests, suggest services are expected to perform prefix search on their database of records, such that a suggest service can be used to provide auto-completion as users type names or identifiers in a field.
         </p>
       </section>      
-      <section>
-      <h3>Flyout Services</h3>
-        <p>
-          A <dfn>flyout service</dfn> provides small previews of suggested elements.
-          These previews are designed to be shown when hovering a suggested element.
-	  When a suggest service supports flyout, it declares the <dfn>flyout endpoint</dfn> in its <a>suggest metadata</a>.
-        </p>
-	<p>
-	  A preview for a suggested entity, property or type can then be obtained at the flyout endpoint by replacing <code>${id}</code>
-	  by the identifier for the entity, property or type, encoded as a URI component. Upon a GET query to this URL, the service returns a JSON response
-	  consisting of an object with the following fields:
-	  <dl>
-	    <dt><code>id</code></dt>
-	    <dd>The identifier supplied in the URL;</dd>
-	    <dt><code>html</code></dt>
-	    <dd>A string containing HTML code that can be used to display a small preview alongside the suggested entity, property or type.</dd>
-	  </dl>
-	</p>
-	<p>
-          For instance, if a service's flyout endpoint is <code>https://example.com/suggest/entities/flyout?id=${id}</code>,
-	  then by retrieving <code>https://example.com/suggest/entities/flyout?id=Q38274</code>, one might get the following
-	  response:
-          <pre data-include="examples/flyout-response/valid/example.json" data-include-format="text" class="example json"></pre>
-	</p>
-	<p class="note">
-	  Flyout services were used by Freebase and are mostly redundant with the <code>description</code> field in <a href="#suggest-responses">suggest responses</a>.
-	  Given that they allow services to return arbitrary HTML content, they also pose a security threat to clients. It is therefore proposed          that this functionality is dropped in the future.
-	</p>
-      </section>
     </section>
     <section>
       <h2>Data Extension Service</h2>
@@ -813,15 +788,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           The <dfn>data extension metadata</dfn> is an object stored in the <a>service manifest</a> in the <code>extend</code> field. It consists of the following settings, all optional:
           <dl>
             <dt><code>propose_properties</code></dt>
-            <dd>A service path object defining a URL which implements <a>data extension property proposal</a>, which consists of:
-              <dl>
-                <dt><code>service_url</code></dt>
-                <dd>The root URL of the service;</dd>
-                <dt><code>service_path</code></dt>
-                <dd>The path to the endpoint for property proposals.</dd>
-              </dl>
-              The full URL for data extension property proposals is obtained by concatenating these two fields.
-            </dd>
+            <dd>A boolean indicating if the service supports <a>data extension property proposal</a>;</dd>
             <dt><code>property_settings</code></dt>
             <dd>An array of <a>data extension property settings</a>.</dd>
           </dl>
@@ -854,16 +821,14 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           A <dfn>data extension property proposal</dfn> service returns <a>properties</a> for a given <a>type</a> identifier.
         </p>
         <p>
-          The service MUST support HTTP GET requests with a `type` query string parameter.
+          If the reconciliation service supports data extension property proposals, it MUST support HTTP GET requests to the endpoint <code>/extend/propose</code> (relative to the reconciliation endpoint) with a <code>type</code> query string parameter
+containing a type identifier.
         </p>
         <p>
-          The service SHOULD support an optional `limit` query string parameter to control the number of proposed properties.
+          The service SHOULD support an optional <code>limit</code> query string parameter to control the number of proposed properties.
         </p>
         <p>
-          The service URL and path are declared in the <a>data extension metadata</a> of the <a>service manifest</a>.
-        </p>
-        <p>
-          <pre class="example nohighlight">GET /properties?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
+          <pre class="example nohighlight">GET /extend/propose?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
         </p>
         <p>
           A <dfn>data extension property proposal response</dfn> consists of:
@@ -890,19 +855,11 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <p>
           The fact that a reconciliation service offers data extension MUST be announced by including a <a>data extension metadata</a> in the <code>extend</code> field of the <a>service manifest</a>.
         <p>
-          A data extension service MUST support HTTP POST requests with
-          <code>application/x-www-form-urlencoded</code> bodies containing a
-          <a>data extension query</a> in a form element named <code>extend</code>.
+          A data extension service MUST support HTTP POST requests at <code>/extend</code> (relative to the reconciliation endpoint) with
+          <code>application/json</code> bodies containing a <a>data extension query</a>.
         </p>
         <p>
-          <pre class="example nohighlight">POST / extend=&lt;URL-encoded data extension query&gt;</pre>
-        </p>
-        <p>
-          A data extension service SHOULD support HTTP GET requests with a
-          <a>data extension query</a> in a query string parameter named <code>extend</code>.
-        </p>
-        <p>
-          <pre class="example nohighlight">GET /?extend=&lt;URL-encoded data extension query&gt;</pre>
+          <pre class="example nohighlight">POST /extend &lt;data extension query&gt;</pre>
         </p>
         <p>
           A <dfn>data extension query</dfn> consists of:
