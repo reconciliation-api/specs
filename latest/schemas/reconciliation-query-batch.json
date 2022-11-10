@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema#",
   "$id": "https://reconciliation-api.github.io/specs/latest/schemas/reconciliation-query.json",
   "type": "object",
-  "description": "This schema validates the JSON serialization of any reconciliation query batch, i.e. the payload of a GET/POST to a reconciliation endpoint.",
+  "description": "This schema validates the JSON serialization of any reconciliation query batch, i.e. the payload of a POST to a reconciliation endpoint.",
   "definitions": {
     "property_value": {
       "oneOf": [
@@ -33,92 +33,99 @@
       ]
     }
   },
-  "patternProperties": {
-    "^.*$": {
-      "type": "object",
-      "properties": {
-        "query": {
-          "type": "string",
-          "description": "A string to be matched against the name of the entities"
-        },
-        "type": {
-          "description": "Either a single type identifier or a list of type identifiers",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          ]
-        },
-        "limit": {
-          "type": "number",
-          "description": "The maximum number of candidates to return"
-        },
+  "required": [
+    "queries"
+  ],
+  "properties": {
+    "queries": {
+      "type": "array",
+      "description": "A list of queries to be processed by the service",
+      "items": {
+        "type": "object",
         "properties": {
-          "type": "array",
-          "description": "An optional list of property mappings to refine the query",
-          "items": {
-            "type": "object",
-            "properties": {
-              "pid": {
-                "type": "string",
-                "description": "The identifier of the property, whose values will be compared to the values supplied"
+          "query": {
+            "type": "string",
+            "description": "A string to be matched against the name of the entities"
+          },
+          "type": {
+            "description": "Either a single type identifier or a list of type identifiers",
+            "oneOf": [
+              {
+                "type": "string"
               },
-              "v": {
-                "description": "A value (or array of values) to match against the property values associated with the property on each candidate",
-                "oneOf": [
-                  {
-                    "$ref": "#/definitions/property_value"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/definitions/property_value"
-                    }
-                  }
-                ]
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
-            },
-            "required": [
-              "pid",
-              "v"
+            ]
+          },
+          "limit": {
+            "type": "number",
+            "description": "The maximum number of candidates to return"
+          },
+          "properties": {
+            "type": "array",
+            "description": "An optional list of property mappings to refine the query",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pid": {
+                  "type": "string",
+                  "description": "The identifier of the property, whose values will be compared to the values supplied"
+                },
+                "v": {
+                  "description": "A value (or array of values) to match against the property values associated with the property on each candidate",
+                  "oneOf": [
+                    {
+                      "$ref": "#/definitions/property_value"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/property_value"
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "pid",
+                "v"
+              ]
+            }
+          },
+          "type_strict": {
+            "type": "string",
+            "description": "A classification of the type matching strategy when multiple types are supplied",
+            "enum": [
+              "any",
+              "should",
+              "all"
             ]
           }
         },
-        "type_strict": {
-          "type": "string",
-          "description": "A classification of the type matching strategy when multiple types are supplied",
-          "enum": [
-            "any",
-            "should",
-            "all"
-          ]
-        }
-      },
-      "anyOf": [
-        {
-          "required": [
-            "query"
-          ]
-        },
-        {
-          "required": [
-            "properties"
-          ],
-          "properties": {
+        "anyOf": [
+          {
+            "required": [
+              "query"
+            ]
+          },
+          {
+            "required": [
+              "properties"
+            ],
             "properties": {
-              "type": "array",
-              "minItems": 1
+              "properties": {
+                "type": "array",
+                "minItems": 1
+              }
             }
           }
-        }
-      ],
-      "additionalProperties": false
+        ],
+        "additionalProperties": false
+      }
     }
   }
 }

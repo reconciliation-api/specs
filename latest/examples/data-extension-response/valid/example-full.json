@@ -22,60 +22,90 @@
       "service": "https://www.wikidata.org/api/reconcile"
     }
   ],
-  "rows": {
-    "10662041X": {
-      "variantName": [
+  "rows": [
+    {
+      "id": "10662041X",
+      "properties": [
         {
-          "str": "Stryi-Leitgeb, Gerda"
+          "id": "variantName",
+          "values": [
+            {
+              "str": "Stryi-Leitgeb, Gerda"
+            },
+            {
+              "str": "Leitgeb, Gerda Stryi-"
+            }
+          ]
         },
         {
-          "str": "Leitgeb, Gerda Stryi-"
-        }
-      ],
-      "geographicAreaCode": [
-        {
-          "str": "http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE"
-        }
-      ],
-      "professionOrOccupation": [
-        {
-          "id": "4037223-6",
-          "name": "Malerin",
-          "description": "Beruf"
+          "id": "geographicAreaCode",
+          "values": [
+            {
+              "str": "http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE"
+            }
+          ]
         },
         {
-          "id": "4033430-2",
-          "name": "Künstlerin"
-        }
-      ],
-      "wikidataId": [
+          "id": "professionOrOccupation",
+          "values": [
+            {
+              "id": "4037223-6",
+              "name": "Malerin",
+              "description": "Beruf"
+            },
+            {
+              "id": "4033430-2",
+              "name": "Künstlerin"
+            }
+          ]
+        },
         {
-          "id": "Q3874347",
-          "name": "Gerda Stryi-Leitgeb"
+          "id": "wikidataId",
+          "values": [
+            {
+              "id": "Q3874347",
+              "name": "Gerda Stryi-Leitgeb"
+            }
+          ]
         }
       ]
     },
-    "1064905412": {
-      "variantName": [
-        {}
-      ],
-      "geographicAreaCode": [
+    {
+      "id": "1064905412",
+      "properties": [
         {
-          "str": "http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE"
-        }
-      ],
-      "professionOrOccupation": [
+          "id": "variantName",
+          "values": [
+            {}
+          ]
+        },
         {
-          "id": "4002844-6",
-          "name": "Architekt"
-        }
-      ],
-      "wikidataId": [
+          "id": "geographicAreaCode",
+          "values": [
+            {
+              "str": "http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE"
+            }
+          ]
+        },
         {
-          "id": "Q3874347",
-          "name": "Gerda Stryi-Leitgeb"
+          "id": "professionOrOccupation",
+          "values": [
+            {
+              "id": "4002844-6",
+              "name": "Architekt"
+            }
+          ]
+        },
+        {
+          "id": "wikidataId",
+          "values": [
+            {
+              "id": "Q3874347",
+              "name": "Gerda Stryi-Leitgeb"
+            }
+          ]
         }
       ]
     }
-  }
+  ]
 }
