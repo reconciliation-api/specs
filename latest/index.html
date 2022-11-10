@@ -686,16 +686,12 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           <dd>The base URL for the suggest service;</dd>
           <dt><code>service_path</code></dt>
           <dd>A URL path which will be concatenated to the <code>service_url</code> to obtain the full URL of the suggest service;</dd>
-          <dt><code>flyout_service_url</code></dt>
-          <dd>The base URL for the <a>flyout service</a>. If none is provided, it is assumed to be identical to <code>service_url</code>;</dd>
-          <dt><code>flyout_service_path</code></dt>
-          <dd>An optional URL path which will be concatenated to the <code>flyout_service_url</code> to obtain the full URL of the flyout service. The absence of this parameter indicates that no flyout service is associated with this suggest service.</dd>
         </dl>
       </p>
       <p>
         For instance, a suggest metadata could be as follows:
         <pre data-include="examples/suggest-metadata/valid/example.json" class="example json"></pre>
-	Such a metadata indicates that a suggest service is available at <code>https://example.com/api/suggest</code> with an associated <a>flyout endpoint</a> at <code>https://example.com/api/suggest/flyout/${id}</code>.
+	Such a metadata indicates that a suggest service is available at <code>https://example.com/api/suggest</code>.
       </p>
       </section>
       <section>
@@ -761,35 +757,6 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           As the <code>prefix</code> name suggests, suggest services are expected to perform prefix search on their database of records, such that a suggest service can be used to provide auto-completion as users type names or identifiers in a field.
         </p>
       </section>      
-      <section>
-      <h3>Flyout Services</h3>
-        <p>
-          A <dfn>flyout service</dfn> provides small previews of suggested elements.
-          These previews are designed to be shown when hovering a suggested element.
-	  When a suggest service supports flyout, it declares the <dfn>flyout endpoint</dfn> in its <a>suggest metadata</a>.
-        </p>
-	<p>
-	  A preview for a suggested entity, property or type can then be obtained at the flyout endpoint by replacing <code>${id}</code>
-	  by the identifier for the entity, property or type, encoded as a URI component. Upon a GET query to this URL, the service returns a JSON response
-	  consisting of an object with the following fields:
-	  <dl>
-	    <dt><code>id</code></dt>
-	    <dd>The identifier supplied in the URL;</dd>
-	    <dt><code>html</code></dt>
-	    <dd>A string containing HTML code that can be used to display a small preview alongside the suggested entity, property or type.</dd>
-	  </dl>
-	</p>
-	<p>
-          For instance, if a service's flyout endpoint is <code>https://example.com/suggest/entities/flyout?id=${id}</code>,
-	  then by retrieving <code>https://example.com/suggest/entities/flyout?id=Q38274</code>, one might get the following
-	  response:
-          <pre data-include="examples/flyout-response/valid/example.json" data-include-format="text" class="example json"></pre>
-	</p>
-	<p class="note">
-	  Flyout services were used by Freebase and are mostly redundant with the <code>description</code> field in <a href="#suggest-responses">suggest responses</a>.
-	  Given that they allow services to return arbitrary HTML content, they also pose a security threat to clients. It is therefore proposed          that this functionality is dropped in the future.
-	</p>
-      </section>
     </section>
     <section>
       <h2>Data Extension Service</h2>
