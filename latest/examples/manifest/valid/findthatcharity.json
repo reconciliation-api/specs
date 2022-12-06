@@ -7,7 +7,6 @@
     "url": "https://findthatcharity.uk/charity/{id}"
   },
   "preview": {
-    "url": "https://findthatcharity.uk/preview/charity/{id}",
     "width": 430,
     "height": 300
   },

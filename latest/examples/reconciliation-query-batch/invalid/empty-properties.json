@@ -1,5 +1,7 @@
 {
-  "q1": {
-    "properties": []
-  }
+  "queries": [
+    {
+      "properties": []
+    }
+  ]
 }

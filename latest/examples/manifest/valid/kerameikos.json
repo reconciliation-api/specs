@@ -61,15 +61,12 @@
     }
   ],
   "preview": {
-    "url": "http://kerameikos.org/apis/reconcile/preview{?id}",
     "height": 90,
     "width": 320
   },
   "suggest": {
-    "entity": {
-      "service_url": "http://kerameikos.org/apis/reconcile",
-      "service_path": "/suggest/entity",
-      "flyout_service_path": "/flyout{?id}"
-    }
+    "entity": true,
+    "property": false,
+    "type": false
   }
 }
