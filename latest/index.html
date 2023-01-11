@@ -917,14 +917,13 @@ containing a type identifier.
       <section>
         <h3>Visual rendering</h3>
         <p>
-          User interfaces provided by reconciliation clients typically provide visual renderings of the data involved in the reconciliation and data extension process.
           The <a href="#preview-service">preview service</a> provides HTML content to reconciliation clients. Using HTML allows services to provide non-text alternatives for text content, as well as 
-          semantically rich content (structure, styled text, hyperlinks, etc). Reconciliation services SHOULD ensure [[accessibility]] of this HTML content
-          (avoid fixed font sizes, provide alternative text for images etc). Except for this
-          HTML content, all data involved in the reconciliation and data extension process is text-based and contains no specifics about visual rendering. <i class="todo">[TODO: the service actually sets an explicit
-          size in the <a>preview metadata</a>, this makes it impossible for the client to get a scaled preview. Can/should we remove the size, and instead support requesting a specific size, e.g. in a header, when calling 
-          <a href="#preview-queries">preview queries</a>?]</i> Reconciliation clients SHOULD ensure [[accessibility]] for this text content (font resizing, screen reader support etc.) based on the technology of the
-          underlying platform, which will typically implement the details of visual text rendering and user interface customization.
+          semantically rich content (structure, styled text, hyperlinks, etc). Reconciliation services SHOULD ensure [[accessibility]] of this HTML content (avoid fixed font sizes, provide alternative text for images etc).
+          The service's <a>preview metadata</a> contains the suggested width and height to display the preview content. Reconciliation clients SHOULD consider adjusting these values as required for supporting accessibility features like UI scaling.
+        </p>
+        <p>
+          Except for the preview content and size, all data involved in the reconciliation and data extension process is text-based and contains no specifics about visual rendering. Reconciliation clients SHOULD ensure [[accessibility]] for this text content
+          (font resizing, screen reader support etc.) based on the technology of the underlying platform, which will typically implement the details of visual text rendering and user interface customization.
         </p>
       </section>
       <section>
