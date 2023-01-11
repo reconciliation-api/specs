@@ -575,6 +575,8 @@ database are instances of this type.<dd>
           <dl>
             <dt><code>id</code></dt>
             <dd>A string which identifies the feature, such as <code>"name_tfidf"</code> or <code>"pagerank"</code>. This id must be unique among all the matching features returned for a given candidate;</dd>
+            <dt><code>name</code></dt>
+            <dd>A human-readable name, which is a non-empty string.</dd>
             <dt><code>value</code></dt>
             <dd>The value of the feature for the candidate, which can be any boolean or numerical value.</dd>
           </dl>
@@ -928,10 +930,10 @@ containing a type identifier.
       <section>
         <h3>Content semantics</h3>
         <p>
-          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> fields for identifiable objects, in particular
-          <a>entities</a>, <a>types</a>, and <a>properties</a> <i class="todo">[TODO: <a>matching features</a> don't have names, but probably should]</i>. These SHOULD be used by
-          reconciliation clients to provide useful labels for displaying and linking identifiable entities. The structural semantics of the content provided by reconciliation services allows different presentations
-          (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can be modified by third-party tools to enhance accessibility.
+          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> fields for all identifiable objects, in particular
+          <a>entities</a>, <a>types</a>, <a>properties</a>, and <a>matching features</a>. These SHOULD be used by reconciliation clients to provide useful labels for displaying and linking identifiable entities. 
+          The structural semantics of the content provided by reconciliation services allows different presentations (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can 
+          be modified by third-party tools to enhance accessibility.
         </p>
       </section>
     </section>
