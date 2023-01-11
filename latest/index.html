@@ -95,7 +95,6 @@
         }
       };
     </script>
-    <link rel="stylesheet" type="text/css" href="https://www.w3.org/2006/02/charter-style.css">
     <title>Reconciliation Service API</title>
   </head>
   <body>
@@ -912,7 +911,10 @@ containing a type identifier.
         Reconciliation clients provide user interfaces for creating <a>reconciliation queries</a> and reviewing <a>reconciliation candidates</a>, including <a href="preview-service">preview</a>
         and <a>suggest services</a>, as well as for interacting with <a href="#data-extension-service">data extension services</a>, including <a href="#dfn-data-extension-property-proposal">property proposals</a> 
         and configuration of <a href="#dfn-data-extension-property-setting">property settings</a>. These user interfaces SHOULD be implemented ensuring [[accessibility]] for all people, whatever their hardware,
-        software, language <i class="todo">[TODO: Internationalization, see <a href="https://github.com/reconciliation-api/specs/issues/52">#52</a>]</i>, location, or ability.
+        software, language, location, or ability.
+      </p>
+      <p class="note">
+        Currently, supporting multiple languages requires separate reconciliation services for each language. For progress on multilingual support in a single service see issue <a href="https://github.com/reconciliation-api/specs/issues/52">#52</a>.
       </p>
       <section>
         <h3>Visual rendering</h3>
