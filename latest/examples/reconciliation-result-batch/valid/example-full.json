@@ -11,18 +11,22 @@
           "features": [
             {
               "id": "name_tfidf",
+              "name": "TF-IDF score for the entity name",
               "value": 378.239
             },
             {
               "id": "pagerank",
+              "name": "PageRank score for the entity",
               "value": -3.1209
             },
             {
               "id": "type_match",
+              "name": "Match score for the entity type",
               "value": 10.329
             },
             {
               "id": "deprecated",
+              "name": "Deprecation status of the entity",
               "value": false
             }
           ],
@@ -66,18 +70,22 @@
           "features": [
             {
               "id": "name_tfidf",
+              "name": "TF-IDF score for the entity name",
               "value": 334.188
             },
             {
               "id": "pagerank",
+              "name": "PageRank score for the entity",
               "value": -4.1581
             },
             {
               "id": "type_match",
+              "name": "Match score for the entity type",
               "value": 13.78
             },
             {
               "id": "deprecated",
+              "name": "Deprecation status of the entity",
               "value": false
             }
           ],

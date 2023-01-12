@@ -1,5 +1,4 @@
 {
-   "url": "https://example.com/api/preview?id={{id}}",
    "width": 200,
    "height": 100
 }

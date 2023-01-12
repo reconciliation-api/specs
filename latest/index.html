@@ -87,6 +87,11 @@
             "publisher": "English Wikipedia",
             "href": "https://en.wikipedia.org/wiki/Code_injection"
           },
+          "accessibility": {
+            "title": "Accessibility",
+            "publisher": "W3C",
+            "href": "https://www.w3.org/standards/webdesign/accessibility"
+          },
         }
       };
     </script>
@@ -569,6 +574,8 @@ database are instances of this type.<dd>
           <dl>
             <dt><code>id</code></dt>
             <dd>A string which identifies the feature, such as <code>"name_tfidf"</code> or <code>"pagerank"</code>. This id must be unique among all the matching features returned for a given candidate;</dd>
+            <dt><code>name</code></dt>
+            <dd>A human-readable name, which is a non-empty string.</dd>
             <dt><code>value</code></dt>
             <dd>The value of the feature for the candidate, which can be any boolean or numerical value.</dd>
           </dl>
@@ -895,6 +902,39 @@ containing a type identifier.
         <p>
           Response example for the <a>data extension query</a> from the previous example:
           <pre data-include="examples/data-extension-response/valid/example-full.json" class="example json"></pre>
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Accessibility Considerations</h2>
+      <p>
+        Reconciliation clients provide user interfaces for creating <a>reconciliation queries</a> and reviewing <a>reconciliation candidates</a>, including <a href="preview-service">preview</a>
+        and <a>suggest services</a>, as well as for interacting with <a href="#data-extension-service">data extension services</a>, including <a href="#dfn-data-extension-property-proposal">property proposals</a> 
+        and configuration of <a href="#dfn-data-extension-property-setting">property settings</a>. These user interfaces SHOULD be implemented ensuring [[accessibility]] for all people, whatever their hardware,
+        software, language, location, or ability.
+      </p>
+      <p class="note">
+        Currently, supporting multiple languages requires separate reconciliation services for each language. For progress on multilingual support in a single service see issue <a href="https://github.com/reconciliation-api/specs/issues/52">#52</a>.
+      </p>
+      <section>
+        <h3>Visual rendering</h3>
+        <p>
+          The <a href="#preview-service">preview service</a> provides HTML content to reconciliation clients. Using HTML allows services to provide non-text alternatives for text content, as well as 
+          semantically rich content (structure, styled text, hyperlinks, etc). Reconciliation services SHOULD ensure [[accessibility]] of this HTML content (avoid fixed font sizes, provide alternative text for images etc).
+          The service's <a>preview metadata</a> contains the suggested width and height to display the preview content. Reconciliation clients SHOULD consider adjusting these values as required for supporting accessibility features like UI scaling.
+        </p>
+        <p>
+          Except for the preview content and size, all data involved in the reconciliation and data extension process is text-based and contains no specifics about visual rendering. Reconciliation clients SHOULD ensure [[accessibility]] for this text content
+          (font resizing, screen reader support etc.) based on the technology of the underlying platform, which will typically implement the details of visual text rendering and user interface customization.
+        </p>
+      </section>
+      <section>
+        <h3>Content semantics</h3>
+        <p>
+          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> fields for all identifiable objects, in particular
+          <a>entities</a>, <a>types</a>, <a>properties</a>, and <a>matching features</a>. These SHOULD be used by reconciliation clients to provide useful labels for displaying and linking identifiable entities. 
+          The structural semantics of the content provided by reconciliation services allows different presentations (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can 
+          be modified by third-party tools to enhance accessibility.
         </p>
       </section>
     </section>
