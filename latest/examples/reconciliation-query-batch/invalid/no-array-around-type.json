@@ -2,7 +2,7 @@
   "queries": [
     {
       "query": "Christel Hanewinckel",
-      "type": ["DifferentiatedPerson"],
+      "type": "DifferentiatedPerson",
       "limit": 5,
       "properties": [
         {
@@ -18,7 +18,7 @@
     },
     {
       "query": "Franz Thönnes",
-      "type": ["DifferentiatedPerson"],
+      "type": "DifferentiatedPerson",
       "limit": 5,
       "properties": [
         {

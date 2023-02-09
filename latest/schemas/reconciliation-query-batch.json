@@ -49,17 +49,10 @@
           },
           "type": {
             "description": "Either a single type identifier or a list of type identifiers",
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "limit": {
             "type": "number",
