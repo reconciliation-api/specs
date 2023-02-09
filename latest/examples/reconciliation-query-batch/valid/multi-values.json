@@ -2,7 +2,7 @@
   "queries": [
     {
       "query": "Christel Hanewinckel",
-      "type": "DifferentiatedPerson",
+      "type": ["DifferentiatedPerson"],
       "limit": 5,
       "properties": [
         {
