@@ -3,7 +3,7 @@
 set -e
 
 # Test JSON examples against schemas
-for version in "0.1" "0.2" "latest"; do
+for version in "0.1" "0.2" "draft"; do
 	echo "Testing version: $version"
 
 	for schema_file in `ls $version/schemas`; do

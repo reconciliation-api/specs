@@ -12,9 +12,9 @@
         wg: "Entity Reconciliation Community Group",
         wgPublicList: "public-reconciliation",
         wgURI: "https://www.w3.org/community/reconciliation/",
-	canonicalURI: "https://reconciliation-api.github.io/specs/0.2/",
+	canonicalURI: "https://reconciliation-api.github.io/specs/latest/",
 	edDraftURI: "https://reconciliation-api.github.io/specs/latest/",
-	prevRecURI: "https://reconciliation-api.github.io/specs/0.1/",
+	prevRecURI: "https://reconciliation-api.github.io/specs/0.2/",
 	license: "w3c-software-doc",
         github: {
            repoURL: "https://github.com/reconciliation-api/specs",
@@ -62,18 +62,43 @@
         localBiblio: {
           "beek-2018": {"aliasOf": "doi:10.1007/978-3-319-93417-4_5"},
           "christen-2012": {"aliasOf": "doi:10.1007/978-3-642-31164-2"},
-	  "JSONP": {
-	     "title": "JSONP",
-	     "publisher": "English Wikipedia",
-	     "href": "https://en.wikipedia.org/wiki/JSONP"
-	  },
+          "JSONP": {
+            "title": "JSONP",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/JSONP"
+          },
+          "CSRF": {
+            "title": "Cross-Site Request Forgery",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/CSRF"
+          },
+          "XSS": {
+            "title": "Cross-Site Scripting",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/XSS"
+          },
+          "DoS": {
+            "title": "Denial of Service",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/DoS"
+          },
+          "injection": {
+            "title": "Code injection",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/Code_injection"
+          },
+          "accessibility": {
+            "title": "Accessibility",
+            "publisher": "W3C",
+            "href": "https://www.w3.org/standards/webdesign/accessibility"
+          },
         }
       };
     </script>
-    <title>Reconciliation Service API v0.2</title>
+    <title>Reconciliation Service API</title>
   </head>
   <body>
-    <h1>Reconciliation Service API v0.2</h1>
+    <h1>Reconciliation Service API</h1>
     <section id='abstract'>
       <p>
         This document describes the reconciliation service API, a protocol edited by the
@@ -173,7 +198,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <p>Initial documentation of the reconciliation API as supported by OpenRefine 3.0 to 3.2.</p>
         </section>
         <section>
-          <h4>0.2 (This Version)</h4>
+          <h4><a href="https://reconciliation-api.github.io/specs/0.2/">0.2</a></h4>
           <p>Initial improvements to the specifications made by our Community Group. Most of them are backwards-compatible, except for the requirement to support CORS for cross-origin access.</p>
           <ul>
             <li>Let manifests announce which versions of the protocol are supported by the service;</li>
@@ -186,6 +211,14 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
             <li>Add support for authentication;</li>
             <li>Add support for referencing other reconciliation services in reconciled values returned by data extension;</li>
             <li>Add support for specifying the size of expected reconciliation batch sizes.</li>
+          </ul>
+        </section>
+        <section>
+          <h4>This Draft</h4>
+          <p>Collection of changes which make the API conform to the REST principles.</p>
+          <ul>
+            <li>Remove support for flyouts;</li>
+            <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint.</li>
           </ul>
         </section>
       </section>
@@ -218,16 +251,21 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
            Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
         <p>
-           Reconciliation services can define in their <a>service manifest</a> a <dfn>view template</dfn> for entities,
-           which associates to each entity a corresponding URI, by inserting its identifier in the template.
-           A view template is a string which contains the <code>{{id}<!-- -->}</code> substring.
-           For each entity, replacing <code>{{id}<!-- -->}</code> in the template by the entity's identifier
-           MUST result in a valid URI. To guarantee the correctness of the formed URI, clients MUST percent-encode
-           component-delimiting reserved characters in the identifier, i.e. encode it as a URI component [[RFC3986]].
+           Reconciliation services can define in their <a>service manifest</a> a <dfn>URI template</dfn> for entities,
+           as defined by [[RFC6570]]. This URI template builds a view URI for each entity, and has <code>id</code> as only variable.
+           For each entity, expanding the template with <code>id</code> being set to the entity's identifier
+           MUST result in a valid URI.
+        </p>
+        <p>
+           For example, a service which uses Wikidata identifiers for its entities could use <code>http://www.wikidata.org/entity/{id}</code>
+           as URI template for entities. For an entity with identifier <code>Q5</code>, this would expand to <code>http://www.wikidata.org/entity/Q5</code>.
+           Services for which the entity's identifier is already a full URI can use the <code>{+id}</code> template, which disables the escaping of some characters
+           when inserting the identifier in the template.
+           See [[RFC6570]] for more examples of URI templates.   
         </p>
         <p>
            Similarly, it is possible to associate to each <a>matching feature</a> a URL where documentation about
-           the feature is provided, by means of a view template. Inserting any feature identifier in this template
+           the feature is provided, by means of a URI template. Inserting any feature identifier in this template
            generates the URL for the feature.
         </p>
       </section>
@@ -334,20 +372,20 @@ database are instances of this type.<dd>
           <dt><code>serviceVersion</code></dt>
           <dd>An optional string which describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
           <dt><code>view</code></dt>
-          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for <a>entities</a>;</dd>
-          <dt><code>feature_view</code></td>
-          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>view template</a> for <a>matching features</a>;</dd>
+          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
+          <dt><code>feature_view</code></dt>
+          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
           <dt><code>preview</code></dt>
-          <dd>A <a>preview metadata</a>, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
+          <dd>A <a>preview metadata</a> object, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
           <dt><code>suggest</code></dt>
           <dd>An optional object which may contain the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
             <dl>
               <dt><code>entity</code></dt>
-              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>entities</a>;</dd>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>entities</a>;</dd>
               <dt><code>property</code></dt>
-              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>properties</a>;</dd>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>properties</a>;</dd>
               <dt><code>type</code></dt>
-              <dd>A <a>suggest metadata</a> for auto-suggestion of <a>types</a>.</dd>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>types</a>;</dd>
             </dl>
           </dd>
           <dt><code>extend</code></dt>
@@ -365,6 +403,32 @@ database are instances of this type.<dd>
         A more complete example, with some optional services implemented:
         <pre data-include="examples/manifest/valid/getty.json" class="example json"></pre>
       </p>
+      </section>
+      <section>
+        <h3>Overview of Possible Routes</h3>
+        <p>
+          We give here an overview of the routes that reconciliation services MUST and MAY implement. They are all relative to the root <a>endpoint</a>, which we assume here to be <code>/</code>.
+        </p>
+        <p>
+        <dl>
+           <dt><code>/</code></dt>
+           <dd>The root endpoint, which supports the GET method and returns the service manifest. Services MUST support this route;</dd>
+           <dt><code>/reconcile</code></dt>
+           <dd>The route used to submit <a>reconciliation query batches</a>, with the POST method. Services MUST support this route;</dd>
+           <dt><code>/suggest/entity</code></dt>
+           <dd>The route used for auto-completion of entities, with the GET method. Services MAY support this route, as indicated  in their manifest;</dd>
+           <dt><code>/suggest/property</code></dt>
+           <dd>The route used for auto-completion of properties, with the GET method. Services MAY support this route, as indicated in their manifest;</dd>
+           <dt><code>/suggest/type</code></dt>
+           <dd>The route used for auto-completion of types, with the GET method. Services MAY support this route, as indicated in their manifest;</dd>
+           <dt><code>/preview</code></dt>
+           <dd>The route used to preview an entity, with the GET method. Services MAY support this route, depending on the presence of a <a>preview metadata</a> object in their manifest;</dd>
+           <dt><code>/extend</code></dt>
+           <dd>The route used to submit <a>data extension queries</a>, with the POST method. Services MAY support this route, depending on the presence of a <a>data extension metadata</a> object in their manifest;</dd>
+           <dt><code>/extend/propose</code></dt>
+           <dd>The route used to obtain <a>data extension property proposals</a>, with the GET method. Services MAY support this route, following what their <a>data extension metadata</a> object in their manifest indicates.</dd>
+        </dl>
+       </p>
       </section>
       <section>
         <h3>HTTP(S) Access</h3>
@@ -459,7 +523,7 @@ database are instances of this type.<dd>
           </dl>
         </p>
         <p>
-          A <dfn>reconciliation query batch</dfn> is a set of <a>reconciliation queries</a> indexed by string identifiers.
+          A <dfn>reconciliation query batch</dfn> is an array of <a>reconciliation queries</a>.
         </p>
         <p>
           Minimal example of a <a>reconciliation query batch</a> with mandatory fields only:
@@ -510,6 +574,8 @@ database are instances of this type.<dd>
           <dl>
             <dt><code>id</code></dt>
             <dd>A string which identifies the feature, such as <code>"name_tfidf"</code> or <code>"pagerank"</code>. This id must be unique among all the matching features returned for a given candidate;</dd>
+            <dt><code>name</code></dt>
+            <dd>A human-readable name, which is a non-empty string.</dd>
             <dt><code>value</code></dt>
             <dd>The value of the feature for the candidate, which can be any boolean or numerical value.</dd>
           </dl>
@@ -523,10 +589,11 @@ in the <code>score</code> field). By exposing individual features in their respo
         </p>
         <p>
 	  A <dfn>reconciliation result</dfn> is a set of <a>reconciliation candidates</a>. It is serialized in JSON
-	  as an array of such reconciliation candidate objects. This array SHOULD be sorted by decreasing score.
+	  as an object containing in the field <code>candidates</code> an array of such reconciliation candidate objects. This array SHOULD be sorted by decreasing score.
         </p>
         <p>
-          A <dfn>reconciliation result batch</dfn> is a set of <a>reconciliation results</a> indexed by string identifiers of the corresponding <a>reconciliation query batch</a>.
+          A <dfn>reconciliation result batch</dfn> is an array of <a>reconciliation results</a> given in the same order as in the corresponding <a>reconciliation query batch</a>.
+          When serialized in JSON, it is wrapped in an object under the <code>results</code> field.
         </p>
         <p>
           Full example of a <a>reconciliation result batch</a>:
@@ -543,27 +610,15 @@ in the <code>score</code> field). By exposing individual features in their respo
 	  <a>reconciliation result batches</a> over HTTP.
 	</p>
 	<p>
-          A reconciliation service MUST support HTTP POST requests on its <a>endpoint</a> with
-          <code>application/x-www-form-urlencoded</code> bodies containing a
-          <a>reconciliation query batch</a> (serialized in JSON) in a form element named <code>queries</code>.
+          A reconciliation service MUST support HTTP POST requests at the route <code>/reconcile</code> (relative to its <a>endpoint</a>) with
+          <code>application/json</code> bodies containing a
+          <a>reconciliation query batch</a>.
         </p>
         <p>
-          <pre class="example nohighlight">POST / queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
-        </p>
-        <p>
-          Similarly, a reconciliation service SHOULD support HTTP GET requests with a
-          <a>reconciliation query batch</a> in a query string parameter named <code>queries</code>.
-        </p>
-        <p>
-          <pre class="example nohighlight">GET /?queries=&lt;URL-encoded reconciliation query batch&gt;</pre>
+          <pre class="example nohighlight">POST /reconcile &lt;reconciliation query batch&gt;</pre>
         </p>
 	<p>
-	   In both cases, the service returns the corresponding query batch serialized in JSON.
-	</p>
-	<p class="note">
-	   The POST method is the primary way to send reconciliation queries to a service since 
-	   it does not restrict the length of the query batches. The GET method is useful for
-	   interactive debugging of reconciliation queries in a web browser, for instance.
+	   The service returns the corresponding query batch serialized in JSON.
 	</p>
       </section>
       <section class="informative">
@@ -611,13 +666,10 @@ in the <code>score</code> field). By exposing individual features in their respo
       <h3>Preview Metadata</h3>
       <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
         <dl>
-          <dt><code>url</code></dt>
-          <dd>A string containing <code>{{id}<!-- -->}</code> such that replacing <code>{{id}<!-- -->}</code> by an <a>entity</a> identifier encoded as a URI component yields the <dfn>preview URL</dfn> for that entity. This preview URL MUST resolve to an HTML page summarizing the entity.
-It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimensions are specified by the service in the following fields;</dd>
           <dt><code>width</code></dt>
-          <dd>The width in pixels of the <code>&lt;iframe&gt;</code> element where to render an entity preview;</dd>
+          <dd>The width in pixels of the viewport where to render an entity preview;</dd>
           <dt><code>height</code></dt>
-          <dd>The height in pixels of the same <code>&lt;iframe&gt;</code>.</dd>
+          <dd>The height in pixels of the same viewport.</dd>
         </dl>
       </p>
       <p>
@@ -627,10 +679,11 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
       </section>
       <section>
       <h3>Preview Queries</h3>
-      <p>A preview service is queried by resolving the <a>preview URL</a> for an <a>entity</a>. The URL must resolve to an HTML document.
+      <p>A preview service is queried by resolving the URI template <code>/preview?id={id}</code> relative to the reconciliation endpoint, where <code>id</code> is subsituted by the <a>entity</a> identifier. The URL must resolve to an HTML document,
+        which MUST be viewable in an HTML viewport whose dimensions are determined by the <a>preview metadata</a>.
       </p>
       <p>
-        For instance, assuming the example preview metadata above, the service could respond to a preview request as follows:
+        For instance, assuming that the reconciliation API is running at <code>/api</code> and serves the example preview metadata above, the service could respond to a preview request as follows:
        <pre data-include="examples/preview-response/example.html" data-include-format="text" class="example html">
        </pre>
       </p>
@@ -644,27 +697,17 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         A reconciliation service can offer a <dfn>suggest service</dfn> for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
         These suggest services can be used by clients to let users select an entity, property or type manually, at various stages of their reconciliation workflows.
         Suggest services for entities, properties and types are declared independently
-        in the <a>service manifest</a> by providing a <a>suggest metadata</a> for them.
+        in the <a>service manifest</a>.
       </p>
       <section>
-      <h3>Suggest Metadata</h3>
+      <h3>Suggest Endpoints</h3>
       <p>
-        A <dfn>suggest metadata</dfn> object consists of the following fields:
+        When supported, the suggest endpoints are located at the following URIs, relative to the service's root <a>endpoint</a>:
         <dl>
-          <dt><code>service_url</code></dt>
-          <dd>The base URL for the suggest service;</dd>
-          <dt><code>service_path</code></dt>
-          <dd>A URL path which will be concatenated to the <code>service_url</code> to obtain the full URL of the suggest service;</dd>
-          <dt><code>flyout_service_url</code></dt>
-          <dd>The base URL for the <a>flyout service</a>. If none is provided, it is assumed to be identical to <code>service_url</code>;</dd>
-          <dt><code>flyout_service_path</code></dt>
-          <dd>An optional URL path which will be concatenated to the <code>flyout_service_url</code> to obtain the full URL of the flyout service. The absence of this parameter indicates that no flyout service is associated with this suggest service.</dd>
+          <dt><code>/suggest/entity</code></dt>
+          <dt><code>/suggest/property</code></dt>
+          <dt><code>/suggest/type</code></dt>
         </dl>
-      </p>
-      <p>
-        For instance, a suggest metadata could be as follows:
-        <pre data-include="examples/suggest-metadata/valid/example.json" class="example json"></pre>
-	Such a metadata indicates that a suggest service is available at <code>https://example.com/api/suggest</code> with an associated <a>flyout endpoint</a> at <code>https://example.com/api/suggest/flyout/${id}</code>.
       </p>
       </section>
       <section>
@@ -730,35 +773,6 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           As the <code>prefix</code> name suggests, suggest services are expected to perform prefix search on their database of records, such that a suggest service can be used to provide auto-completion as users type names or identifiers in a field.
         </p>
       </section>      
-      <section>
-      <h3>Flyout Services</h3>
-        <p>
-          A <dfn>flyout service</dfn> provides small previews of suggested elements.
-          These previews are designed to be shown when hovering a suggested element.
-	  When a suggest service supports flyout, it declares the <dfn>flyout endpoint</dfn> in its <a>suggest metadata</a>.
-        </p>
-	<p>
-	  A preview for a suggested entity, property or type can then be obtained at the flyout endpoint by replacing <code>${id}</code>
-	  by the identifier for the entity, property or type, encoded as a URI component. Upon a GET query to this URL, the service returns a JSON response
-	  consisting of an object with the following fields:
-	  <dl>
-	    <dt><code>id</code></dt>
-	    <dd>The identifier supplied in the URL;</dd>
-	    <dt><code>html</code></dt>
-	    <dd>A string containing HTML code that can be used to display a small preview alongside the suggested entity, property or type.</dd>
-	  </dl>
-	</p>
-	<p>
-          For instance, if a service's flyout endpoint is <code>https://example.com/suggest/entities/flyout?id=${id}</code>,
-	  then by retrieving <code>https://example.com/suggest/entities/flyout?id=Q38274</code>, one might get the following
-	  response:
-          <pre data-include="examples/flyout-response/valid/example.json" data-include-format="text" class="example json"></pre>
-	</p>
-	<p class="note">
-	  Flyout services were used by Freebase and are mostly redundant with the <code>description</code> field in <a href="#suggest-responses">suggest responses</a>.
-	  Given that they allow services to return arbitrary HTML content, they also pose a security threat to clients. It is therefore proposed          that this functionality is dropped in the future.
-	</p>
-      </section>
     </section>
     <section>
       <h2>Data Extension Service</h2>
@@ -781,15 +795,7 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           The <dfn>data extension metadata</dfn> is an object stored in the <a>service manifest</a> in the <code>extend</code> field. It consists of the following settings, all optional:
           <dl>
             <dt><code>propose_properties</code></dt>
-            <dd>A service path object defining a URL which implements <a>data extension property proposal</a>, which consists of:
-              <dl>
-                <dt><code>service_url</code></dt>
-                <dd>The root URL of the service;</dd>
-                <dt><code>service_path</code></dt>
-                <dd>The path to the endpoint for property proposals.</dd>
-              </dl>
-              The full URL for data extension property proposals is obtained by concatenating these two fields.
-            </dd>
+            <dd>A boolean indicating if the service supports <a>data extension property proposal</a>;</dd>
             <dt><code>property_settings</code></dt>
             <dd>An array of <a>data extension property settings</a>.</dd>
           </dl>
@@ -822,16 +828,14 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
           A <dfn>data extension property proposal</dfn> service returns <a>properties</a> for a given <a>type</a> identifier.
         </p>
         <p>
-          The service MUST support HTTP GET requests with a `type` query string parameter.
+          If the reconciliation service supports data extension property proposals, it MUST support HTTP GET requests to the endpoint <code>/extend/propose</code> (relative to the reconciliation endpoint) with a <code>type</code> query string parameter
+containing a type identifier.
         </p>
         <p>
-          The service SHOULD support an optional `limit` query string parameter to control the number of proposed properties.
+          The service SHOULD support an optional <code>limit</code> query string parameter to control the number of proposed properties.
         </p>
         <p>
-          The service URL and path are declared in the <a>data extension metadata</a> of the <a>service manifest</a>.
-        </p>
-        <p>
-          <pre class="example nohighlight">GET /properties?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
+          <pre class="example nohighlight">GET /extend/propose?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
         </p>
         <p>
           A <dfn>data extension property proposal response</dfn> consists of:
@@ -858,19 +862,11 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         <p>
           The fact that a reconciliation service offers data extension MUST be announced by including a <a>data extension metadata</a> in the <code>extend</code> field of the <a>service manifest</a>.
         <p>
-          A data extension service MUST support HTTP POST requests with
-          <code>application/x-www-form-urlencoded</code> bodies containing a
-          <a>data extension query</a> in a form element named <code>extend</code>.
+          A data extension service MUST support HTTP POST requests at <code>/extend</code> (relative to the reconciliation endpoint) with
+          <code>application/json</code> bodies containing a <a>data extension query</a>.
         </p>
         <p>
-          <pre class="example nohighlight">POST / extend=&lt;URL-encoded data extension query&gt;</pre>
-        </p>
-        <p>
-          A data extension service SHOULD support HTTP GET requests with a
-          <a>data extension query</a> in a query string parameter named <code>extend</code>.
-        </p>
-        <p>
-          <pre class="example nohighlight">GET /?extend=&lt;URL-encoded data extension query&gt;</pre>
+          <pre class="example nohighlight">POST /extend &lt;data extension query&gt;</pre>
         </p>
         <p>
           A <dfn>data extension query</dfn> consists of:
@@ -909,6 +905,93 @@ It SHOULD render appropriately in an <code>&lt;iframe&gt;</code> whose dimension
         </p>
       </section>
     </section>
+    <section>
+      <h2>Accessibility Considerations</h2>
+      <p>
+        Reconciliation clients provide user interfaces for creating <a>reconciliation queries</a> and reviewing <a>reconciliation candidates</a>, including <a href="preview-service">preview</a>
+        and <a>suggest services</a>, as well as for interacting with <a href="#data-extension-service">data extension services</a>, including <a href="#dfn-data-extension-property-proposal">property proposals</a> 
+        and configuration of <a href="#dfn-data-extension-property-setting">property settings</a>. These user interfaces SHOULD be implemented ensuring [[accessibility]] for all people, whatever their hardware,
+        software, language, location, or ability.
+      </p>
+      <p class="note">
+        Currently, supporting multiple languages requires separate reconciliation services for each language. For progress on multilingual support in a single service see issue <a href="https://github.com/reconciliation-api/specs/issues/52">#52</a>.
+      </p>
+      <section>
+        <h3>Visual rendering</h3>
+        <p>
+          The <a href="#preview-service">preview service</a> provides HTML content to reconciliation clients. Using HTML allows services to provide non-text alternatives for text content, as well as 
+          semantically rich content (structure, styled text, hyperlinks, etc). Reconciliation services SHOULD ensure [[accessibility]] of this HTML content (avoid fixed font sizes, provide alternative text for images etc).
+          The service's <a>preview metadata</a> contains the suggested width and height to display the preview content. Reconciliation clients SHOULD consider adjusting these values as required for supporting accessibility features like UI scaling.
+        </p>
+        <p>
+          Except for the preview content and size, all data involved in the reconciliation and data extension process is text-based and contains no specifics about visual rendering. Reconciliation clients SHOULD ensure [[accessibility]] for this text content
+          (font resizing, screen reader support etc.) based on the technology of the underlying platform, which will typically implement the details of visual text rendering and user interface customization.
+        </p>
+      </section>
+      <section>
+        <h3>Content semantics</h3>
+        <p>
+          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> fields for all identifiable objects, in particular
+          <a>entities</a>, <a>types</a>, <a>properties</a>, and <a>matching features</a>. These SHOULD be used by reconciliation clients to provide useful labels for displaying and linking identifiable entities. 
+          The structural semantics of the content provided by reconciliation services allows different presentations (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can 
+          be modified by third-party tools to enhance accessibility.
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Security Considerations</h2>
+
+      <section>
+        <h3>Preventing Abuse</h3>
+        <ul>
+          <li>Reconciliation services SHOULD guard against too frequent requests to prevent [[DoS]] attacks (see <a href="#error-handling-and-rate-limiting">Error Handling and Rate-limiting</a>).</li>
+          <li>Reconciliation services SHOULD guard against malicious code when querying their underlying data store with data from <a>reconciliation queries</a> to avoid code [[injection]].</li>
+          <li>Reconciliation services SHOULD NOT parse the JSON requests sent by clients using a code execution mechanism like JavaScript's <code>eval()</code>, since requests could contain malicious code.</li>
+          <li>Reconciliation clients that display data from <a href="#preview-service">preview services</a> SHOULD ensure that the data is encoded, sanitized, or isolated to prevent [[XSS]] and [[CSRF]] attacks.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Other considerations</h3>
+        <ul>
+          <li>Reconciliation services and clients MAY support user authentication (see <a href="#authentication">authentication</a>).</li>
+          <li>Reconciliation features don't expose information about the underlying platform to clients or services, they don't allow clients or services to send data to the underlying platform, access other devices, device sensors, 
+            a user agent's native UI, or enable clients or services to downgrade default security protections.
+          </li>
+        </ul>
+      </section>
+
+    </section>
+
+    <section>
+      <h2>Privacy Considerations</h2>
+
+      <section>
+        <h3>Network data</h3>
+        <ul>
+          <li>All data in <a>reconciliation queries</a> is visible to the reconciliation service, to be processed for returning <a>reconciliation results</a> to the client.
+            To prevent malicious actors from intercepting the data that is sent and received, services SHOULD provide secure HTTPS endpoints for reconciliation.
+          </li>
+          <li>User selections of matching <a>reconciliation candidates</a> provide user-verified statements about the data. These selections are currently not sent back to the reconciliation service
+            (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Persistent data</h3>
+        <ul>
+          <li>Reconciliation clients MAY introduce new state that persists across browsing sessions for persisting <a>reconciliation queries</a>,
+            the service's <a>reconciliation results</a>, and/or the user's selection of matches.</li>
+          <li>Reconciliation clients implemented as browser extensions running in <em>Private Browsing</em> or <em>Incognito</em> mode SHOULD NOT store <a>reconciliation queries</a>,
+            the service's <a>reconciliation results</a>, or the user's selection of matches.</li>
+          <li>Reconciliation services currently don't introduce new state that persists across browsing sessions (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).</li>
+          </li>
+        </ul>
+      </section>
+
+    </section>
+
     <section class="appendix">
       <h2>JSON Schemas</h2>
         <p>
