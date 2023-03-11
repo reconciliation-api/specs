@@ -48,18 +48,8 @@
             "description": "A string to be matched against the name of the entities"
           },
           "type": {
-            "description": "Either a single type identifier or a list of type identifiers",
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
+            "description": "A type identifier indicating which class of entities to restrict the search to",
+            "type": "string"
           },
           "limit": {
             "type": "number",

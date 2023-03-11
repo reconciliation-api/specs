@@ -218,7 +218,8 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <p>Collection of changes which make the API conform to the REST principles.</p>
           <ul>
             <li>Remove support for flyouts;</li>
-            <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint.</li>
+            <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint;</li>
+            <li>The reconciliation queries only support passing a single <code>type</code> and the <code>type_strict</code> parameter was removed.</li>
           </ul>
         </section>
       </section>
@@ -505,11 +506,11 @@ database are instances of this type.<dd>
 	    	By supplying such a string, a client intends to search for entities with similar
 	    	names. The specifics of how this similarity is defined are determined by the service.</dd>
 	    <dt><code>type</code></dt>
-            <dd>An array of <a>types</a>. Supplying such types allows users to restrict
-	    	the search to entities which bear those types. Whether this restriction should be a
+            <dd>A <a>type</a>. Supplying such a type allows users to restrict
+	    	the search to entities which bear this type. Whether this restriction should be a
 	    	hard constraint or simply induce a change on the reconciliation scores can be
 	    	determined by the service. In particular, services MAY return candidates which
-	    	do not belong to any of the supplied types;</dd>
+	    	do not belong to the supplied type;</dd>
 	    <dt><code>limit</code></dt>
             <dd>A limit on the number of candidates to return, which must be a positive integer;</dd>
 	    <dt><code>properties</code></dt>
@@ -518,8 +519,6 @@ database are instances of this type.<dd>
 		by allowing clients to specify other attributes of entities that should match, beyond their name in the <code>query</code> field.
 		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service.
 		A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties;</dd>
-	    <dt><code>type_strict</code></dt>
-            <dd>A type strictness parameter, which can be one of the strings <code>"should"</code>, <code>"all"</code> or <code>"any"</code>.</dd>
           </dl>
         </p>
         <p>
@@ -542,10 +541,6 @@ database are instances of this type.<dd>
         <p>
           A <a href="#reconciliation-query-batch-json-schema">JSON schema to validate the serialization of a query batch</a> is available.
         </p>
-	<p class="note">
-          The meaning of the <code>type_strict</code> is unclear, it is inherited from Freebase's API but is not used
-	  or documented in OpenRefine.
-	</p>
       </section>
       <section>
         <h3>Reconciliation Query Responses</h3>
