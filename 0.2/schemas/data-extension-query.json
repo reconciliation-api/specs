@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema#",
-  "$id": "https://reconciliation-api.github.io/specs/latest/schemas/data-extension-query.json",
+  "$id": "https://reconciliation-api.github.io/specs/0.2/schemas/data-extension-query.json",
   "type": "object",
   "description": "This schema validates a data extension query",
   "properties": {

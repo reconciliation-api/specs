@@ -1,5 +1,5 @@
 {
-    "$id": "https://reconciliation-api.github.io/specs/latest/schemas/type.json",
+    "$id": "https://reconciliation-api.github.io/specs/0.2/schemas/type.json",
     "type": "object",
     "properties": {
         "id": {

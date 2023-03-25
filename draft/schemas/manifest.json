@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema#",
-  "$id": "https://reconciliation-api.github.io/specs/latest/schemas/manifest.json",
+  "$id": "https://reconciliation-api.github.io/specs/draft/schemas/manifest.json",
   "type": "object",
   "description": "This validates a service manifest, describing the features supported by the endpoint.",
   "properties": {
