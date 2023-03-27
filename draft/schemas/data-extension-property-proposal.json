@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema#",
   "$id": "https://reconciliation-api.github.io/specs/draft/schemas/data-extension-property-proposal.json",
   "type": "object",
-  "description": "This schema can be used to validate the JSON response a property proposal endpoint (part of the data extension feature).",
+  "description": "This schema can be used to validate the JSON response of a property proposal endpoint (part of the data extension feature).",
   "properties": {
     "properties": {
       "type": "array",
