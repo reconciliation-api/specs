@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "https://reconciliation-api.github.io/specs/draft/schemas/data-extension-property-proposal.json",
+  "type": "object",
+  "description": "This schema can be used to validate the JSON response of a property proposal endpoint (part of the data extension feature).",
+  "properties": {
+    "properties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identifier of the suggested property"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the suggested property"
+          },
+          "description": {
+            "type": "string",
+            "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    },
+    "type": {
+       "type": "string",
+       "description": "The identifier of the type for which those properties are suggested"
+    },
+    "limit": {
+       "type": "number",
+       "description": "The maximum number of results requested."
+    }
+  },
+  "required": [
+    "properties"
+  ]
+}
