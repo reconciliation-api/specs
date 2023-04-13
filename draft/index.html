@@ -713,7 +713,9 @@ in the <code>score</code> field). By exposing individual features in their respo
         <p>A suggest service MUST accept GET queries with the following URL-encoded parameters:
           <dl>
             <dt><code>prefix</code></dt>
-            <dd>The string input by the user in the auto-suggest-enabled field;</dd>
+            <dd>The string input by the user in the auto-suggest-enabled field;
+              depending on the data users are working with, they might want to select a suggestion from all available <a>types</a>, <a>properties</a>, or even <a>entities</a>;
+              to allow that, services MAY send all suggestions if the prefix is empty, and clients SHOULD provide a way to send the empty prefix;</dd>
             <dt><code>cursor</code></dt>
             <dd>An optional integer to specify the number of suggestions to skip: this can be used by clients to fetch more suggestions.</dd>
           </dl>
