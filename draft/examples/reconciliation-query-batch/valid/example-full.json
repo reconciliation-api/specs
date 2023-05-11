@@ -13,8 +13,7 @@
           "pid": "affiliation",
           "v": "http://d-nb.info/gnd/2022139-3"
         }
-      ],
-      "type_strict": "should"
+      ]
     },
     {
       "query": "Franz Thönnes",
@@ -29,8 +28,7 @@
           "pid": "affiliation",
           "v": "http://d-nb.info/gnd/2022139-3"
         }
-      ],
-      "type_strict": "should"
+      ]
     }
   ]
 }

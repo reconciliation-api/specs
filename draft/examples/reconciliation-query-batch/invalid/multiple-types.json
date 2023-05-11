@@ -1,0 +1,9 @@
+{
+  "queries": [
+    {
+      "query": "Christel Hanewinckel",
+      "type": ["DifferentiatedPerson", "FictionalCharacter"],
+      "limit": 5
+    }
+  ]
+}
