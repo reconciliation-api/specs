@@ -91,6 +91,11 @@
             "publisher": "W3C",
             "href": "https://www.w3.org/standards/webdesign/accessibility"
           },
+          "BCP 47": {
+            "title": "Tags for Identifying Languages",
+            "publisher": "IETF",
+            "href": "https://www.rfc-editor.org/rfc/bcp/bcp47.txt"
+          },
         }
       };
     </script>
@@ -908,9 +913,6 @@ containing a type identifier.
         and configuration of <a href="#dfn-data-extension-property-setting">property settings</a>. These user interfaces SHOULD be implemented ensuring [[accessibility]] for all people, whatever their hardware,
         software, language, location, or ability.
       </p>
-      <p class="note">
-        Currently, supporting multiple languages requires separate reconciliation services for each language. For progress on multilingual support in a single service see issue <a href="https://github.com/reconciliation-api/specs/issues/52">#52</a>.
-      </p>
       <section>
         <h3>Visual rendering</h3>
         <p>
@@ -931,6 +933,22 @@ containing a type identifier.
           The structural semantics of the content provided by reconciliation services allows different presentations (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can 
           be modified by third-party tools to enhance accessibility.
         </p>
+      </section>
+      <section>
+        <h3>Text-processing language</h3>
+
+        <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">
+        text-processing languge</a> in a <code>lang</code> field. The <code>lang</code> value MUST be a single well-formed [[BCP 47]] language tag. This text-processing languge applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
+        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
+        (see example below). Client and service implementors SHOULD consider the text-processing languge to ensure correct processing of natural language content.</p>
+
+        <p>In the following example, we first set the text-processing language for a reconciliation query to <code>en</code>, which is inherited by the first property, and overridden in the second property with <code>zh-Hant</code>:</p>
+
+        <p>
+          <pre data-include="examples/reconciliation-query-batch/valid/text-processing-language.json" class="example json"></pre>
+        </p>
+
+        <p>If no explicit text-processing language is given, the metadata language (the language of the intended audience) provided first (see <a href="#service-definition">service definition</a>) is considered the default text-processing language.</p>
       </section>
     </section>
     <section>

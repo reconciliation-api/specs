@@ -1,0 +1,19 @@
+{
+  "queries": [
+    {
+      "query": "Deng Shuping",
+      "lang": "en",
+      "properties": [
+        {
+          "pid": "professionOrOccupation",
+          "v": "art historian"
+        },
+        {
+          "pid": "variantName",
+          "v": "鄧淑蘋",
+          "lang": "zh-Hant"
+        }
+      ]
+    }
+  ]
+}

@@ -55,6 +55,10 @@
             "type": "number",
             "description": "The maximum number of candidates to return"
           },
+          "lang": {
+            "type": "string",
+            "description": "The text-processing language for the query"
+          },
           "properties": {
             "type": "array",
             "description": "An optional list of property mappings to refine the query",

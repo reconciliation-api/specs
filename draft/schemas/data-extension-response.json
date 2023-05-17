@@ -79,6 +79,9 @@
                           },
                           "description": {
                             "type": "string"
+                          },
+                          "lang": {
+                            "type": "string"
                           }
                         },
                         "required": [
@@ -91,6 +94,9 @@
                         "type": "object",
                         "properties": {
                           "str": {
+                            "type": "string"
+                          },
+                          "lang": {
                             "type": "string"
                           }
                         },
