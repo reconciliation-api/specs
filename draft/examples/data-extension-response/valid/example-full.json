@@ -30,7 +30,8 @@
           "id": "variantName",
           "values": [
             {
-              "str": "Stryi-Leitgeb, Gerda"
+              "str": "Stryi-Leitgeb, Gerda",
+              "lang": "de"
             },
             {
               "str": "Leitgeb, Gerda Stryi-"
@@ -55,7 +56,8 @@
             },
             {
               "id": "4033430-2",
-              "name": "Künstlerin"
+              "name": "Künstlerin",
+              "lang": "de"
             }
           ]
         },
