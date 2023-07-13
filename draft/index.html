@@ -96,6 +96,11 @@
             "publisher": "IETF",
             "href": "https://www.rfc-editor.org/rfc/bcp/bcp47.txt"
           },
+          "EDTF": {
+            "title": "Extended Date/Time Format Specification (part of ISO 8601:2019)",
+            "publisher": "Library of Congress / International Organization for Standardization",
+            "href": "https://www.loc.gov/standards/datetime/"
+          },
         }
       };
     </script>
@@ -517,12 +522,26 @@ database are instances of this type.<dd>
 	    <dt><code>limit</code></dt>
             <dd>A limit on the number of candidates to return, which must be a positive integer;</dd>
 	    <dt><code>properties</code></dt>
-	    <dd>An array of objects, where each object maps a <a href='#properties'>property</a> identifier (in the <code>pid</code> field) 
-        to one or more <a>property values</a> (in the <code>v</code> field). These are used to further filter the set of candidates (similar to a WHERE clause in SQL),
-		by allowing clients to specify other attributes of entities that should match, beyond their name in the <code>query</code> field.
-		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service.
-		A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties;</dd>
-          </dl>
+        <dd><p>An array of objects, where each object maps a <a href='#properties'>property</a> identifier (in the <code>pid</code> field) to one or more <a>property values</a> (in the <code>v</code> field).
+        These are used to further refine the list of candidates by allowing clients to specify other attributes of entities, beyond their name in the <code>query</code> field.
+        A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties.</p>
+        <p>In addition to <code>pid</code> and <code>v</code>, services MAY support the following optional fields that allow clients to specify the effect of each property on the resulting list of candidates.
+          If these fields are omitted, the exact behavior ("must match all", "should match some", etc.) is up to the service.</p>
+        <dl>
+          <dt><code>required</code></dt>
+          <dd>A boolean indicating if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)
+            or optional (i.e. only effecting the entity's rank in the list of candidates);</dd>
+          <dt><code>match_quantifier</code></dt>
+          <dd>A string to indicate which of the values in <code>v</code> to match. MUST be "any" (equivalent to boolean OR), "all" (equivalent to boolean AND), or "none" (equivalent to boolean NOT);</dd>
+          <dt><code>match_qualifier</code></dt>
+          <dd>A string to indicate how to match the values in <code>v</code>.
+            This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
+            (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
+            To allow discovery of supported qualifiers by clients, services that support <code>match_qualifier</code> SHOULD return a <a href='#suggest-responses'>suggest response</a> with supported qualifiers
+            for a property at <code>/suggest/property/match_qualifier/&lt;pid&gt;</code> (relative to the service root).</p></dd>
+        </dl>
+        </dd>
+        </dl>
         </p>
         <p>
           A <dfn>reconciliation query batch</dfn> is an array of <a>reconciliation queries</a>.
