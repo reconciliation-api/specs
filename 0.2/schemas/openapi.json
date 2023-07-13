@@ -1,7 +1,7 @@
 {
   "title": "A JSON Schema for Swagger 2.0 API.",
-  "id": "http://swagger.io/v2/schema.json#",
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "http://swagger.io/v2/schema.json#",
+  "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "required": [
     "swagger",
@@ -490,8 +490,7 @@
     },
     "vendorExtension": {
       "description": "Any property starting with x- is valid.",
-      "additionalProperties": true,
-      "additionalItems": true
+      "additionalProperties": true
     },
     "bodyParameter": {
       "type": "object",
@@ -948,58 +947,46 @@
           "type": "string"
         },
         "title": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/title"
         },
         "description": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/description"
         },
         "default": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/default"
         },
         "multipleOf": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/multipleOf"
         },
         "maximum": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/maximum"
         },
         "exclusiveMaximum": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/exclusiveMaximum"
         },
         "minimum": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/minimum"
         },
         "exclusiveMinimum": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/exclusiveMinimum"
         },
         "maxLength": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+          "type": "integer"
         },
         "minLength": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveIntegerDefault0"
+          "type": "integer"
         },
         "pattern": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/pattern"
         },
         "maxItems": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+          "type": "integer"
         },
         "minItems": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveIntegerDefault0"
+          "type": "integer"
         },
         "uniqueItems": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/uniqueItems"
         },
         "maxProperties": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+          "type": "integer"
         },
         "minProperties": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveIntegerDefault0"
+          "type": "integer"
         },
         "required": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/stringArray"
         },
         "enum": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/enum"
         },
         "additionalProperties": {
           "anyOf": [
@@ -1013,7 +1000,6 @@
           "default": {}
         },
         "type": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/type"
         },
         "items": {
           "anyOf": [
@@ -1077,16 +1063,12 @@
           "type": "string"
         },
         "title": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/title"
         },
         "description": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/description"
         },
         "default": {
-          "$ref": "http://json-schema.org/draft-04/schema#/properties/default"
         },
         "required": {
-          "$ref": "http://json-schema.org/draft-04/schema#/definitions/stringArray"
         },
         "type": {
           "type": "string",
@@ -1498,7 +1480,6 @@
     "parametersList": {
       "type": "array",
       "description": "The parameters needed to send a valid API call.",
-      "additionalItems": false,
       "items": {
         "oneOf": [
           {
@@ -1547,49 +1528,38 @@
       "default": "csv"
     },
     "title": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/title"
     },
     "description": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/description"
     },
     "default": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/default"
     },
     "multipleOf": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/multipleOf"
     },
     "maximum": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/maximum"
     },
     "exclusiveMaximum": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/exclusiveMaximum"
     },
     "minimum": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/minimum"
     },
     "exclusiveMinimum": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/exclusiveMinimum"
     },
     "maxLength": {
-      "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+      "type": "integer"
     },
     "minLength": {
-      "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveIntegerDefault0"
+      "type": "integer"
     },
     "pattern": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/pattern"
     },
     "maxItems": {
-      "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+      "type": "integer"
     },
     "minItems": {
-      "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveIntegerDefault0"
+      "type": "integer"
     },
     "uniqueItems": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/uniqueItems"
     },
     "enum": {
-      "$ref": "http://json-schema.org/draft-04/schema#/properties/enum"
     },
     "jsonReference": {
       "type": "object",
