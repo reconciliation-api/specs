@@ -460,6 +460,17 @@ database are instances of this type.<dd>
         </p>
       </section>
       <section>
+        <h3>Language Selection</h3>
+        <p>
+           Following [[RFC9110]], services SHOULD use the <code>Accept-Language</code> header to let clients select the language in which user-facing text is returned.
+           They SHOULD use the <code>Content-Language</code> in their responses to expose the language each response is returned in.
+        </p>
+        <p>
+          Examples of user-facing text in service responses are: the name of the service and the name of property configuration fields in the manifest, the name and description of entities, types and properties,
+          the contents of the entity preview pages, and the documentation linked in the manifest.
+        </p>
+      </section>
+      <section>
         <h3>Error Handling and Rate-limiting</h3>
         <p>
            Services SHOULD use the broad spectrum of HTTP status codes [[RFC2616]] [[RFC6585]] to
