@@ -537,8 +537,8 @@ database are instances of this type.<dd>
           <dd>A string to indicate how to match the values in <code>v</code>.
             This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
             (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
-            To allow discovery of supported qualifiers by clients, services that support <code>match_qualifier</code> SHOULD return a <a href='#suggest-responses'>suggest response</a> with supported qualifiers
-            for a property at <code>/suggest/property/match_qualifier/&lt;pid&gt;</code> (relative to the service root).</p></dd>
+            To allow discovery of supported qualifiers by clients, services that support <code>match_qualifier</code> SHOULD return the supported <code>match_qualifiers</code> for each property
+            in their property <a href='#suggest-responses'>suggest responses</a>.</p></dd>
         </dl>
         </dd>
         </dl>
@@ -757,7 +757,9 @@ in the <code>score</code> field). By exposing individual features in their respo
               <dt><code>description</code></dt>
               <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>;</dd>
 	      <dt><code>notable</code></dt>
-	      <dd>When suggesting entities only, this field can be used to supply some important types (not necessarily all types) of the suggested entity. The value must be an array of either type identifiers (as strings) or type objects, containing a <code>id</code> and <code>name</code> field which represent the type.</dd>
+	      <dd>When suggesting entities only, this field can be used to supply some important types (not necessarily all types) of the suggested entity. The value must be an array of either type identifiers (as strings) or type objects, containing an <code>id</code> and <code>name</code> field which represent the type.</dd>
+              <dt><code>match_qualifiers</code></dt>
+              <dd>When suggesting properties only, an optional array of either identifiers (as strings) or objects containing an <code>id</code> and <code>name</code> field, which represent the property's <code>match_qualifiers</code> supported in <a>reconciliation queries</a>.</dd>
             </dl>
             </dd>
           </dl>
