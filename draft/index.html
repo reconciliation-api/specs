@@ -633,7 +633,7 @@ in the <code>score</code> field). By exposing individual features in their respo
 	</p>
 	<p>
 	  Deciding on a scoring method is one of the main difficulties in developing a reconciliation service.
-          Selecting candidates does not always rely on fuzzy matching. In those cases of exact match the score is an irrelevant information as candidates are either in or out. Thus the score attribute is optional.
+          Depending on the use case, we might not want a score at all: in cases like geo containment (a place should be inside a specific area) or date ranges (a point in time should be inside a specific time range) the score is irrelevant, as candidates are either in or out. Thus the score attribute is optional.
           Services are encouraged to expose as many <a>matching features</a> as they deem useful, in particular
           features which require knowledge of global statistics on the database or other attributes. Examples include:
           <dl>
