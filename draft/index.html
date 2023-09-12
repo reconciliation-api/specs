@@ -96,6 +96,11 @@
             "publisher": "IETF",
             "href": "https://www.rfc-editor.org/rfc/bcp/bcp47.txt"
           },
+          "IANA Language Subtag Registry": {
+            "title": "IANA-maintained registry of language subtags",
+            "publisher": "IANA",
+            "href": "https://www.iana.org/assignments/language-subtag-registry"
+          },
         }
       };
     </script>
@@ -908,10 +913,10 @@ containing a type identifier.
     <section>
       <h2>Internationalization Considerations</h2>
       <section>
-        <h3>Language Selection</h3>
+        <h3>Language of the intended audience</h3>
         <p>
-           Following [[RFC9110]], services SHOULD use the <code>Accept-Language</code> header to let clients select the language in which user-facing text is returned.
-           They SHOULD use the <code>Content-Language</code> in their responses to expose the language each response is returned in.
+           Following [[RFC9110]], services SHOULD support the <code>Accept-Language</code> header to let clients specify the preferred language in which user-facing text is returned. The language(s) requested by clients MUST be well-formed [[BCP 47]] language tags.
+           Services SHOULD use the <code>Content-Language</code> header in their responses to expose the language(s) of the intended audience(s) of each response. Services MUST return valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] tags.
         </p>
         <p>
           Examples of user-facing text in service responses are: the name of the service and the name of property configuration fields in the manifest, the name and description of entities, types and properties,
@@ -922,9 +927,9 @@ containing a type identifier.
         <h3>Text-processing language</h3>
 
         <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">
-        text-processing languge</a> in a <code>lang</code> field. The <code>lang</code> value MUST be a single well-formed [[BCP 47]] language tag. This text-processing languge applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
+        text-processing language</a> in a <code>lang</code> field. The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
         <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
-        (see example below). Client and service implementors SHOULD consider the text-processing languge to ensure correct processing of natural language content.</p>
+        (see example below). Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
 
         <p>In the following example, we first set the text-processing language for a reconciliation query to <code>en</code>, which is inherited by the first property, and overridden in the second property with <code>zh-Hant</code>:</p>
 
@@ -932,7 +937,7 @@ containing a type identifier.
           <pre data-include="examples/reconciliation-query-batch/valid/text-processing-language.json" class="example json"></pre>
         </p>
 
-        <p>If no explicit text-processing language is given, the metadata language (the language of the intended audience) provided first (see <a href="#service-definition">service definition</a>) is considered the default text-processing language.</p>
+        <p>If no explicit text-processing language is given, the first <a href="#language-of-the-intended-audience">language of the intended audience</a> returned by the service is considered the default text-processing language.</p>
       </section>
     </section>
     <section>
