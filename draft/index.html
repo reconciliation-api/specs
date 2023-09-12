@@ -460,17 +460,6 @@ database are instances of this type.<dd>
         </p>
       </section>
       <section>
-        <h3>Language Selection</h3>
-        <p>
-           Following [[RFC9110]], services SHOULD use the <code>Accept-Language</code> header to let clients select the language in which user-facing text is returned.
-           They SHOULD use the <code>Content-Language</code> in their responses to expose the language each response is returned in.
-        </p>
-        <p>
-          Examples of user-facing text in service responses are: the name of the service and the name of property configuration fields in the manifest, the name and description of entities, types and properties,
-          the contents of the entity preview pages, and the documentation linked in the manifest.
-        </p>
-      </section>
-      <section>
         <h3>Error Handling and Rate-limiting</h3>
         <p>
            Services SHOULD use the broad spectrum of HTTP status codes [[RFC2616]] [[RFC6585]] to
@@ -917,6 +906,36 @@ containing a type identifier.
       </section>
     </section>
     <section>
+      <h2>Internationalization Considerations</h2>
+      <section>
+        <h3>Language Selection</h3>
+        <p>
+           Following [[RFC9110]], services SHOULD use the <code>Accept-Language</code> header to let clients select the language in which user-facing text is returned.
+           They SHOULD use the <code>Content-Language</code> in their responses to expose the language each response is returned in.
+        </p>
+        <p>
+          Examples of user-facing text in service responses are: the name of the service and the name of property configuration fields in the manifest, the name and description of entities, types and properties,
+          the contents of the entity preview pages, and the documentation linked in the manifest.
+        </p>
+      </section>
+      <section>
+        <h3>Text-processing language</h3>
+
+        <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">
+        text-processing languge</a> in a <code>lang</code> field. The <code>lang</code> value MUST be a single well-formed [[BCP 47]] language tag. This text-processing languge applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
+        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
+        (see example below). Client and service implementors SHOULD consider the text-processing languge to ensure correct processing of natural language content.</p>
+
+        <p>In the following example, we first set the text-processing language for a reconciliation query to <code>en</code>, which is inherited by the first property, and overridden in the second property with <code>zh-Hant</code>:</p>
+
+        <p>
+          <pre data-include="examples/reconciliation-query-batch/valid/text-processing-language.json" class="example json"></pre>
+        </p>
+
+        <p>If no explicit text-processing language is given, the metadata language (the language of the intended audience) provided first (see <a href="#service-definition">service definition</a>) is considered the default text-processing language.</p>
+      </section>
+    </section>
+    <section>
       <h2>Accessibility Considerations</h2>
       <p>
         Reconciliation clients provide user interfaces for creating <a>reconciliation queries</a> and reviewing <a>reconciliation candidates</a>, including <a href="preview-service">preview</a>
@@ -944,22 +963,6 @@ containing a type identifier.
           The structural semantics of the content provided by reconciliation services allows different presentations (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can 
           be modified by third-party tools to enhance accessibility.
         </p>
-      </section>
-      <section>
-        <h3>Text-processing language</h3>
-
-        <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">
-        text-processing languge</a> in a <code>lang</code> field. The <code>lang</code> value MUST be a single well-formed [[BCP 47]] language tag. This text-processing languge applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
-        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
-        (see example below). Client and service implementors SHOULD consider the text-processing languge to ensure correct processing of natural language content.</p>
-
-        <p>In the following example, we first set the text-processing language for a reconciliation query to <code>en</code>, which is inherited by the first property, and overridden in the second property with <code>zh-Hant</code>:</p>
-
-        <p>
-          <pre data-include="examples/reconciliation-query-batch/valid/text-processing-language.json" class="example json"></pre>
-        </p>
-
-        <p>If no explicit text-processing language is given, the metadata language (the language of the intended audience) provided first (see <a href="#service-definition">service definition</a>) is considered the default text-processing language.</p>
       </section>
     </section>
     <section>
