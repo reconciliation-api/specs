@@ -951,6 +951,12 @@ containing a type identifier.
         <a href="#service-manifest">service manifest</a>. Clients SHOULD consider the base direction to ensure correct rendering of content, e.g. by setting corresponding <code>dir</code> attributes when rendering JSON responses in HTML. 
         For instance, rendering a Persian label for 'Yahoo!' like <code>یاهو!</code> right-to-left will correctly display as <code dir="rtl">یاهو!</code>.</p>
 
+        <p>In the following example, we first set the base direction for a data extension response row to <code>ltr</code>, which is inherited by the first property, and overridden in the second property with <code>rtl</code>:</p>
+
+        <p>
+          <pre data-include="examples/data-extension-response/valid/example-dir.json" class="example json"></pre>
+        </p>
+
         <p>If no explicit base direction is given, left-to-right is considered the default base direction.</p>
       </section>
     </section>
