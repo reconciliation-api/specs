@@ -5,7 +5,6 @@
     "width": 400,
     "height": 100
   },
-  "schemaSpace": "http://www.wikidata.org/prop/direct/",
   "documentation": "https://tools.wmflabs.org/openrefine-wikidata/",
   "logo": "https://tools.wmflabs.org/openrefine-wikidata/logo.png",
   "serviceVersion": "1.2.3",
@@ -83,6 +82,5 @@
     "type": true,
     "entity": true,
     "property": true
-  },
-  "identifierSpace": "http://www.wikidata.org/entity/"
+  }
 }
