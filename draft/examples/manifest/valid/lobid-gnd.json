@@ -44,7 +44,7 @@
     }
   ],
   "view": {
-    "url": "https://lobid.org/gnd/{{id}}"
+    "url": "https://lobid.org/gnd/{id}"
   },
   "preview": {
     "height": 100,

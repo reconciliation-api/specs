@@ -1,7 +1,7 @@
 {
   "versions": [ "0.2" ],
   "view": {
-    "url": "http://vivo.med.cornell.edu/individual?uri={{id}}"
+    "url": "http://vivo.med.cornell.edu/individual?uri={id}"
   },
   "identifierSpace": "http://vivo.med.cornell.edu/individual/",
   "name": "VIVO Reconciliation Service",
