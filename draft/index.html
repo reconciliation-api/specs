@@ -61,11 +61,6 @@
         localBiblio: {
           "beek-2018": {"aliasOf": "doi:10.1007/978-3-319-93417-4_5"},
           "christen-2012": {"aliasOf": "doi:10.1007/978-3-642-31164-2"},
-          "JSONP": {
-            "title": "JSONP",
-            "publisher": "English Wikipedia",
-            "href": "https://en.wikipedia.org/wiki/JSONP"
-          },
           "CSRF": {
             "title": "Cross-Site Request Forgery",
             "publisher": "English Wikipedia",
@@ -222,7 +217,8 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <ul>
             <li>Remove support for flyouts;</li>
             <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint;</li>
-            <li>The reconciliation queries only support passing a single <code>type</code> and the <code>type_strict</code> parameter was removed.</li>
+            <li>The reconciliation queries only support passing a single <code>type</code> and the <code>type_strict</code> parameter was removed;</li>
+            <li>Remove JSONP support.</li>
           </ul>
         </section>
       </section>
@@ -453,10 +449,6 @@ database are instances of this type.<dd>
 	   which are called directly by a web UI.
 	   Since this depends on the architecture of the client, this cannot be relied upon
 	   and cross-origin access MUST be implemented for all endpoints in a uniform way.
-        </p>
-	<p>
-           In addition, endpoints exposed by the service MAY support JSONP [[JSONP]], which
-           enables older web-based clients to access the service from a different domain.
         </p>
       </section>
       <section>
