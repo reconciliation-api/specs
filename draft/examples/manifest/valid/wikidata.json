@@ -77,7 +77,7 @@
     }
   ],
   "view": {
-    "url": "https://www.wikidata.org/wiki/{{id}}"
+    "url": "https://www.wikidata.org/wiki/{id}"
   },
   "suggest": {
     "type": true,
