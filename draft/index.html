@@ -571,7 +571,7 @@ database are instances of this type.<dd>
 	    <dt><code>type</code></dt>
 	    <dd>The types of the candidate entity;</dd>
 	    <dt><code>score</code></dt>
-	    <dd>A numeral indicating how well this candidate entity matches the query: a higher score indicates a better match;</dt>
+	    <dd>An optional numeral indicating how well this candidate entity matches the query: a higher score indicates a better match. If candidates are scored, the reconciliation service SHOULD sort candidates in decreasing score order;</dt>
             <dt><code>features</code></dt>
             <dd>An optional array of <a>matching features</a>;</dd>
 	    <dt><code>match</code></dt>
@@ -598,7 +598,7 @@ in the <code>score</code> field). By exposing individual features in their respo
         </p>
         <p>
 	  A <dfn>reconciliation result</dfn> is a set of <a>reconciliation candidates</a>. It is serialized in JSON
-	  as an object containing in the field <code>candidates</code> an array of such reconciliation candidate objects. This array SHOULD be sorted by decreasing score.
+	  as an object containing in the field <code>candidates</code> an array of such reconciliation candidate objects.
         </p>
         <p>
           A <dfn>reconciliation result batch</dfn> is an array of <a>reconciliation results</a> given in the same order as in the corresponding <a>reconciliation query batch</a>.
@@ -644,6 +644,7 @@ in the <code>score</code> field). By exposing individual features in their respo
 	</p>
 	<p>
 	  Deciding on a scoring method is one of the main difficulties in developing a reconciliation service.
+          Depending on the use case, we might not want a score at all: in cases like geo containment (a place should be inside a specific area) or date ranges (a point in time should be inside a specific time range) the score is irrelevant, as candidates are either in or out. Thus the score attribute is optional.
           Services are encouraged to expose as many <a>matching features</a> as they deem useful, in particular
           features which require knowledge of global statistics on the database or other attributes. Examples include:
           <dl>
