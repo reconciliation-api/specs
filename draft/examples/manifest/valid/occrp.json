@@ -1,10 +1,8 @@
 {
   "versions": ["0.2"],
   "name": "OCCRP Aleph",
-  "identifierSpace": "http://rdf.freebase.com/ns/type.object.id",
-  "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
   "view": {
-    "url": "https://aleph.occrp.org/entities/{{id}}"
+    "url": "https://aleph.occrp.org/entities/{id}"
   },
   "preview": {
     "width": 800,

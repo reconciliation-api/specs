@@ -101,8 +101,7 @@
               },
               "required": [
                 "id",
-                "name",
-                "score"
+                "name"
               ]
             }
           }

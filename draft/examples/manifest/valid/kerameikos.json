@@ -4,8 +4,6 @@
   "view": {
     "url": "http://kerameikos.org/id/{id}"
   },
-  "identifierSpace": "http://kerameikos.org/id/",
-  "schemaSpace": "http://kerameikos.org/ontology",
   "defaultTypes": [
     {
       "id": "skos:Concept",
