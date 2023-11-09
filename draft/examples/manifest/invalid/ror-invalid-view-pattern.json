@@ -1,7 +1,5 @@
 {
   "name": "ROR Reconciliation Service",
-  "identifierSpace": "http://ror.org/organization",
-  "schemaSpace": "http://ror.org/ns/type.object.id",
   "defaultTypes": [
     {
       "id": "/ror/organization",

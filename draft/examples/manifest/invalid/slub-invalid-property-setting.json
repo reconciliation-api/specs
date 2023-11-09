@@ -59,14 +59,12 @@
       "service_url": "http://data.slub-dresden.de"
     }
   },
-  "identifierSpace": "http://data.slub-dresden.de",
   "name": "SLUB LOD reconciliation for OpenRefine",
   "preview": {
     "height": 100,
     "url": "http://data.slub-dresden.de/{id}.preview",
     "width": 320
   },
-  "schemaSpace": "http://schema.org",
   "view": {
     "url": "http://data.slub-dresden.de/{id}"
   }

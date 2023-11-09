@@ -4,8 +4,6 @@
   "view": {
     "url": "http://nomisma.org/id/{id}"
   },
-  "identifierSpace": "http://nomisma.org/id/",
-  "schemaSpace": "http://nomisma.org/ontology",
   "defaultTypes": [
     {
       "id": "nmo:CoinWear",

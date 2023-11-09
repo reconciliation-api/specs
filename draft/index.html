@@ -222,7 +222,8 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <ul>
             <li>Remove support for flyouts;</li>
             <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint;</li>
-            <li>The reconciliation queries only support passing a single <code>type</code> and the <code>type_strict</code> parameter was removed.</li>
+            <li>The reconciliation queries only support passing a single <code>type</code> and the <code>type_strict</code> parameter was removed;</li>
+            <li>Remove the notion of identifierSpace and schemaSpace and make view templates mandatory.
           </ul>
         </section>
       </section>
@@ -255,7 +256,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
            Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
         <p>
-           Reconciliation services can define in their <a>service manifest</a> a <dfn>URI template</dfn> for entities,
+           Reconciliation services MUST define in their <a>service manifest</a> a <dfn>URI template</dfn> for entities,
            as defined by [[RFC6570]]. This URI template builds a view URI for each entity, and has <code>id</code> as only variable.
            For each entity, expanding the template with <code>id</code> being set to the entity's identifier
            MUST result in a valid URI.
@@ -314,29 +315,6 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           </ul>
         </p>
       </section>
-      <section>
-        <h3 data-link-for="spaces">Identifier and Schema Spaces</h3>
-        <p>
-          A reconciliation service MUST define two URIs, exposed in its <a>service manifest</a>:
-          <dl>
-            <dt><dfn>identifier space</dfn></dt>
-            <dd>The URI namespace (i.e. prefix) for the identifiers of an <a>entity</a> returned by the reconciliation service, for example <code>http://www.wikidata.org/entity/</code> or <code>https://d-nb.info/gnd/</code>. This URI MAY resolve to a page describing these entities and their identifiers;</dd>
-            <dt><dfn>schema space</dfn></dt>
-            <dd>A URI which identifies the type of an <a>entity</a> returned by the reconciliation service, for example <code>http://www.w3.org/2004/02/skos/core#Concept</code> or <code>https://schema.org/Thing</code>. This URI MAY resolve to a page describing this type.</dd>
-          </dl>
-        </p>
-        <p>
-          If two different reconciliation services expose the same entities and properties, then
-          they SHOULD use the same identifier and schema space URIs, signalling that
-          (for instance) the Data Extension service of the first one can be used on reconciliation candidates by the second one.
-        </p>
-        <p class="note">
-          The notions of identifier and schema space
-          have been inherited from the API's original purpose, when it was specific
-          to Freebase. Their original meaning was to be understood within Freebase's
-          own data model.
-        </p>
-      </section>
     </section>
     <section>
       <h2>Service Definition</h2>
@@ -362,10 +340,6 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <dt><code>name</code></dt>
           <dd>A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
 will help disambiguating it from others;</dd>
-          <dt><code>identifierSpace</code></dt>
-          <dd>The <a>identifier space</a> used by the service, as a URI;</dd>
-          <dt><code>schemaSpace</code></dt>
-          <dd>The <a>schema space</a> used by the service, as a URI;</dd>
           <dt><code>defaultTypes</code></dt>
           <dd>An array of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
 database are instances of this type.<dd>
@@ -376,7 +350,7 @@ database are instances of this type.<dd>
           <dt><code>serviceVersion</code></dt>
           <dd>An optional string which describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
           <dt><code>view</code></dt>
-          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
+          <dd>An object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
           <dt><code>feature_view</code></dt>
           <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
           <dt><code>preview</code></dt>
@@ -907,9 +881,9 @@ containing a type identifier.
           The <dfn id="data+extension+response+rows">rows</dfn> object contains, for each <a>entity</a> identifier in the
           <a>data extension query</a>, for each <a>property</a> identifier in the
           <a href="#data+extension+response+metadata">metadata</a>, the <a>property values</a> of that property in that entity.
-          If the property values are <a>entities</a>, their identifiers are expected to be in the service's <a>identifier space</a>.
-          If that is not the case, the service MUST specify in the <code>meta</code> section the endpoint of another reconciliation service whose <a>identifier space</a>
-          contains the returned entities. This endpoint is specified on a column-per-column basis.
+          If the property values are <a>entities</a>, their identifiers are expected to be valid entities for the service at hand.
+          If that is not the case, the service MUST specify in the <code>meta</code> section the endpoint of another reconciliation service for which the entity identifiers are valid, i.e., inserting them into the entity view template of that other service yields valid URIs.
+          This endpoint is specified on a column-per-column basis.
         </p>
         <p>
           Response example for the <a>data extension query</a> from the previous example:
