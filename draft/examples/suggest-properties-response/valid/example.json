@@ -13,7 +13,10 @@
       "name": "place of birth",
       "description": "most specific known (e.g. city instead of country, or hospital instead of city) birth location of a person, animal or fictional character",
       "id": "P19",
-      "match_qualifiers": ["schema:containsPlace", "schema:containedInPlace"]
+      "match_qualifiers": [
+        {"id": "schema:containsPlace", "name": "Containment relation between a place and another that it contains"},
+        {"id": "schema:containedInPlace", "name": "Containment relation between a place and another that contains it"}
+      ]
     },
     {
       "name": "located in time zone",
