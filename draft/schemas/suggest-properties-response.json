@@ -20,6 +20,27 @@
           "description": {
             "type": "string",
             "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
+          },
+          "match_qualifiers": {
+            "type": "array",
+            "description": "An optional array of objects representing the match_qualifiers supported for the suggested property",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Identifier of the match_qualifier"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the match_qualifier"
+                }
+              },
+              "required": [
+                "id",
+                "name"
+              ]
+            }
           }
         },
         "required": [
