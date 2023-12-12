@@ -914,10 +914,20 @@ containing a type identifier.
     </section>
     <section>
       <h2>Internationalization Considerations</h2>
+      <p>The following sections rely on terminology from the <a href="https://www.w3.org/TR/international-specs/">W3C internationalization best practices for spec developers</a>,
+        in particular on the distinction of two <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">types of language declaration</a>:</p>
+      <p>
+        The <dfn>language of the intended audience</dfn>, also referred to as <em>language metadata</em>, is used to describe the language(s) of the intended audience of resources as a whole. In the context of reconciliation,
+        this is relevant e.g. for setting the user interface language in a reconciliation client, providing user-facing text in the user's preferred language.
+      </p>
+      <p>
+        The <dfn>text-processing language</dfn> on the other hand declares the single language in which a specific range of text is actually written in, to support features like text-to-speech, spell checking, or hyphenation.
+        In the context of reconciliation, this distinction is importat since the actual data being reconciled will often be in a different language than the client's user interface.
+      </p>
       <section>
         <h3>Language of the intended audience</h3>
         <p>
-           Following [[RFC9110]], services SHOULD support the <code>Accept-Language</code> header to let clients specify the preferred language in which user-facing text is returned.
+           Following [[RFC9110]], services SHOULD support the <code>Accept-Language</code> header to let clients specify the <a>language of the intended audience</a> in which user-facing text is returned.
            If clients set the <code>Accept-Language</code> header, the requested language(s) MUST be provided as <em>well-formed</em> [[BCP 47]] language tags.
            Services MAY use the <code>Content-Language</code> header in their responses to expose the language(s) of the intended audience(s) of each response.
            If services set the <code>Content-Language</code> header, they MUST use <em>valid</em> (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] tags.
@@ -930,8 +940,8 @@ containing a type identifier.
       <section>
         <h3>Text-processing language</h3>
 
-        <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">
-        text-processing language</a> in a <code>lang</code> field. The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
+        <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a>text-processing language</a> in a <code>lang</code> field.
+        The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
         <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
         (see example below). A default text-processing language for any natural language string returned or processed by a service MAY be set in the <code>lang</code> field of the <a href="#service-manifest">service manifest</a>.
         Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
