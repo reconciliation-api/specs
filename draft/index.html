@@ -403,6 +403,8 @@ database are instances of this type.<dd>
           <dd>The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
           <dt><code>authentication</code></dt>
           <dd>An <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
+          <dt><code>lang</code></dt>
+          <dd>An optional value for the default <a href="#text-processing-language">text-processing language</a> used by this service.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -929,7 +931,8 @@ containing a type identifier.
         <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">
         text-processing language</a> in a <code>lang</code> field. The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
         <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
-        (see example below). Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
+        (see example below). A default text-processing language for any natural language string returned or processed by a service MAY be set in the <code>lang</code> field of the <a href="#service-manifest">service manifest</a>.
+        Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
 
         <p>In the following example, we first set the text-processing language for a reconciliation query to <code>en</code>, which is inherited by the first property, and overridden in the second property with <code>zh-Hant</code>:</p>
 
@@ -937,7 +940,6 @@ containing a type identifier.
           <pre data-include="examples/reconciliation-query-batch/valid/text-processing-language.json" class="example json"></pre>
         </p>
 
-        <p>If no explicit text-processing language is given, the first <a href="#language-of-the-intended-audience">language of the intended audience</a> returned by the service is considered the default text-processing language.</p>
       </section>
     </section>
     <section>
