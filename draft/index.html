@@ -961,8 +961,8 @@ containing a type identifier.
         <p>All objects returned by reconciliation services (entities, types, properties, candidates, features, etc.) MAY declare an explicit text <a href="https://www.w3.org/International/articles/inline-bidi-markup/uba-basics">
         base direction</a> in a <code>dir</code> field. The <code>dir</code> value MUST be <code>ltr</code> for left-to-right, <code>rtl</code> for right-to-left, or <code>auto</code> for determining the direction by examining the content of each JSON field.
         This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>v</code> and <code>str</code> (for <a>property values</a>).
-        Nested objects inherit the base direction of their parent, and can override it by setting their own <code>dir</code> value. A default base direction for any natural language string returned by a service can be set in the <code>dir</code> field of the
-        <a href="#service-manifest">service manifest</a>. Clients SHOULD consider the base direction to ensure correct rendering of content, e.g. by setting corresponding <code>dir</code> attributes when rendering JSON responses in HTML. 
+        Nested objects inherit the base direction of their parent, and can override it by setting their own <code>dir</code> value. A default base direction for any natural language string returned or processed by a service MAY be set in the <code>dir</code> field of the
+        <a href="#service-manifest">service manifest</a>. If no explicit base direction is given, left-to-right is considered the default base direction. Clients SHOULD consider the base direction to ensure correct rendering of content, e.g. by setting corresponding <code>dir</code> attributes when rendering JSON responses in HTML.
         For instance, rendering a Persian label for 'Yahoo!' like <code>یاهو!</code> right-to-left will correctly display as <code dir="rtl">یاهو!</code>.</p>
 
         <p>In the following example, we first set the base direction for a data extension response row to <code>ltr</code>, which is inherited by the first property, and overridden in the second property with <code>rtl</code>:</p>
@@ -971,7 +971,6 @@ containing a type identifier.
           <pre data-include="examples/data-extension-response/valid/example-dir.json" class="example json"></pre>
         </p>
 
-        <p>If no explicit base direction is given, left-to-right is considered the default base direction.</p>
       </section>
     </section>
     <section>
