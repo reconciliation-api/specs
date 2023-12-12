@@ -917,8 +917,10 @@ containing a type identifier.
       <section>
         <h3>Language of the intended audience</h3>
         <p>
-           Following [[RFC9110]], services SHOULD support the <code>Accept-Language</code> header to let clients specify the preferred language in which user-facing text is returned. The language(s) requested by clients MUST be well-formed [[BCP 47]] language tags.
-           Services SHOULD use the <code>Content-Language</code> header in their responses to expose the language(s) of the intended audience(s) of each response. Services MUST return valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] tags.
+           Following [[RFC9110]], services SHOULD support the <code>Accept-Language</code> header to let clients specify the preferred language in which user-facing text is returned.
+           If clients set the <code>Accept-Language</code> header, the requested language(s) MUST be provided as <em>well-formed</em> [[BCP 47]] language tags.
+           Services MAY use the <code>Content-Language</code> header in their responses to expose the language(s) of the intended audience(s) of each response.
+           If services set the <code>Content-Language</code> header, they MUST use <em>valid</em> (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] tags.
         </p>
         <p>
           Examples of user-facing text in service responses are: the name of the service and the name of property configuration fields in the manifest, the name and description of entities, types and properties,
