@@ -1,10 +1,12 @@
 {
   "queries": [
     {
-      "query": "Christel Hanewinckel",
       "type": "DifferentiatedPerson",
       "limit": 5,
       "properties": [
+        {
+          "v": "Christel Hanewinckel"
+        },
         {
           "pid": "professionOrOccupation",
           "v": [

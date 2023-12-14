@@ -1,10 +1,18 @@
 {
   "queries": [
     {
-      "query": "Hans-Eberhard Urbaniak"
+      "properties": [
+        {
+          "v": "Hans-Eberhard Urbaniak"
+        }
+      ]
     },
     {
-      "query": "Ernst Schwanhold"
+      "properties": [
+        {
+          "v": "Ernst Schwanhold"
+        }
+      ]
     }
   ]
 }

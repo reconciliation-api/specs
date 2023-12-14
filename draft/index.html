@@ -478,28 +478,34 @@ database are instances of this type.<dd>
         <h3>Structure of a Reconciliation Query</h3>
         <p>
           A <dfn>reconciliation query</dfn> consists of the following fields. 
-	  At least one of <code>query</code> or <code>properties</code> must be supplied, but all other
-	  fields are optional.
           <dl>
-	    <dt><code>query</code></dt>
-            <dd>A query string, consisting of a non-empty string.
-	    	By supplying such a string, a client intends to search for entities with similar
-	    	names. The specifics of how this similarity is defined are determined by the service.</dd>
+	    <dt><code>properties</code></dt>
+	    <dd>An array of <a>property assignments</a> (at least one).</dd>
 	    <dt><code>type</code></dt>
-            <dd>A <a>type</a> identifier. Supplying such a type allows users to restrict
+            <dd>An optional <a>type</a> identifier. Supplying such a type allows users to restrict
 	    	the search to entities which bear this type. Whether this restriction should be a
 	    	hard constraint or simply induce a change on the reconciliation scores can be
 	    	determined by the service. In particular, services MAY return candidates which
 	    	do not belong to the supplied type;</dd>
 	    <dt><code>limit</code></dt>
-            <dd>A limit on the number of candidates to return, which must be a positive integer;</dd>
-	    <dt><code>properties</code></dt>
-	    <dd>An array of objects, where each object maps a <a href='#properties'>property</a> identifier (in the <code>pid</code> field) 
-        to one or more <a>property values</a> (in the <code>v</code> field). These are used to further filter the set of candidates (similar to a WHERE clause in SQL),
-		by allowing clients to specify other attributes of entities that should match, beyond their name in the <code>query</code> field.
-		How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service.
-		A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties;</dd>
+            <dd>An optional limit on the number of candidates to return, which must be a positive integer;</dd>
           </dl>
+        </p>
+        <p>
+          A <dfn>property assignment</dfn> specifies the expected value of a property on the entities to match.
+                These are used to filter the set of candidates (similar to a WHERE clause in SQL),
+		by allowing clients to specify an attribute of entities that should match. It consists of:
+         <dl>
+            <dt><code>pid</code></dt>
+            <dd>A <a href='#properties'>property</a> identifier. If this is not provided, then this signals that
+                the client intends to search for entities with similar names. The specifics of how this similarity
+                is defined are determined by the service.</dd> 
+            <dt><code>v</code></dt>
+            <dd>one or more <a>property values</a>.
+         </dl>
+        
+        How reconciliation services handle this further restriction ("must match all properties" or "should match some") and how it affects the score, is up to the service.
+	A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties.
         </p>
         <p>
           A <dfn>reconciliation query batch</dfn> is an array of <a>reconciliation queries</a>.

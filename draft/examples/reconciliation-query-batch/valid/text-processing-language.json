@@ -1,9 +1,11 @@
 {
   "queries": [
     {
-      "query": "Deng Shuping",
       "lang": "en",
       "properties": [
+        {
+          "v": "Deng Shuping"
+        },
         {
           "pid": "professionOrOccupation",
           "v": "art historian"
