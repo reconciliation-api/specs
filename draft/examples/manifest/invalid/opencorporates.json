@@ -1,12 +1,10 @@
 {
   "name": "OpenCorporates Reconciliation Service",
-  "identifierSpace": "http://rdf.freebase.com/ns/type.object.id",
-  "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
   "view": {
-    "url": "https://opencorporates.com{{id}}"
+    "url": "https://opencorporates.com{id}"
   },
   "preview": {
-    "url": "https://opencorporates.com{{id}}/preview",
+    "url": "https://opencorporates.com{id}/preview",
     "width": 430,
     "height": 300
   },

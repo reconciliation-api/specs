@@ -7,11 +7,17 @@
       "properties": [
         {
           "pid": "professionOrOccupation",
-          "v": "Politik*"
+          "v": "Politik*",
+          "required": false,
+          "match_quantifier": "any",
+          "match_qualifier": "WildcardMatch"
         },
         {
           "pid": "affiliation",
-          "v": "http://d-nb.info/gnd/2022139-3"
+          "v": "http://d-nb.info/gnd/2022139-3",
+          "required": false,
+          "match_quantifier": "any",
+          "match_qualifier": "ExactMatch"
         }
       ]
     },
@@ -22,11 +28,17 @@
       "properties": [
         {
           "pid": "professionOrOccupation",
-          "v": "Politik*"
+          "v": "Politik*",
+          "required": false,
+          "match_quantifier": "any",
+          "match_qualifier": "WildcardMatch"
         },
         {
           "pid": "affiliation",
-          "v": "http://d-nb.info/gnd/2022139-3"
+          "v": "http://d-nb.info/gnd/2022139-3",
+          "required": false,
+          "match_quantifier": "any",
+          "match_qualifier": "ExactMatch"
         }
       ]
     }

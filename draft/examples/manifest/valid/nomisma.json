@@ -2,10 +2,8 @@
   "versions": ["0.2"],
   "name": "Nomisma.org",
   "view": {
-    "url": "http://nomisma.org/id/{{id}}"
+    "url": "http://nomisma.org/id/{id}"
   },
-  "identifierSpace": "http://nomisma.org/id/",
-  "schemaSpace": "http://nomisma.org/ontology",
   "defaultTypes": [
     {
       "id": "nmo:CoinWear",

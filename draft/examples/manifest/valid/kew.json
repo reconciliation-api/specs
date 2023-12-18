@@ -1,13 +1,11 @@
 {
   "versions": ["0.2"],
   "name": "IPNI Name Reconciliation Service",
-  "identifierSpace": "http://ipni.org/urn:lsid:ipni.org:names:",
-  "schemaSpace": "http://rdf.freebase.com/ns/type.object.id",
   "view": {
-    "url": "http://ipni.org/urn:lsid:ipni.org:names:{{id}}"
+    "url": "http://ipni.org/urn:lsid:ipni.org:names:{id}"
   },
   "preview": {
-    "url": "http://ipni.org/urn:lsid:ipni.org:names:{{id}}",
+    "url": "http://ipni.org/urn:lsid:ipni.org:names:{id}",
     "width": 400,
     "height": 400
   },
