@@ -82,6 +82,9 @@
                           },
                           "lang": {
                             "type": "string"
+                          },
+                          "dir": {
+                            "type": "string"
                           }
                         },
                         "required": [
@@ -97,6 +100,9 @@
                             "type": "string"
                           },
                           "lang": {
+                            "type": "string"
+                          },
+                          "dir": {
                             "type": "string"
                           }
                         },
