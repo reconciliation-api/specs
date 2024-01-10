@@ -79,6 +79,23 @@
                       }
                     }
                   ]
+                },
+                "required": {
+                  "type": "boolean",
+                  "description": "A boolean indicating if a match for the property is required for an entity to enter the list of candidates"
+                },
+                "match_quantifier": {
+                  "type": "string",
+                  "description": "A string to indicate which of the values in v to match",
+                  "enum": [
+                    "any",
+                    "all",
+                    "none"
+                  ]
+                },
+                "match_qualifier": {
+                  "type": "string",
+                  "description": "A string to indicate how to match the values in v"
                 }
               },
               "required": [

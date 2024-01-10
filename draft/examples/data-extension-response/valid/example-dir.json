@@ -1,0 +1,37 @@
+{
+  "meta": [
+    {
+      "id": "Len",
+      "name": "Label (for language code 'en')"
+    },
+    {
+      "id": "Afa",
+      "name": "Also known as (for language code 'fa')"
+    }
+  ],
+  "rows": [
+    {
+      "id": "Q37093",
+      "dir": "ltr",
+      "properties": [
+        {
+          "id": "Len",
+          "values": [
+            {
+              "str": "Yahoo!"
+            }
+          ]
+        },
+        {
+          "id": "Afa",
+          "values": [
+            {
+              "str": "یاهو!",
+              "dir": "rtl"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
