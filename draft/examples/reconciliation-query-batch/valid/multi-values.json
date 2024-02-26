@@ -3,11 +3,13 @@
     {
       "type": "DifferentiatedPerson",
       "limit": 5,
-      "properties": [
+      "conditions": [
         {
+          "match_type": "name",
           "v": "Christel Hanewinckel"
         },
         {
+          "match_type": "property",
           "pid": "professionOrOccupation",
           "v": [
             "Politik*",

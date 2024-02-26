@@ -1,8 +1,9 @@
 {
   "queries": [
     {
-      "properties": [
+      "conditions": [
         {
+          "match_type": "name",
           "v": "Christel Hanewinckel"
         }
       ],
