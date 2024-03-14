@@ -382,6 +382,8 @@ database are instances of this type.<dd>
           <dd>An optional value for the default <a href="#text-processing-language">text-processing language</a> used by this service.</dd>
           <dt><code>dir</code></dt>
           <dd>An optional value for the default <a href="#text-direction">text direction</a> used by this service.</dd>
+          <dt><code>standardizedScore</code></dt>
+          <dd>An optional boolean indicating if the service returns values between 0 and 100 (inclusive) in the <code>score</code> field of <a>reconciliation candidates</a>. This enables clients to process and display candidates accordingly, e.g. with score percentages or visualizations.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -554,7 +556,7 @@ database are instances of this type.<dd>
 	    <dt><code>type</code></dt>
 	    <dd>The types of the candidate entity;</dd>
 	    <dt><code>score</code></dt>
-	    <dd>An optional numeral indicating how well this candidate entity matches the query: a higher score indicates a better match. If candidates are scored, the reconciliation service SHOULD sort candidates in decreasing score order;</dt>
+	    <dd>An optional numeral indicating how well this candidate entity matches the query: a higher score indicates a better match. If candidates are scored, the reconciliation service SHOULD sort candidates in decreasing score order. If <code>standardizedScore</code> is set to <code>true</code> in the <a>service manifest</a>, this value MUST be between 0 and 100 (inclusive);</dt>
             <dt><code>features</code></dt>
             <dd>An optional array of <a>matching features</a>;</dd>
 	    <dt><code>match</code></dt>
