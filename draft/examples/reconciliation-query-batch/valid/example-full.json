@@ -1,11 +1,15 @@
 {
   "queries": [
     {
-      "query": "Christel Hanewinckel",
       "type": "DifferentiatedPerson",
       "limit": 5,
-      "properties": [
+      "conditions": [
         {
+          "match_type": "name",
+          "v": "Christel Hanewinckel"
+        },
+        {
+          "match_type": "property",
           "pid": "professionOrOccupation",
           "v": "Politik*",
           "required": false,
@@ -13,6 +17,7 @@
           "match_qualifier": "WildcardMatch"
         },
         {
+          "match_type": "property",
           "pid": "affiliation",
           "v": "http://d-nb.info/gnd/2022139-3",
           "required": false,
@@ -22,11 +27,15 @@
       ]
     },
     {
-      "query": "Franz Thönnes",
       "type": "DifferentiatedPerson",
       "limit": 5,
-      "properties": [
+      "conditions": [
         {
+          "match_type": "name",
+          "v": "Franz Thönnes"
+        },
+        {
+          "match_type": "property",
           "pid": "professionOrOccupation",
           "v": "Politik*",
           "required": false,
@@ -34,6 +43,7 @@
           "match_qualifier": "WildcardMatch"
         },
         {
+          "match_type": "property",
           "pid": "affiliation",
           "v": "http://d-nb.info/gnd/2022139-3",
           "required": false,
