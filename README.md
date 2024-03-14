@@ -22,6 +22,8 @@ for editor metadata).
 This specification is developed using [ReSpec](https://github.com/w3c/respec) and help about
 its markup can be found in its [user guide](https://github.com/w3c/respec/wiki/ReSpec-Editor's-Guide).
 
+Deploy previews on pull requests are provided by [Netlify](https://www.netlify.com/).
+
 Local setup
 -----------
 
