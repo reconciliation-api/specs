@@ -8,12 +8,7 @@ https://reconciliation-api.github.io/specs/draft/
 
 General discussion about this protocol can be held on the [`public-reconciliation@w3.org` mailing list](https://lists.w3.org/Archives/Public/public-reconciliation/).
 
-Initially, the aim is to document the existing state of the API,
-as witnessed by the existing clients and servers, and the [original documentation
-on OpenRefine's wiki](https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-API).
-Once the existing API is documented to a satisfactory level, we will incorporate improvements
-discussed in the [Community Group](https://www.w3.org/community/reconciliation/) in further versions
-of the document.
+Anyone can join our [W3C Entity Reconciliation Community Group](https://www.w3.org/community/reconciliation/) or read our past announcements.
 
 Feel free to contribute to this documentation effort by editing `draft/index.html`. Add yourself
 to the list of editors in the preamble of the document (see the [available options](https://github.com/w3c/respec/wiki/person)
