@@ -254,6 +254,10 @@
           }
         }
       }
+    },
+    "standardizedScore": {
+      "type": "boolean",
+      "description": "Whether the service returns values between 0 and 100 (inclusive) in the score field of reconciliation candidates"
     }
   },
   "required": [

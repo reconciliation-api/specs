@@ -82,5 +82,6 @@
     "type": true,
     "entity": true,
     "property": true
-  }
+  },
+  "standardizedScore": true
 }
