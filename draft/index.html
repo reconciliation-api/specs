@@ -210,27 +210,36 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <h4><a href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">0.2</a></h4>
           <p>Initial improvements to the specifications made by our Community Group. Most of them are backwards-compatible, except for the requirement to support CORS for cross-origin access.</p>
           <ul>
-            <li>Let manifests announce which versions of the protocol are supported by the service;</li>
-            <li>Make CORS support mandatory and JSONP support optional;</li>
-            <li>Add support for exposing type hierarchies;</li>
-            <li>Improve definition of schema space;</li>
-            <li>Establish the connection between properties in reconciliation queries and in data extension queries;</li>
-            <li>Make 'query' field of reconciliation queries optional;</li>
-            <li>Add support for returning matching features in reconciliation candidates;</li>
-            <li>Add support for authentication;</li>
-            <li>Add support for referencing other reconciliation services in reconciled values returned by data extension;</li>
-            <li>Add support for specifying the size of expected reconciliation batch sizes.</li>
+            <li>Let manifests announce which versions of the protocol are supported by the service</li>
+            <li>Make CORS support mandatory and JSONP support optional</li>
+            <li>Add support for exposing type hierarchies</li>
+            <li>Improve definition of schema space</li>
+            <li>Establish the connection between properties in reconciliation queries and in data extension queries</li>
+            <li>Make 'query' field of reconciliation queries optional</li>
+            <li>Add support for returning matching features in reconciliation candidates</li>
+            <li>Add support for authentication</li>
+            <li>Add support for referencing other reconciliation services in reconciled values returned by data extension</li>
+            <li>Add support for specifying the size of expected reconciliation batch sizes</li>
           </ul>
         </section>
         <section>
           <h4>This Draft</h4>
-          <p>Collection of changes which make the API conform to the REST principles.</p>
+          <p>Collection of changes which make the API conform to the REST principles and follow the W3C's guidelines around accessibility, localization and security.</p>
           <ul>
-            <li>Remove support for flyouts;</li>
-            <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint;</li>
-            <li>The reconciliation queries only support passing a single <code>type</code> and the <code>type_strict</code> parameter was removed;</li>
-            <li>Remove the notion of identifierSpace and schemaSpace and make view templates mandatory.</li>
-            <li>Remove JSONP support.</li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/85">Have all URI templates follow the RFC6570 syntax</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/89">Add <code>documentation</code>, <code>serviceVersion</code> and <code>logo</code> fields to the manifest</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/91">Remove configurability of the endpoints of various sub-services are no longer configurable, determine them by the root reconciliation endpoint instead</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/92">Change the format of reconciliation queries, responses and data extension responses</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/99">Add a section on security and privacy considerations</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/103">Add a section on accessibility</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/115">Restrict reconciliation queries to only support passing a single <code>type</code> and remove the <code>type_strict</code> parameter</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/124">Specify the behaviour of suggest services when an empty prefix is passed</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/131">Add matching settings that can be offered by reconciliation services to configure how property values are compared</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/133">Make the <code>score</code> field of reconciliation optional</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/136">Improve support for content language and text direction forrowing the W3C's checklist</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/140">Remove <code>identifierSpace</code> and <code>schemaSpace</code> and make view templates mandatory</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/142">Remove support for JSONP</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
           </ul>
         </section>
       </section>
