@@ -11,15 +11,15 @@
   "extend": {
     "propertySettings": [
       {
-        "name": "limit",
-        "label": "Limit",
+        "id": "limit",
+        "name": "Limit",
         "helpText": "Maximum number of values to return per row (0 for no limit)",
         "type": "number",
         "default": 0
       },
       {
-        "name": "rank",
-        "label": "Ranks",
+        "id": "rank",
+        "name": "Ranks",
         "type": "select",
         "helpText": "Filter statements by rank",
         "choices": [
@@ -39,8 +39,8 @@
         "default": "best"
       },
       {
-        "name": "references",
-        "label": "References",
+        "id": "references",
+        "name": "References",
         "type": "select",
         "helpText": "Filter statements by their references",
         "choices": [
@@ -60,8 +60,8 @@
         "default": "any"
       },
       {
-        "name": "count",
-        "label": "Return counts instead of values",
+        "id": "count",
+        "name": "Return counts instead of values",
         "helpText": "The number of values will be returned.",
         "type": "checkbox",
         "default": false
