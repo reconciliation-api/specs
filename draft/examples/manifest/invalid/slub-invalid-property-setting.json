@@ -54,10 +54,7 @@
         "type": "string"
       }
     ],
-    "proposeProperties": {
-      "service_path": "/reconcile/properties",
-      "service_url": "http://data.slub-dresden.de"
-    }
+    "proposeProperties": true
   },
   "name": "SLUB LOD reconciliation for OpenRefine",
   "preview": {

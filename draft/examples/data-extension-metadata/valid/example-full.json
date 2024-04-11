@@ -1,8 +1,5 @@
 {
-  "proposeProperties": {
-    "service_url": "https://lobid.org",
-    "service_path": "/gnd/reconcile/properties"
-  },
+  "proposeProperties": true,
   "propertySettings": [
     {
       "name": "limit",

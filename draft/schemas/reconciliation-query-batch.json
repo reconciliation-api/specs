@@ -111,15 +111,6 @@
                 "v"
               ]
             }
-          },
-          "type_strict": {
-            "type": "string",
-            "description": "A classification of the type matching strategy when multiple types are supplied",
-            "enum": [
-              "any",
-              "should",
-              "all"
-            ]
           }
         },
         "required": [
