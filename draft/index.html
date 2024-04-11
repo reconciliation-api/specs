@@ -840,11 +840,11 @@ in the <code>score</code> field). By exposing individual features in their respo
           A <dfn>data extension property proposal</dfn> service returns <a>properties</a> for a given <a>type</a> identifier.
         </p>
         <p>
-          If the reconciliation service supports data extension property proposals, it MUST support HTTP GET requests to the endpoint <code>/extend/propose</code> (relative to the reconciliation endpoint) with a <code>type</code> query string parameter
+          If the reconciliation service supports data extension property proposals, it MUST support HTTP GET requests to the endpoint <code>/extend/propose</code> (relative to the reconciliation endpoint) with a <code>type</code> query parameter
 containing a type identifier.
         </p>
         <p>
-          The service SHOULD support an optional <code>limit</code> query string parameter to control the number of proposed properties.
+          The service SHOULD support an optional <code>limit</code> query parameter to control the number of proposed properties.
         </p>
         <p>
           <pre class="example nohighlight">GET /extend/propose?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
@@ -857,7 +857,7 @@ containing a type identifier.
             <dt><code>type</code></dt>
             <dd>The <a>type</a> identifier supplied in the query;</dd>
             <dt><code>limit</code></dt>
-            <dd>Optionally, the requested limit;</dd>
+            <dd>Optionally, an integer to indicate the requested limit;</dd>
           </dl>
         </p>
         <p>
