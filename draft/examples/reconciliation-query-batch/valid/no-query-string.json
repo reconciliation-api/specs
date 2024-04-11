@@ -3,7 +3,7 @@
     {
       "conditions": [
         {
-          "match_type": "property",
+          "matchType": "property",
           "pid": "uid",
           "v": "27eb892afbb2"
         }
@@ -12,7 +12,7 @@
     {
       "conditions": [
         {
-          "match_type": "property",
+          "matchType": "property",
           "pid": "uid",
           "v": "ab09da9dd37e"
         }

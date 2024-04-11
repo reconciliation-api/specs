@@ -38,23 +38,23 @@
     }
   ],
   "extend": {
-    "property_settings": [
+    "propertySettings": [
       {
         "default": 10,
-        "help_text": "Maximum number of values to return per row (maximum: 1000)",
+        "helpText": "Maximum number of values to return per row (maximum: 1000)",
         "label": "Limit",
         "name": "limit",
         "type": "number"
       },
       {
         "default": "geo,organizations,slub-resources,persons,events,topics,works, ",
-        "help_text": "Which Entity-Type to use, allwed values: http://schema.org/CreativeWork, http://schema.org/Work, http://schema.org/Event, http://schema.org/Place, http://schema.org/Person, http://schema.org/Book, http://schema.org/Organization, http://schema.org/Topic, http://schema.org/CreativeWorkSeries",
+        "helpText": "Which Entity-Type to use, allwed values: http://schema.org/CreativeWork, http://schema.org/Work, http://schema.org/Event, http://schema.org/Place, http://schema.org/Person, http://schema.org/Book, http://schema.org/Organization, http://schema.org/Topic, http://schema.org/CreativeWorkSeries",
         "label": "Typ",
         "name": "type",
         "type": "string"
       }
     ],
-    "propose_properties": {
+    "proposeProperties": {
       "service_path": "/reconcile/properties",
       "service_url": "http://data.slub-dresden.de"
     }

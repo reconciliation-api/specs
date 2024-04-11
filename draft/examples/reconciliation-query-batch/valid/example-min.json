@@ -3,7 +3,7 @@
     {
       "conditions": [
         {
-          "match_type": "name",
+          "matchType": "name",
           "v": "Hans-Eberhard Urbaniak"
         }
       ]
@@ -11,7 +11,7 @@
     {
       "conditions": [
         {
-          "match_type": "name",
+          "matchType": "name",
           "v": "Ernst Schwanhold"
         }
       ]

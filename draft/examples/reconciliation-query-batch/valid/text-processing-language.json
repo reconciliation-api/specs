@@ -4,16 +4,16 @@
       "lang": "en",
       "conditions": [
         {
-          "match_type": "name",
+          "matchType": "name",
           "v": "Deng Shuping"
         },
         {
-          "match_type": "property",
+          "matchType": "property",
           "pid": "professionOrOccupation",
           "v": "art historian"
         },
         {
-          "match_type": "property",
+          "matchType": "property",
           "pid": "variantName",
           "v": "鄧淑蘋",
           "lang": "zh-Hant"

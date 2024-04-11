@@ -46,7 +46,7 @@
         "url"
       ]
     },
-    "feature_view": {
+    "featureView": {
       "type": "object",
       "properties": {
         "url": {
@@ -106,11 +106,11 @@
       "type": "object",
       "description": "Settings for the data extension protocol, to fetch property values",
       "properties": {
-        "propose_properties": {
+        "proposeProperties": {
           "type": "boolean",
           "description": "Whether the service supports property proposals"
         },
-        "property_settings": {
+        "propertySettings": {
           "type": "array",
           "description": "Definition of the settings configurable by the user when fetching a property",
           "items": {
@@ -134,7 +134,7 @@
                   "name": {
                     "type": "string"
                   },
-                  "help_text": {
+                  "helpText": {
                     "type": "string"
                   }
                 },
@@ -163,7 +163,7 @@
                   "name": {
                     "type": "string"
                   },
-                  "help_text": {
+                  "helpText": {
                     "type": "string"
                   }
                 },
@@ -192,7 +192,7 @@
                   "name": {
                     "type": "string"
                   },
-                  "help_text": {
+                  "helpText": {
                     "type": "string"
                   }
                 },
@@ -221,7 +221,7 @@
                   "name": {
                     "type": "string"
                   },
-                  "help_text": {
+                  "helpText": {
                     "type": "string"
                   },
                   "choices": {

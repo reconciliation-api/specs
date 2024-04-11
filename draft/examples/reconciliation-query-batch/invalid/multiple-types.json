@@ -3,7 +3,7 @@
     {
       "conditions": [
         {
-          "match_type": "name",
+          "matchType": "name",
           "v": "Christel Hanewinckel"
         }
       ],
