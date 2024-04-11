@@ -15,7 +15,8 @@
         wgURI: "https://www.w3.org/community/reconciliation/",
 	canonicalURI: "https://reconciliation-api.github.io/specs/draft/",
 	edDraftURI: "https://reconciliation-api.github.io/specs/draft/",
-	prevRecURI: "https://reconciliation-api.github.io/specs/0.2/",
+        prevRecURI: "https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/",
+        latestVersion: "https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/",
 	license: "w3c-software-doc",
         github: {
            repoURL: "https://github.com/reconciliation-api/specs",
@@ -209,27 +210,37 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <h4><a href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">0.2</a></h4>
           <p>Initial improvements to the specifications made by our Community Group. Most of them are backwards-compatible, except for the requirement to support CORS for cross-origin access.</p>
           <ul>
-            <li>Let manifests announce which versions of the protocol are supported by the service;</li>
-            <li>Make CORS support mandatory and JSONP support optional;</li>
-            <li>Add support for exposing type hierarchies;</li>
-            <li>Improve definition of schema space;</li>
-            <li>Establish the connection between properties in reconciliation queries and in data extension queries;</li>
-            <li>Make 'query' field of reconciliation queries optional;</li>
-            <li>Add support for returning matching features in reconciliation candidates;</li>
-            <li>Add support for authentication;</li>
-            <li>Add support for referencing other reconciliation services in reconciled values returned by data extension;</li>
-            <li>Add support for specifying the size of expected reconciliation batch sizes.</li>
+            <li>Let manifests announce which versions of the protocol are supported by the service</li>
+            <li>Make CORS support mandatory and JSONP support optional</li>
+            <li>Add support for exposing type hierarchies</li>
+            <li>Improve definition of schema space</li>
+            <li>Establish the connection between properties in reconciliation queries and in data extension queries</li>
+            <li>Make 'query' field of reconciliation queries optional</li>
+            <li>Add support for returning matching features in reconciliation candidates</li>
+            <li>Add support for authentication</li>
+            <li>Add support for referencing other reconciliation services in reconciled values returned by data extension</li>
+            <li>Add support for specifying the size of expected reconciliation batch sizes</li>
           </ul>
         </section>
         <section>
           <h4>This Draft</h4>
-          <p>Collection of changes which make the API conform to the REST principles.</p>
+          <p>Collection of changes which make the API conform to the REST principles and follow the W3C's guidelines around accessibility, localization and security.</p>
           <ul>
-            <li>Remove support for flyouts;</li>
-            <li>The endpoints of various sub-services are no longer configurable, but determined by the root reconciliation endpoint;</li>
-            <li>The reconciliation queries only support passing a single <code>type</code> and the <code>type_strict</code> parameter was removed;</li>
-            <li>Remove the notion of identifierSpace and schemaSpace and make view templates mandatory.</li>
-            <li>Remove JSONP support.</li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/85">Have all URI templates follow the RFC6570 syntax</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/89">Add <code>documentation</code>, <code>serviceVersion</code> and <code>logo</code> fields to the manifest</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/91">Remove configurability of the endpoints of various sub-services, determine them by the root reconciliation endpoint instead</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/92">Change the format of reconciliation queries, responses and data extension responses</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/99">Add a section on security and privacy considerations</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/103">Add a section on accessibility</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/115">Restrict reconciliation queries to only support passing a single <code>type</code> and remove the <code>type_strict</code> parameter</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/124">Specify the behaviour of suggest services when an empty prefix is passed</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/131">Add matching settings that can be offered by reconciliation services to configure how property values are compared</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/133">Make the <code>score</code> field of reconciliation optional</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/136">Improve support for content language and text direction following the W3C's checklist</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/140">Remove <code>identifierSpace</code> and <code>schemaSpace</code> and make view templates mandatory</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/142">Remove support for JSONP</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/166">Unify naming to camelCase convention</a></li>
           </ul>
         </section>
       </section>
@@ -483,42 +494,46 @@ database are instances of this type.<dd>
         <h3>Structure of a Reconciliation Query</h3>
         <p>
           A <dfn>reconciliation query</dfn> consists of the following fields. 
-	  At least one of <code>query</code> or <code>properties</code> must be supplied, but all other
-	  fields are optional.
           <dl>
-	    <dt><code>query</code></dt>
-            <dd>A query string, consisting of a non-empty string.
-	    	By supplying such a string, a client intends to search for entities with similar
-	    	names. The specifics of how this similarity is defined are determined by the service.</dd>
+	    <dt><code>conditions</code></dt>
+	    <dd>An array of <a>conditions</a> (at least one).</dd>
 	    <dt><code>type</code></dt>
-            <dd>A <a>type</a> identifier. Supplying such a type allows users to restrict
+            <dd>An optional <a>type</a> identifier. Supplying such a type allows users to restrict
 	    	the search to entities which bear this type. Whether this restriction should be a
 	    	hard constraint or simply induce a change on the reconciliation scores can be
 	    	determined by the service. In particular, services MAY return candidates which
 	    	do not belong to the supplied type;</dd>
 	    <dt><code>limit</code></dt>
-            <dd>A limit on the number of candidates to return, which must be a positive integer;</dd>
-	    <dt><code>properties</code></dt>
-        <dd><p>An array of objects, where each object maps a <a href='#properties'>property</a> identifier (in the <code>pid</code> field) to one or more <a>property values</a> (in the <code>v</code> field).
-        These are used to further refine the list of candidates by allowing clients to specify other attributes of entities, beyond their name in the <code>query</code> field.
-        A reconciliation service that supports properties SHOULD provide a <a>suggest service</a> for discovering these properties.</p>
-        <p>In addition to <code>pid</code> and <code>v</code>, services MAY support the following optional fields that allow clients to specify the effect of each property on the resulting list of candidates.
-          If these fields are omitted, the exact behavior ("must match all", "should match some", etc.) is up to the service.</p>
-        <dl>
-          <dt><code>required</code></dt>
-          <dd>A boolean indicating if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)
-            or optional (i.e. only effecting the entity's rank in the list of candidates);</dd>
-          <dt><code>match_quantifier</code></dt>
-          <dd>A string to indicate which of the values in <code>v</code> to match. MUST be "any" (equivalent to boolean OR), "all" (equivalent to boolean AND), or "none" (equivalent to boolean NOT);</dd>
-          <dt><code>match_qualifier</code></dt>
-          <dd>A string to indicate how to match the values in <code>v</code>.
-            This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
-            (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
-            To allow discovery of supported qualifiers by clients, services that support <code>match_qualifier</code> MUST return the supported <code>match_qualifiers</code> for each property
-            in their property <a href='#suggest-responses'>suggest responses</a>.</p></dd>
-        </dl>
-        </dd>
-        </dl>
+            <dd>An optional limit on the number of candidates to return, which must be a positive integer;</dd>
+          </dl>
+        </p>
+        <p>
+          A <dfn>condition</dfn> specifies a constraint that should be matched by the entities to return.
+                It is used to filter the set of candidates (similar to a WHERE clause in SQL),
+		by allowing clients to specify an attribute of entities that should match. It consists of:
+         <dl>
+            <dt><code>match_type</code></dt>
+            <dd>Either <code>name</code> or <code>property</code>, depending on whether the condition relates to entity names or their properties.</dd>
+            <dt><code>pid</code></dt>
+            <dd>A <a href='#properties'>property</a> identifier, to be provided if and only if the <code>match_type</code> is <code>property</code>.</dd>
+            <dt><code>v</code></dt>
+            <dd>one or more <a>property values</a>. If <code>match_type</code> is <code>name</code>, then this value is to
+                be matched to entity names, otherwise to the property values via the supplied <code>pid</code>. The specifics of how this similarity
+                is defined are determined by the service.</dd> 
+            <dt><code>required</code></dt>
+            <dd>An optional boolean indicating if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)
+              or optional (i.e. only effecting the entity's rank in the list of candidates);</dd>
+            <dt><code>match_quantifier</code></dt>
+            <dd>An optional string to indicate which of the values in <code>v</code> to match. MUST be <code>any</code> (equivalent to boolean OR), <code>all</code> (equivalent to boolean AND), or <code>none</code> (equivalent to boolean NOT);</dd>
+            <dt><code>match_qualifier</code></dt>
+            <dd>An optional string to indicate how to match the values in <code>v</code>.
+              This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
+              (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
+              To allow discovery of supported qualifiers by clients, services that support <code>match_qualifier</code> MUST return the supported <code>match_qualifiers</code> for each property
+              in their property <a href='#suggest-responses'>suggest responses</a>.</p></dd>
+         </dl>
+        
+	    A reconciliation service that supports property assignments SHOULD provide a <a>suggest service</a> for discovering these properties. If the optional fields are omitted, the exact behavior ("must match all", "should match some", etc.) is up to the service.
         </p>
         <p>
           A <dfn>reconciliation query batch</dfn> is an array of <a>reconciliation queries</a>.
@@ -807,7 +822,7 @@ in the <code>score</code> field). By exposing individual features in their respo
             <dt><code>label</code></dt>
 	    <dd>A human-readable label, which is used when presenting the setting to the user in a form;</dd>
 	    <dt><code>type</code></dt>
-            <dd>A data type, which can be one of the strings <code>"number"</code>, <code>"text"</code>, <code>"checkbox"</code>, or <code>"select"</code>. This determines which type of value the property setting gis expected to store: clients SHOULD render this setting with the corresponding HTML element;</li>
+            <dd>A data type, which can be one of the strings <code>"number"</code>, <code>"text"</code>, <code>"checkbox"</code>, or <code>"select"</code>. This determines which type of value the property setting is expected to store: clients SHOULD render this setting with the corresponding HTML element;</li>
 	    <dt><code>default</code></dt>
 	    <dd>A default value for the setting, when not provided or left untouched by the user;</dd>
 	    <dt><code>help_text</code></dt>
@@ -827,11 +842,11 @@ in the <code>score</code> field). By exposing individual features in their respo
           A <dfn>data extension property proposal</dfn> service returns <a>properties</a> for a given <a>type</a> identifier.
         </p>
         <p>
-          If the reconciliation service supports data extension property proposals, it MUST support HTTP GET requests to the endpoint <code>/extend/propose</code> (relative to the reconciliation endpoint) with a <code>type</code> query string parameter
+          If the reconciliation service supports data extension property proposals, it MUST support HTTP GET requests to the endpoint <code>/extend/propose</code> (relative to the reconciliation endpoint) with a <code>type</code> query parameter
 containing a type identifier.
         </p>
         <p>
-          The service SHOULD support an optional <code>limit</code> query string parameter to control the number of proposed properties.
+          The service SHOULD support an optional <code>limit</code> query parameter to control the number of proposed properties.
         </p>
         <p>
           <pre class="example nohighlight">GET /extend/propose?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
@@ -844,7 +859,7 @@ containing a type identifier.
             <dt><code>type</code></dt>
             <dd>The <a>type</a> identifier supplied in the query;</dd>
             <dt><code>limit</code></dt>
-            <dd>Optionally, the requested limit;</dd>
+            <dd>Optionally, an integer to indicate the requested limit;</dd>
           </dl>
         </p>
         <p>

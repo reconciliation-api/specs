@@ -1,8 +1,16 @@
 {
   "queries": [
     {
-      "query": "Christel Hanewinckel",
-      "type": ["DifferentiatedPerson", "FictionalCharacter"],
+      "conditions": [
+        {
+          "match_type": "name",
+          "v": "Christel Hanewinckel"
+        }
+      ],
+      "type": [
+        "DifferentiatedPerson",
+        "FictionalCharacter"
+      ],
       "limit": 5
     }
   ]

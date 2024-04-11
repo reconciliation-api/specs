@@ -43,10 +43,6 @@
       "items": {
         "type": "object",
         "properties": {
-          "query": {
-            "type": "string",
-            "description": "A string to be matched against the name of the entities"
-          },
           "type": {
             "description": "A type identifier indicating which class of entities to restrict the search to",
             "type": "string"
@@ -59,18 +55,27 @@
             "type": "string",
             "description": "The text-processing language for the query"
           },
-          "properties": {
+          "conditions": {
             "type": "array",
-            "description": "An optional list of property mappings to refine the query",
+            "minItems": 1,
+            "description": "A list of conditions to select candidates",
             "items": {
               "type": "object",
               "properties": {
+                "match_type": {
+                  "type": "string",
+                  "description": "A string to indicate whether to match the supplied value to entity names or property values",
+                  "enum": [
+                    "name",
+                    "property"
+                  ]
+                },
                 "pid": {
                   "type": "string",
-                  "description": "The identifier of the property, whose values will be compared to the values supplied"
+                  "description": "The identifier of the property, whose values will be compared to the values supplied. Required if 'match_type' is 'property'."
                 },
                 "v": {
-                  "description": "A value (or array of values) to match against the property values associated with the property on each candidate",
+                  "description": "A value (or array of values) to match against the entity names or property values associated with the property on each candidate",
                   "oneOf": [
                     {
                       "$ref": "#/definitions/property_value"
@@ -85,7 +90,7 @@
                 },
                 "required": {
                   "type": "boolean",
-                  "description": "A boolean indicating if a match for the property is required for an entity to enter the list of candidates"
+                  "description": "A boolean indicating if a match of this condition is required for an entity to enter the list of candidates"
                 },
                 "match_quantifier": {
                   "type": "string",
@@ -102,7 +107,7 @@
                 }
               },
               "required": [
-                "pid",
+                "match_type",
                 "v"
               ]
             }
@@ -117,23 +122,8 @@
             ]
           }
         },
-        "anyOf": [
-          {
-            "required": [
-              "query"
-            ]
-          },
-          {
-            "required": [
-              "properties"
-            ],
-            "properties": {
-              "properties": {
-                "type": "array",
-                "minItems": 1
-              }
-            }
-          }
+        "required": [
+          "conditions"
         ],
         "additionalProperties": false
       }
