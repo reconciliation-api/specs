@@ -1,0 +1,206 @@
+openapi: 3.1.0
+info:
+  title: Reconciliation API
+  version: draft
+  summary: OpenAPI definition of the Reconciliation API
+  description: web API letting clients match data against a database hosted by the service
+  contact:
+    name: W3C Entity Reconciliation Community Group
+    url: https://www.w3.org/community/reconciliation/
+    email: public-reconciliation@w3.org
+  license:
+    name: W3C Community Final Specification Agreement (FSA)
+    url: https://www.w3.org/community/about/process/fsa-deed/
+paths:
+  /:
+    get:
+      operationId: getManifest
+      tags:
+        - Service Definition
+      summary: Retrieve the service manifest
+      responses:
+        '200':
+          description: Service manifest
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                $ref: examples/manifest/valid/getty.json
+  /reconcile:
+    post:
+      operationId: reconciliationQueries
+      tags:
+        - Reconcile
+      summary: Submit a batch of reconciliation queries
+      requestBody:
+        required: true
+        description: "A batch of reconciliation queries"
+        content:
+          application/json:
+            schema:
+              $ref: schemas/reconciliation-query-batch.json
+            example:
+              $ref: examples/reconciliation-query-batch/valid/example-full.json
+      responses:
+        '200':
+          description: Reconciliation candidates for each query
+          content:
+            application/json:
+              schema:
+                $ref: schemas/reconciliation-result-batch.json
+              example:
+                $ref: examples/reconciliation-result-batch/valid/example-full.json
+  /suggest/entity:
+    get:
+      operation: suggestEntities
+      tags:
+        - Suggest
+      summary: Retrieve auto-complete suggestions for entities
+      parameters:
+        - name: prefix
+          in: query
+          required: true
+          description: "the search string input by the user"
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          required: false
+          description: "a number of results to skip"
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of entities suitable for displaying in a drop-down auto-complete widget
+          content:
+            application/json:
+              schema:
+                $ref: schemas/suggest-entities-response.json
+              example:
+                $ref: examples/suggest-entities-response/valid/example.json
+  /suggest/property:
+    get:
+      operation: suggestProperties
+      tags:
+        - Suggest
+      summary: Retrieve auto-complete suggestions for properties
+      parameters:
+        - name: prefix
+          in: query
+          required: true
+          description: "the search string input by the user"
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          required: false
+          description: "a number of results to skip"
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of properties suitable for displaying in a drop-down auto-complete widget
+          content:
+            application/json:
+              schema:
+                $ref: schemas/suggest-properties-response.json
+              example:
+                $ref: examples/suggest-properties-response/valid/example.json
+  /suggest/type:
+    get:
+      operation: suggestTypes
+      tags:
+        - Suggest
+      summary: Retrieve auto-complete suggestions for types
+      parameters:
+        - name: prefix
+          in: query
+          required: true
+          description: "the search string input by the user"
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          required: false
+          description: "a number of results to skip"
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of types suitable for displaying in a drop-down auto-complete widget
+          content:
+            application/json:
+              schema:
+                $ref: schemas/suggest-types-response.json
+              example:
+                $ref: examples/suggest-types-response/valid/example.json
+  /preview:
+    get:
+      operation: preview
+      tags:
+        - Preview
+      summary: Retrieve a compact representation of an entity as an HTML page
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: an entity id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "A web page describing the entity"
+          content:
+            text/html:
+              example: "test"
+  /extend:
+    post:
+      operation: extend
+      tags:
+        - Extend
+      summary: Retrieve the values of properties on a list of entities
+      requestBody:
+        required: true
+        description: "A list of entities and the properties to fetch on them"
+        content:
+          application/json:
+            schema:
+              $ref: schemas/data-extension-query.json
+            example:
+              $ref: examples/data-extension-query/valid/example-full.json
+      responses:
+        '200':
+          description: The values of the properties on those entities
+          content:
+            application/json:
+              schema:
+                $ref: schemas/data-extension-response.json
+              example:
+                $ref: examples/data-extension-response/valid/example-full.json
+  /extend/propose:
+    get:
+      operation: proposeProperties
+      tags:
+        - Extend
+      summary: List properties commonly fetched on entities of a given type
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of properties which could be fetched on entities of the provided type
+          content:
+            application/json:
+              schema:
+                $ref: schemas/data-extension-property-proposal.json
+              example:
+                $ref: examples/data-extension-property-proposal/valid/response.json
