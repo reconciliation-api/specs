@@ -5,6 +5,7 @@
     <script src='../libs/respec-w3c.js' async class='remove'></script>
     <script class='remove'>
       var respecConfig = {
+        xref: ["ecmascript", "RFC2119", "RFC6570"],
         specStatus: "CG-DRAFT",
         subtitle: "A protocol for data matching on the Web",
         pluralize: true,
@@ -244,7 +245,6 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           </ul>
         </section>
       </section>
-      <section id="conformance"></section>
     </section>
     <section>
       <h2>Core Concepts</h2>
@@ -255,21 +255,53 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         or <a>properties</a> with <a>property values</a>.
         The purpose of this section is to define these notions.
       </p>
+      <h3 data-link-for="conventions">Terms Used</h3>
+      <p>
+        <b>JSON</b> [[RFC8259]] format conventions are used throughout this document, including examples.
+      </p>  
+      <p>
+        The following concepts are used and borrowed from JSON syntax as well as from [[RFC2119]]:
+      <ul>
+        <li>
+        <dfn
+          data-lt="key|keyword|fields">
+          field
+        </dfn> ,plural "fields", is the alternative term used throughout to refer to the key or name part in a <code>"name":"value"</code> pair in a JSON object as defined by [[RFC8259]].
+        Or more loosely, a "key" in JSON data.  The typical convention when dealing with APIs or programmatic querying of
+        records is to use "fields" rather than "keys", so we have chosen to use that term in this specification
+        when speaking of objects to query/request or respond with.
+        </li>
+        <li>
+        <dfn
+          data-lt="MANDATORY|NON-OPTIONAL">
+          required
+        </dfn> is the default and might be used at times to signify those [=fields=] which are mandatory and MUST be used in all reconciliation services.
+        If the field is not specified as either REQUIRED or OPTIONAL, then it is REQUIRED.
+        </li>
+        <li>
+        <dfn
+          data-lt="NOT MANDATORY|NON-MANDATORY">
+          optional
+        </dfn> is used to signify those [=fields=] which are not mandatory and MAY be used.
+        </li>
+      </ul>
+      </p>
+      </p>
       <section>
         <h3 data-link-for="entities">Entities</h3>
         <p>
            An <dfn>entity</dfn> is a record in the data source exposed by the service.
-           It comprises the following fields:
-           <dl>
-	     <dt><code>id</code></dt>
-             <dd>an identifier, which is a non-empty string. This identifier must be unique among all entities;</dd>
-             <dt><code>name</code></dt>
-             <dd>a <emph>name</emph>, which is also a non-empty string;</dd>
-             <dt><code>description</code></dt>
-             <dd>an optional <emph>description</emph> as a human-readable string;</dd>
-             <dt><code>type</code></dt>
-             <dd>an array of <a>types</a>, possibly empty;</dd>
-           </dl>
+           It comprises the following [=fields=]:
+        <dl>
+        <dt><code>id</code></dt>
+          <dd>{{String}} - a non-empty identifier. This identifier must be unique among all entities;</dd>
+        <dt><code>name</code></dt>
+          <dd>{{String}} - a non-empty <emph>name</emph>;</dd>
+        <dt><code>description</code></dt>
+          <dd>{{String}} ({{optional}}) - a <emph>description</emph> as a human-readable string;</dd>
+        <dt><code>type</code></dt>
+          <dd>{{Array}} ({{optional}}) - an array of <a>types</a>, possibly empty;</dd>
+        </dl>
            Moreover, for each <a>property</a> it contains a set of associated <a>property values</a>, possibly empty.
         </p>
         <p>
@@ -295,7 +327,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         <h3 data-link-for="types">Types</h3>
         <p>
           A <dfn>type</dfn> represents a category of <a>entities</a>.
-          It comprises the following fields:
+          It comprises the following [=fields=]:
           <dl>
              <dt><code>id</code></dt>
              <dd>an identifier, which is a non-empty string. This identifier must be unique among all types;</dd>
@@ -310,7 +342,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         <h3 data-link-for="properties">Properties</h3>
         <p>
           A <dfn>property</dfn> represents a type of attribute that entities can have in the data source.
-          It comprises the following fields:
+          It comprises the following [=fields=]:
           <dl>
 	    <dt><code>id</code></dt>
             <dd>an identifier, which is a non-empty string. This identifier must be unique among all properties;</dd>
@@ -332,6 +364,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           </ul>
         </p>
       </section>
+      <section id="conformance"></section>
     </section>
     <section>
       <h2>Service Definition</h2>
@@ -350,7 +383,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
            parameters, the <a>service manifest</a> MUST be returned.
         </p>
       <p>
-        A <dfn>service manifest</dfn> consists of the following fields:
+        A <dfn>service manifest</dfn> consists of the following [=fields=]:
         <dl>
           <dt><code>versions</code></dt>
           <dd>The array of API versions supported by the endpoint, such as <code>["0.1", "0.2"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
@@ -373,7 +406,7 @@ database are instances of this type.<dd>
           <dt><code>preview</code></dt>
           <dd>A <a>preview metadata</a> object, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
           <dt><code>suggest</code></dt>
-          <dd>An optional object which may contain the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
+          <dd>An optional object which may contain the following [=fields=], depending on which <a href="#suggest-services">suggest services</a> are offered:
             <dl>
               <dt><code>entity</code></dt>
               <dd>A boolean indicating if the service supports auto-suggestion of <a>entities</a>;</dd>
@@ -493,7 +526,7 @@ database are instances of this type.<dd>
       <section>
         <h3>Structure of a Reconciliation Query</h3>
         <p>
-          A <dfn>reconciliation query</dfn> consists of the following fields. 
+          A <dfn>reconciliation query</dfn> consists of the following [=fields=]. 
           <dl>
 	    <dt><code>conditions</code></dt>
 	    <dd>An array of <a>conditions</a> (at least one).</dd>
@@ -528,7 +561,7 @@ database are instances of this type.<dd>
             <dt><code>match_qualifier</code></dt>
             <dd>An optional string to indicate how to match the values in <code>v</code>.
               This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
-              (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
+              (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date [=fields=] (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
               To allow discovery of supported qualifiers by clients, services that support <code>match_qualifier</code> MUST return the supported <code>match_qualifiers</code> for each property
               in their property <a href='#suggest-responses'>suggest responses</a>.</p></dd>
          </dl>
@@ -539,11 +572,11 @@ database are instances of this type.<dd>
           A <dfn>reconciliation query batch</dfn> is an array of <a>reconciliation queries</a>.
         </p>
         <p>
-          Minimal example of a <a>reconciliation query batch</a> with mandatory fields only:
+          Minimal example of a <a>reconciliation query batch</a> with mandatory [=fields=] only:
           <pre data-include="examples/reconciliation-query-batch/valid/example-min.json" class="example json"></pre>
         </p>
         <p>
-          Full example of a <a>reconciliation query batch</a> with all optional fields:
+          Full example of a <a>reconciliation query batch</a> with all optional [=fields=]:
           <pre data-include="examples/reconciliation-query-batch/valid/example-full.json" class="example json"></pre>
         </p>
 	<p>
@@ -560,7 +593,7 @@ database are instances of this type.<dd>
         <h3>Reconciliation Query Responses</h3>
         <p>
 	  A <dfn>reconciliation candidate</dfn> represents an <a>entity</a> as a response to a <a>reconciliation query</a>.
-	  It is proposed to the client as a potential matching entity for this query. It contains the following fields:
+	  It is proposed to the client as a potential matching entity for this query. It contains the following [=fields=]:
           <dl>
 	    <dt><code>id</code></dt>
 	    <dd>The identifier of the candidate entity;</dd>
@@ -593,7 +626,7 @@ in the <code>score</code> field). By exposing individual features in their respo
          to compute matching scores which fit their use cases better.
         </p>
         <p>
-          Example of a <a>reconciliation candidate</a> with all possible fields:
+          Example of a <a>reconciliation candidate</a> with all possible [=fields=]:
           <pre data-include="examples/reconciliation-candidate/valid/example.json" class="example json"></pre>
         </p>
         <p>
@@ -674,7 +707,7 @@ in the <code>score</code> field). By exposing individual features in their respo
       </p>
       <section>
       <h3>Preview Metadata</h3>
-      <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
+      <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following [=fields=], all mandatory:
         <dl>
           <dt><code>width</code></dt>
           <dd>The width in pixels of the viewport where to render an entity preview;</dd>
@@ -736,12 +769,12 @@ in the <code>score</code> field). By exposing individual features in their respo
       <section id="suggest-responses">
         <h3>Suggest Responses</h3>
         <p>
-          A response to a suggest query consists of the following fields:
+          A response to a suggest query consists of the following [=fields=]:
           <dl>
             <dt><code>result</code></dt>
             <dd>An array of items, which can be <a>entities</a>, <a>properties</a>
             or <a>types</a> depending on which of these the service
-            is provided for. Each such object can contain the following fields:
+            is provided for. Each such object can contain the following [=fields=]:
             <dl>
               <dt><code>id</code></dt>
               <dd>The identifier of the entity, property or type suggested;</dd>
@@ -832,7 +865,7 @@ in the <code>score</code> field). By exposing individual features in their respo
           </dl>
         </p>
         <p>
-          Example of <a>data extension metadata</a> with all optional fields:
+          Example of <a>data extension metadata</a> with all optional [=fields=]:
           <pre data-include="examples/data-extension-metadata/valid/example-full.json" class="example json"></pre>
         </p>
       </section>
@@ -855,7 +888,7 @@ containing a type identifier.
           A <dfn>data extension property proposal response</dfn> consists of:
           <dl>
             <dt><code>properties</code></dt>
-            <dd>An array of proposed <a>properties</a>. These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query;</dd>
+            <dd>An array of proposed <a>properties</a>. These properties are suggested as [=fields=] that could be potentially fetched via data extension for entities of the type provided in the query;</dd>
             <dt><code>type</code></dt>
             <dd>The <a>type</a> identifier supplied in the query;</dd>
             <dt><code>limit</code></dt>
@@ -1001,7 +1034,7 @@ containing a type identifier.
       <section>
         <h3>Content semantics</h3>
         <p>
-          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> fields for all identifiable objects, in particular
+          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> [=fields=] for all identifiable objects, in particular
           <a>entities</a>, <a>types</a>, <a>properties</a>, and <a>matching features</a>. These SHOULD be used by reconciliation clients to provide useful labels for displaying and linking identifiable entities. 
           The structural semantics of the content provided by reconciliation services allows different presentations (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can 
           be modified by third-party tools to enhance accessibility.
