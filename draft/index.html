@@ -257,32 +257,29 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
       </p>
       <h3 data-link-for="conventions">Terms Used</h3>
       <p>
-        <b>JSON</b> [[RFC8259]] format conventions are used throughout this document, including examples.
-      </p>  
-      <p>
-        The following concepts are used and borrowed from JSON syntax as well as from [[RFC2119]]:
+        The following concepts are used and borrowed from JSON [[RFC8259]] syntax as well as from [[RFC2119]]:
       <ul>
         <li>
         <dfn
           data-lt="key|keyword|fields">
           field
-        </dfn> is the alternative term used throughout to refer to the key or name part in a <code>"name":"value"</code> pair in a JSON object as defined by [[RFC8259]].
+        </dfn> is the alternative term used throughout to refer to the key or name part in a <code>{"name":"value"}</code> pair in a JSON object as defined by [[RFC8259]].
         Or more loosely, a "key" in JSON data.  The typical convention when dealing with APIs or programmatic querying of
-        records is to use "fields" rather than "keys", so we have chosen to use that term in this specification
+        records is to use the term "fields" rather than "keys", so we have chosen to use that term in this specification
         when speaking of objects to query/request or respond with.
         </li>
         <li>
-        <dfn
-          data-lt="MANDATORY|NON-OPTIONAL">
-          required
-        </dfn> is the default and might be used at times to signify those [=fields=] which are mandatory and MUST be used in all reconciliation services.
+          <!-- "required" is not a defined term since it is a default and unused currently.
+               So, we just make it bold italics to provide a similar style as defined terms.
+          -->
+        ( <b><i>required</i></b> ) is the default and might be used at times to signify those [=fields=] which are mandatory and MUST be used in all reconciliation services.
         If the field is not specified as either REQUIRED or OPTIONAL, then it is REQUIRED.
         </li>
         <li>
-        <dfn
+        (<dfn
           data-lt="NOT MANDATORY|NON-MANDATORY">
           optional
-        </dfn> is used to signify those [=fields=] which are not mandatory and MAY be used.
+        </dfn>) is used to signify those [=fields=] which are not mandatory and MAY be used.
         </li>
       </ul>
       </p>
