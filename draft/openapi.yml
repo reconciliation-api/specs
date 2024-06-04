@@ -1,9 +1,15 @@
 openapi: 3.1.0
 info:
-  title: Reconciliation API
-  version: draft
+  title: Reconciliation API - OpenAPI 3.1
   summary: OpenAPI definition of the Reconciliation API
-  description: web API letting clients match data against a database hosted by the service
+  description: |-
+    Web API letting clients match data against a database hosted by the service.
+
+    Some useful links:
+      - [ W3C Entity Reconciliation Community Group ](https://www.w3.org/community/reconciliation/)
+      - [ Source code for Reconciliation API ](https://github.com/reconciliation-api/specs)
+      - [ List of known public endpoints ](https://reconciliation-api.github.io/testbench/)
+      - [ OpenRefine wiki list of reconciliable data sources ](https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources)
   contact:
     name: W3C Entity Reconciliation Community Group
     url: https://www.w3.org/community/reconciliation/
@@ -11,6 +17,29 @@ info:
   license:
     name: W3C Community Final Specification Agreement (FSA)
     url: https://www.w3.org/community/about/process/fsa-deed/
+# version: is the version of this document,  when updated, please bump this version
+  version: 0.0.1
+
+externalDocs:
+  description: Find out more about Reconciliation API
+  url: https://reconciliation-api.github.io
+
+# tags:
+#   - name: manifest
+#     description: the service manifest 
+#   - name: reconciliation
+#     description: |-
+#       the process of linking entities or records with
+#       other entities or records
+#     externalDocs:
+#       description: Wikidata URL for "data reconciliation"
+#       url: https://www.wikidata.org/wiki/Q48719515
+#   - name: entity
+#     description: a record in the data source exposed by the service
+#     externalDocs:
+#       description: Wikidata URL for "entity"
+#       url: https://www.wikidata.org/wiki/Q35120
+
 paths:
   /:
     get:
@@ -24,7 +53,9 @@ paths:
           content:
             application/json:
               schema:
+                name: service manifest
                 type: object
+                $ref: '#/components/schemas/manifest'
               example:
                 $ref: examples/manifest/valid/getty.json
   /reconcile:
@@ -204,3 +235,48 @@ paths:
                 $ref: schemas/data-extension-property-proposal.json
               example:
                 $ref: examples/data-extension-property-proposal/valid/response.json
+
+components:
+  schemas:
+    manifest:
+      type: object
+      properties:
+        versions:
+          type: array
+          description: The array of API versions supported by the endpoint, such as ["0.1", "0.2"]. Since this field did not exist in version 0.1, services which do not declare a versions field are expected to only support version 0.1.
+          examples: ["0.1", "0.2"]
+        name:
+          type: string
+          description: A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which will help disambiguating it from others
+          examples: [myReconService]
+        defaultTypes:
+          type: array
+          description: An array of types which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the database are instances of this type.
+        documentation:
+          type: string
+          format: uri
+          description: An optional URL with human-readable documentation about the service, for instance giving more information about the data it exposes.
+        logo:
+          type: string
+          format: uri
+          description: An optional URL of a square image which can be used as the service's logo.
+        serviceVersion:
+          type: string
+          description: An optional string which describes the version of the software exposing this service. This is not to be confused with versions which is about the versions of the reconciliation API supported by the service.
+        view:
+          type: object
+          description: An object which contains a single field url.
+          items:
+            url:
+              type: string
+              format: uri
+              description: a URI template for entities
+              externalDocs:
+                description: a URI template as defined by RFC6570
+                url: https://www.rfc-editor.org/rfc/rfc6570
+              examples: ["http://www.wikidata.org/entity/{id}"]
+    reconcile-query-batch:
+      type: object
+      description: |-
+        This schema validates the JSON serialization of any reconciliation query batch, i.e. the payload of a POST to a reconciliation endpoint.
+
