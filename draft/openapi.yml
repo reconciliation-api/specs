@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: "3.1.0"
 info:
   title: Reconciliation API - OpenAPI 3.1
   summary: OpenAPI definition of the Reconciliation API
@@ -17,7 +17,10 @@ info:
   license:
     name: W3C Community Final Specification Agreement (FSA)
     url: https://www.w3.org/community/about/process/fsa-deed/
-# version: is the version of this document,  when updated, please bump this version
+####
+# version: is the version of this document not the version of the Reconciliation API.
+#          when updating this document, please bump this version below:
+####
   version: 0.0.1
 
 externalDocs:
@@ -238,7 +241,92 @@ paths:
 
 components:
   schemas:
+
+    identifier:
+      type: string
+      name: id
+      description: a unique character string that identifies an entity
+
+    entity:
+      required:
+        - id
+        - name
+      summary: |-
+        An entity is a record in the data source exposed by the service.
+        For each entity, expanding the template with 'id' being set to
+        the entity's identifier MUST result in a valid URI.
+      type: object
+      properties:
+        id:
+          type: string
+          description: |-
+           an identifier for the entity.
+           This identifier must be unique among all entities.
+           Services for which the entity's identifier is already a full URI
+           can use the '{+id}'' template, which disables the escaping of some characters
+           when inserting the identifier in the URI template.
+           $ref: '#/components/schemas/URI-template'
+        name:
+          type: string
+          description: a name, which is also a non-empty string
+        description:
+          type: string
+          description: an optional description as a human-readable string
+        type:
+          type: array
+          description: an array of types, possibly empty
+          $ref: '#/components/schemas/type'
+
+    type:
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: |-
+           a unique identifier for the type.
+           This identifier must be unique among all types.
+        name:
+          type: string
+          description: a human-readable name for the type which is a non-empty string
+        broader:
+          type: array
+          description: |-
+           an optional array of types, each representing a direct (i.e., immediate) 'broader' [skos-reference] category of [entities]: /entity
+          $ref: 'https://www.w3.org/TR/skos-reference/#semantic-relations'
+
+    property:
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: |-
+           an identifier, which is a non-empty string.
+           This identifier must be unique among all properties
+        name:
+          type: string
+          description: a human-readable name for the property
+    
+    propertyValue:
+      type: string
+      description: a value for a property
+      enum:
+        - string
+        - boolean
+        - integer
+        - float
+        - entity
+
     manifest:
+      required:
+        - versions
+        - name
+        - defaultTypes
       type: object
       properties:
         versions:
@@ -247,25 +335,42 @@ components:
           examples: ["0.1", "0.2"]
         name:
           type: string
-          description: A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which will help disambiguating it from others
+          description: |-
+           a human-readable name for the service,
+           generally the name of the database it exposes.
+           In the case where multiple reconciliation services exist for the same database,
+           it is in the interest of a service to bear a meaningful name
+           which will help disambiguating it from others
           examples: [myReconService]
         defaultTypes:
           type: array
-          description: An array of types which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the database are instances of this type.
+          description: |-
+           an array of types which are considered sensible default choices as types
+           supplied in reconciliation queries. For services which do not rely on types,
+           this MAY contain a single type with a generic name
+           making it clear that all entities in the database are instances of this type.
         documentation:
           type: string
           format: uri
-          description: An optional URL with human-readable documentation about the service, for instance giving more information about the data it exposes.
+          description: |-
+           an optional URL with human-readable documentation about the service,
+           for instance giving more information about the data it exposes.
         logo:
           type: string
           format: uri
           description: An optional URL of a square image which can be used as the service's logo.
         serviceVersion:
           type: string
-          description: An optional string which describes the version of the software exposing this service. This is not to be confused with versions which is about the versions of the reconciliation API supported by the service.
+          description: |-
+           an optional string which describes the version of the software exposing this service.
+           This is not to be confused with `versions`[array] property
+           which is about the versions of the reconciliation API supported by the service.
         view:
           type: object
-          description: An object which contains a single field url.
+          description: |-
+           an object which contains a single field url.
+           Its value is a URI template for entities
+           $ref: '#/components/schemas/URI-template'
           items:
             url:
               type: string
@@ -275,6 +380,82 @@ components:
                 description: a URI template as defined by RFC6570
                 url: https://www.rfc-editor.org/rfc/rfc6570
               examples: ["http://www.wikidata.org/entity/{id}"]
+        feature_view:
+          type: object
+          description: An object which contains a url field pointing to a human-readable web page which can be used to view matching features.
+          items:
+            url:
+              type: string
+              format: uri
+              description: a URI template for features
+              externalDocs:
+                description: a URI template as defined by RFC6570
+                url: https://www.rfc-editor.org/rfc/rfc6570
+              examples: ["http://www.wikidata.org/entity/{id}"]
+        suggest:
+          type: object
+          description: |-
+            an object which contains a url field pointing to a human-readable web page
+            which can be used to view matching properties.
+          items:
+            entity:
+              type: boolean
+              description: A boolean indicating if the service supports auto-suggestion of [entity]: /suggest/entity "entities"
+            property:
+              type: boolean
+              description: A boolean indicating if the service supports auto-suggestion of [property]: /suggest/property "properties"
+            type:
+              type: boolean
+              description: A boolean indicating if the service supports auto-suggestion of [type]: /type "types"
+        extend:
+          type: object
+          description: |-
+            A data extension metadata, supplied if the service offers a data extension service
+    
+    data-extension-metadata:
+      propose_properties:
+        type: boolean
+        description: |-
+          a boolean indicating if the service supports `data extension property proposal`
+      property_settings:
+        type: array
+        description: |-
+          an array of [data-extension-property-settings]: /data-extension-property-settings 
+
+    data-extension-property-settings:
+      name:
+        type: string
+        description: |-
+          a name for the setting, which identifies the setting uniquely
+      label:
+        type: string
+        description: |-
+          a human-readable label, which is used when presenting the setting to the user in a form
+      type:
+        type: string
+        description: |-
+          a data type, which can be one of the strings `number, `text`, `checkbox`, or `select`.
+          This determines which type of value the property setting is expected to store.
+          Clients SHOULD render this setting with the corresponding HTML element
+      default:
+        type: string
+        description: |-
+          a default value for the setting, when not provided or left untouched by the user
+      help_text:
+        type: string
+        description: |-
+          a help text, which describes the meaning of the field to the user.
+          This is meant to be a short string that can be displayed alongside the corresponding form field
+      choices:
+        type: array
+        description: |-
+          If type is `select`, an array of property setting choices.
+## TODO: add more schema and their properties
+##       and clean up the schema
+##       and add examples
+##       and add references and more inline link reference definitions
+##       https://spec.commonmark.org/0.31.2/#link-reference-definitions
+
     reconcile-query-batch:
       type: object
       description: |-
