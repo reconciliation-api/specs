@@ -401,6 +401,14 @@ components:
           items:
             entity:
               type: boolean
+## TODO: Verify that descriptions allow for CommonMark spec allows this kind of Link reference definitions
+##
+##       > The following properties are taken from the JSON Schema specification but their definitions have been extended by the OAS:
+##       > description - [CommonMark](https://spec.commonmark.org/) syntax MAY be used for rich text representation.
+##       > format - See Data Type Formats for further details. While relying on JSON Schema's defined formats, the OAS offers a few additional predefined formats.
+##
+##       https://spec.commonmark.org/0.31.2/#link-reference-definitions
+##       and that it navigates well in OAS editors.
               description: A boolean indicating if the service supports auto-suggestion of [entity]: /suggest/entity "entities"
             property:
               type: boolean
