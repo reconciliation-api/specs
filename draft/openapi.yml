@@ -265,7 +265,7 @@ components:
            Services for which the entity's identifier is already a full URI
            can use the '{+id}'' template, which disables the escaping of some characters
            when inserting the identifier in the URI template.
-           $ref: '#/components/schemas/URI-template'
+          $ref: '#/components/schemas/URI-template'
         name:
           type: string
           description: a name, which is also a non-empty string
@@ -312,7 +312,7 @@ components:
           type: string
           description: a human-readable name for the property
     
-    propertyValue:
+    property-value:
       type: string
       description: a value for a property
       enum:
@@ -395,8 +395,9 @@ components:
         suggest:
           type: object
           description: |-
-            an object which contains a url field pointing to a human-readable web page
-            which can be used to view matching properties.
+            an optional object which may contain the following fields,
+            depending on which suggest services are offered
+          $ref: 'https://reconciliation-api.github.io/specs/draft/#suggest-services'
           items:
             entity:
               type: boolean
@@ -459,5 +460,6 @@ components:
     reconcile-query-batch:
       type: object
       description: |-
-        This schema validates the JSON serialization of any reconciliation query batch, i.e. the payload of a POST to a reconciliation endpoint.
+        This schema validates the JSON serialization of any reconciliation query batch,
+        i.e. the payload of a POST to a reconciliation endpoint.
 
