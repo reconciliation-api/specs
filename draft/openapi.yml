@@ -1,4 +1,4 @@
-openapi: "3.1.0"
+openapi: "3.1"
 info:
   title: Reconciliation API - OpenAPI 3.1
   summary: OpenAPI definition of the Reconciliation API
@@ -18,7 +18,7 @@ info:
     name: W3C Community Final Specification Agreement (FSA)
     url: https://www.w3.org/community/about/process/fsa-deed/
 ####
-# version: is the version of this document not the version of the Reconciliation API.
+# version: is the version of this document, not the version of the Reconciliation API.
 #          when updating this document, please bump this version below:
 ####
   version: 0.0.1
@@ -49,7 +49,7 @@ paths:
       operationId: getManifest
       tags:
         - Service Definition
-      summary: Retrieve the service manifest
+      summary: retrieve the service manifest
       responses:
         '200':
           description: Service manifest
@@ -66,16 +66,16 @@ paths:
       operationId: reconciliationQueries
       tags:
         - Reconcile
-      summary: Submit a batch of reconciliation queries
+      summary: submit a batch of reconciliation queries
       requestBody:
         required: true
-        description: "A batch of reconciliation queries"
+        description: A batch of reconciliation queries
         content:
           application/json:
             schema:
-              $ref: schemas/reconciliation-query-batch.json
+              $ref: '#/components/schemas/reconcile-query-batch'
             example:
-              $ref: examples/reconciliation-query-batch/valid/example-full.json
+              $ref: '#examples/reconciliation-query-batch/valid/example-full'
       responses:
         '200':
           description: Reconciliation candidates for each query
@@ -90,23 +90,23 @@ paths:
       operation: suggestEntities
       tags:
         - Suggest
-      summary: Retrieve auto-complete suggestions for entities
+      summary: retrieve auto-complete suggestions for entities
       parameters:
         - name: prefix
           in: query
           required: true
-          description: "the search string input by the user"
+          description: the search string input by the user
           schema:
             type: string
         - name: cursor
           in: query
           required: false
-          description: "a number of results to skip"
+          description: a number of results to skip
           schema:
             type: integer
       responses:
         '200':
-          description: A list of entities suitable for displaying in a drop-down auto-complete widget
+          description: a list of entities suitable for displaying in a drop-down auto-complete widget
           content:
             application/json:
               schema:
@@ -123,13 +123,13 @@ paths:
         - name: prefix
           in: query
           required: true
-          description: "the search string input by the user"
+          description: the search string input by the user
           schema:
             type: string
         - name: cursor
           in: query
           required: false
-          description: "a number of results to skip"
+          description: a number of results to skip
           schema:
             type: integer
       responses:
@@ -151,13 +151,13 @@ paths:
         - name: prefix
           in: query
           required: true
-          description: "the search string input by the user"
+          description: the search string input by the user
           schema:
             type: string
         - name: cursor
           in: query
           required: false
-          description: "a number of results to skip"
+          description: a number of results to skip
           schema:
             type: integer
       responses:
@@ -184,7 +184,7 @@ paths:
             type: string
       responses:
         '200':
-          description: "A web page describing the entity"
+          description: A web page describing the entity
           content:
             text/html:
               example: "test"
@@ -196,7 +196,7 @@ paths:
       summary: Retrieve the values of properties on a list of entities
       requestBody:
         required: true
-        description: "A list of entities and the properties to fetch on them"
+        description: A list of entities and the properties to fetch on them
         content:
           application/json:
             schema:
@@ -209,9 +209,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/data-extension-response.json
+                $ref: '#components/schemas/data-extension-response'
               example:
-                $ref: examples/data-extension-response/valid/example-full.json
+                $ref: '#examples/data-extension-response/valid/example-full'
   /extend/propose:
     get:
       operation: proposeProperties
@@ -235,9 +235,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/data-extension-property-proposal.json
+                $ref: '#/components/schemas/data-extension-property-proposal'
               example:
-                $ref: examples/data-extension-property-proposal/valid/response.json
+                $ref: '#/components/schemas/data-extension-property-proposal/valid/response'
 
 components:
   schemas:
@@ -263,9 +263,11 @@ components:
            an identifier for the entity.
            This identifier must be unique among all entities.
            Services for which the entity's identifier is already a full URI
-           can use the '{+id}'' template, which disables the escaping of some characters
+           can use the '{+id} template, which disables the escaping of some characters
            when inserting the identifier in the URI template.
-          $ref: '#/components/schemas/URI-template'
+          allOf:
+            $ref: '#/components/schemas/uri-template'
+            $ref: '#/components/schemas/identifier'
         name:
           type: string
           description: a name, which is also a non-empty string
@@ -273,8 +275,6 @@ components:
           type: string
           description: an optional description as a human-readable string
         type:
-          type: array
-          description: an array of types, possibly empty
           $ref: '#/components/schemas/type'
 
     type:
@@ -284,6 +284,7 @@ components:
       type: object
       properties:
         id:
+          $id: "#/components/schemas/identifier"
           type: string
           description: |-
            a unique identifier for the type.
@@ -291,12 +292,24 @@ components:
         name:
           type: string
           description: a human-readable name for the type which is a non-empty string
+        description:
+          type: string
+          description: |-
+            optional description which can be provided to disambiguate namesakes
+            and provide more context
         broader:
           type: array
           description: |-
            an optional array of types, each representing a direct (i.e., immediate) 'broader' [skos-reference] category of [entities]: /entity
-          $ref: 'https://www.w3.org/TR/skos-reference/#semantic-relations'
-
+          items:
+            $ref: '#/components/schemas/broader'
+  
+    broader:
+      type: string
+      externalDocs: 
+        description: a skos-reference broader category
+        url: https://www.w3.org/TR/skos-reference/#semantic-relations
+        
     property:
       required:
         - id
@@ -304,23 +317,30 @@ components:
       type: object
       properties:
         id:
+          $id: '#/components/schemas/identifier'
           type: string
           description: |-
            an identifier, which is a non-empty string.
            This identifier must be unique among all properties
+          $ref: '#/components/schemas/identifier'
         name:
           type: string
           description: a human-readable name for the property
     
     property-value:
       type: string
+      name: property value
       description: a value for a property
       enum:
         - string
         - boolean
         - integer
-        - float
-        - entity
+    
+    uri-template:
+      type: object
+      externalDocs: 
+        description: a URI template as defined by RFC6570
+        url: https://www.rfc-editor.org/rfc/rfc6570
 
     manifest:
       required:
@@ -331,7 +351,10 @@ components:
       properties:
         versions:
           type: array
-          description: The array of API versions supported by the endpoint, such as ["0.1", "0.2"]. Since this field did not exist in version 0.1, services which do not declare a versions field are expected to only support version 0.1.
+          description: |-
+            The array of API versions supported by the endpoint, such as ["0.1", "0.2"].
+            Since this field did not exist in version 0.1, services which do not declare
+            a versions field are expected to only support version 0.1.
           examples: ["0.1", "0.2"]
         name:
           type: string
@@ -349,6 +372,8 @@ components:
            supplied in reconciliation queries. For services which do not rely on types,
            this MAY contain a single type with a generic name
            making it clear that all entities in the database are instances of this type.
+          items:
+            $ref: '#/components/'
         documentation:
           type: string
           format: uri
@@ -358,7 +383,8 @@ components:
         logo:
           type: string
           format: uri
-          description: An optional URL of a square image which can be used as the service's logo.
+          description: |-
+            an optional URL of a square image which can be used as the service's logo.
         serviceVersion:
           type: string
           description: |-
@@ -370,104 +396,173 @@ components:
           description: |-
            an object which contains a single field url.
            Its value is a URI template for entities
-           $ref: '#/components/schemas/URI-template'
-          items:
+          $ref: '#/components/schema/uri-template'
+          properties:
             url:
-              type: string
-              format: uri
-              description: a URI template for entities
-              externalDocs:
-                description: a URI template as defined by RFC6570
-                url: https://www.rfc-editor.org/rfc/rfc6570
-              examples: ["http://www.wikidata.org/entity/{id}"]
+              
         feature_view:
           type: object
-          description: An object which contains a url field pointing to a human-readable web page which can be used to view matching features.
-          items:
+          description: |-
+            an object which contains a url field pointing to a human-readable web page
+            which can be used to view matching features.
+          properties:
             url:
-              type: string
-              format: uri
-              description: a URI template for features
-              externalDocs:
-                description: a URI template as defined by RFC6570
-                url: https://www.rfc-editor.org/rfc/rfc6570
+              $ref: '/#components/schema/uri-template'
               examples: ["http://www.wikidata.org/entity/{id}"]
         suggest:
           type: object
           description: |-
             an optional object which may contain the following fields,
             depending on which suggest services are offered
-          $ref: 'https://reconciliation-api.github.io/specs/draft/#suggest-services'
-          items:
+          properties:
             entity:
               type: boolean
-## TODO: Verify that descriptions allow for CommonMark spec allows this kind of Link reference definitions
-##
-##       > The following properties are taken from the JSON Schema specification but their definitions have been extended by the OAS:
-##       > description - [CommonMark](https://spec.commonmark.org/) syntax MAY be used for rich text representation.
-##       > format - See Data Type Formats for further details. While relying on JSON Schema's defined formats, the OAS offers a few additional predefined formats.
-##
-##       https://spec.commonmark.org/0.31.2/#link-reference-definitions
-##       and that it navigates well in OAS editors.
-              description: A boolean indicating if the service supports auto-suggestion of [entity]: /suggest/entity "entities"
+              description: |-
+                a boolean indicating if the service supports auto-suggestion of [entity]: /entity "entities"
             property:
               type: boolean
-              description: A boolean indicating if the service supports auto-suggestion of [property]: /suggest/property "properties"
+              description: |-
+                a boolean indicating if the service supports auto-suggestion of [property]: /property "properties"
             type:
               type: boolean
-              description: A boolean indicating if the service supports auto-suggestion of [type]: /type "types"
+              description: |-
+                a boolean indicating if the service supports auto-suggestion of [type]: /type "types"
         extend:
           type: object
           description: |-
-            A data extension metadata, supplied if the service offers a data extension service
+            a data extension metadata, supplied if the service offers a data extension service
     
+    data-extension-service:
+      description: |-
+        a service which allows clients to fetch the values of some [property]: /property "properties" on a selection of entities.
+      
     data-extension-metadata:
-      propose_properties:
-        type: boolean
-        description: |-
-          a boolean indicating if the service supports `data extension property proposal`
-      property_settings:
-        type: array
-        description: |-
-          an array of [data-extension-property-settings]: /data-extension-property-settings 
+      properties:
+        propose_properties:
+          type: boolean
+          description: |-
+            a boolean indicating if the service supports [data extension property proposal]
+        property_settings:
+          type: array
+          description: |-
+            an array of [data-extension-property-setting]: /data-extension-property-setting "data extension property settings". 
+          $ref: '#/components/schemas/data-extension-property-setting'
 
-    data-extension-property-settings:
-      name:
-        type: string
-        description: |-
-          a name for the setting, which identifies the setting uniquely
-      label:
-        type: string
-        description: |-
-          a human-readable label, which is used when presenting the setting to the user in a form
-      type:
-        type: string
-        description: |-
-          a data type, which can be one of the strings `number, `text`, `checkbox`, or `select`.
-          This determines which type of value the property setting is expected to store.
-          Clients SHOULD render this setting with the corresponding HTML element
-      default:
-        type: string
-        description: |-
-          a default value for the setting, when not provided or left untouched by the user
-      help_text:
-        type: string
-        description: |-
-          a help text, which describes the meaning of the field to the user.
-          This is meant to be a short string that can be displayed alongside the corresponding form field
-      choices:
-        type: array
-        description: |-
-          If type is `select`, an array of property setting choices.
-## TODO: add more schema and their properties
-##       and clean up the schema
-##       and add examples
-##       and add references and more inline link reference definitions
-##       https://spec.commonmark.org/0.31.2/#link-reference-definitions
+    data-extension-property-setting:
+      properties:
+        name:
+          type: string
+          description: |-
+            a name for the setting, which identifies the setting uniquely
+        label:
+          type: string
+          description: |-
+            a human-readable label, which is used when presenting the setting to the user in a form
+        type:
+          type: string
+          description: |-
+            a data type, which can be one of the strings `number, `text`, `checkbox`, or `select`.
+            This determines which type of value the property setting is expected to store.
+            Clients SHOULD render this setting with the corresponding HTML element
+        default:
+          type: string
+          description: |-
+            a default value for the setting, when not provided or left untouched by the user
+        help_text:
+          type: string
+          description: |-
+            a help text, which describes the meaning of the field to the user.
+            This is meant to be a short string that can be displayed alongside the corresponding form field
+        choices:
+          type: array
+          description: |-
+            If type is `select`, an array of property setting choices.
+          items:
+            $ref: '#/components/schemas/property-settings'
+            
+    condition:
+      type: object
+      description: some conditional object
+      properties:
+        match_type:
+          description: |-
+            either `name` or `property`, depending on whether the condition relates to
+            entity names or their properties.
+        pid:
+          description: |-
+            a [property]: /property identifier, to be provided if and only if the match_type is property.
 
+        v:
+          description: |-
+            one or more [property-value]: /property-value "property values". If `match_type` is `name`, then this value is to be matched to entity names, otherwise to the property values via the supplied [pid]. The specifics of how this similarity is defined are determined by the service.
+        
+        required:
+          description: |-
+            an optional boolean indicating if a match for the property is required for an
+            entity to enter the list of candidates (i.e. acting like a filter or a WHERE
+            clause in SQL) or optional (i.e. only effecting the entity's rank in the
+            list of candidates)
+        
+        match_quantifier:
+          description: |-
+            An optional string to indicate which of the values in v to match.
+            MUST be any (equivalent to boolean OR), all (equivalent to boolean AND),
+            or none (equivalent to boolean NOT)
+        
+        match_qualifier:
+          description: |-
+            An optional string to indicate how to match the values in v.
+            This can be used for general matching relations like "skos:exactMatch",
+            "skos:closeMatch", etc. or for specific features like spatial matching
+            with geo data (e.g. containment search with "schema:containsPlace" etc.) or
+            custom matching on date fields (e.g. services supporting the [EDTF](https://www.loc.gov/standards/datetime/) specification
+            could use "EDTF:Level-0" etc.)
+            To allow discovery of supported qualifiers by clients, services that support
+            match_qualifier MUST return the supported match_qualifiers for each property
+            in their property suggest responses
+        
+    reconcile-query:
+      required:
+        - conditions
+      type: object
+      description: a single query
+      properties:
+        conditions:
+          type: array
+          description:
+            an array of conditions (at least one)
+          items:
+            oneOf:
+              $ref: '#/components/schemas/condition'
+        type:
+          description: |-
+            an optional type identifier. Supplying such a type allows users to restrict
+            the search to entities which bear this type. Whether this restriction should be
+            a hard constraint or simply induce a change on the reconciliation scores
+            can be determined by the service.
+            In particular, services MAY return candidates which do not belong to
+            the supplied type.
+        
+        limit:
+          description: |-
+            An optional limit on the number of candidates to return,
+            which must be a positive integer
+        
     reconcile-query-batch:
+      required:
+        - queries
       type: object
       description: |-
         This schema validates the JSON serialization of any reconciliation query batch,
         i.e. the payload of a POST to a reconciliation endpoint.
-
+      properties:
+        queries:
+          type: array
+          xml:
+          name: queries
+          wrapped: true
+          description: a list of queries to be processed by the service
+          items:
+            $ref: '#/components/schemas/reconcile-query'
+      
+    reconciliation-result-batch:
