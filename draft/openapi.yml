@@ -57,7 +57,6 @@ paths:
             application/json:
               schema:
                 name: service manifest
-                type: object
                 $ref: '#/components/schemas/manifest'
               example:
                 $ref: examples/manifest/valid/getty.json
@@ -75,19 +74,19 @@ paths:
             schema:
               $ref: '#/components/schemas/reconcile-query-batch'
             example:
-              $ref: '#examples/reconciliation-query-batch/valid/example-full'
+              $ref: '#/components/schemas/examples/reconciliation-query-batch/valid/example-full'
       responses:
         '200':
           description: Reconciliation candidates for each query
           content:
             application/json:
               schema:
-                $ref: schemas/reconciliation-result-batch.json
+                $ref: '#/components/schemas/reconciliation-result-batch'
               example:
-                $ref: examples/reconciliation-result-batch/valid/example-full.json
+                $ref: '#/components/schemas/reconciliation-result-batch/valid/example-full'
   /suggest/entity:
     get:
-      operation: suggestEntities
+      operationId: suggestEntities
       tags:
         - Suggest
       summary: retrieve auto-complete suggestions for entities
@@ -110,12 +109,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/suggest-entities-response.json
+                $ref: '#/components/schemas/suggest-entities-response'
               example:
-                $ref: examples/suggest-entities-response/valid/example.json
+                $ref: '#/components/schemas/suggest-entities-response/valid/example'
+
   /suggest/property:
     get:
-      operation: suggestProperties
+      operationId: suggestProperties
       tags:
         - Suggest
       summary: Retrieve auto-complete suggestions for properties
@@ -143,7 +143,7 @@ paths:
                 $ref: examples/suggest-properties-response/valid/example.json
   /suggest/type:
     get:
-      operation: suggestTypes
+      operationId: suggestTypes
       tags:
         - Suggest
       summary: Retrieve auto-complete suggestions for types
@@ -166,12 +166,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/suggest-types-response.json
+                $ref: components/schemas/suggest-types-response
               example:
-                $ref: examples/suggest-types-response/valid/example.json
+                $ref: components/schemas/suggest-types-response/valid/example
   /preview:
     get:
-      operation: preview
+      operationId: preview
       tags:
         - Preview
       summary: Retrieve a compact representation of an entity as an HTML page
@@ -190,7 +190,7 @@ paths:
               example: "test"
   /extend:
     post:
-      operation: extend
+      operationId: extend
       tags:
         - Extend
       summary: Retrieve the values of properties on a list of entities
@@ -200,7 +200,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: schemas/data-extension-query.json
+              $ref: '#/components/schemas/data-extension-query'
             example:
               $ref: examples/data-extension-query/valid/example-full.json
       responses:
@@ -209,12 +209,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/schemas/data-extension-response'
+                $ref: '#/components/schemas/data-extension-response'
               example:
                 $ref: '#examples/data-extension-response/valid/example-full'
   /extend/propose:
     get:
-      operation: proposeProperties
+      operationId: proposeProperties
       tags:
         - Extend
       summary: List properties commonly fetched on entities of a given type
@@ -235,7 +235,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/data-extension-property-proposal'
+                $ref: '#/components/schemas/data-extension-property-proposal-response'
               example:
                 $ref: '#/components/schemas/data-extension-property-proposal/valid/response'
 
@@ -260,14 +260,13 @@ components:
         id:
           type: string
           description: |-
-           an identifier for the entity.
-           This identifier must be unique among all entities.
-           Services for which the entity's identifier is already a full URI
-           can use the '{+id} template, which disables the escaping of some characters
-           when inserting the identifier in the URI template.
-          allOf:
-            $ref: '#/components/schemas/uri-template'
-            $ref: '#/components/schemas/identifier'
+            an identifier for the entity.
+            This identifier must be unique among all entities.
+            Services for which the entity's identifier is already a full URI
+            can use the '{+id} template, which disables the escaping of some characters
+            when inserting the identifier in the URI template.
+          $ref: '#/components/schemas/uri-template'
+
         name:
           type: string
           description: a name, which is also a non-empty string
@@ -284,7 +283,7 @@ components:
       type: object
       properties:
         id:
-          $id: "#/components/schemas/identifier"
+          $id: '#/components/schemas/identifier'
           type: string
           description: |-
            a unique identifier for the type.
@@ -306,9 +305,7 @@ components:
   
     broader:
       type: string
-      externalDocs: 
-        description: a skos-reference broader category
-        url: https://www.w3.org/TR/skos-reference/#semantic-relations
+      description: a [skos-reference broader category](https://www.w3.org/TR/skos-reference/#semantic-relations)
         
     property:
       required:
@@ -337,16 +334,14 @@ components:
         - integer
     
     uri-template:
-      type: object
-      externalDocs: 
-        description: a URI template as defined by RFC6570
-        url: https://www.rfc-editor.org/rfc/rfc6570
-
+      type: string
+      description: a URI template as defined by [RFC6570](https://www.rfc-editor.org/rfc/rfc6570)
     manifest:
       required:
         - versions
         - name
-        - defaultTypes
+        - view
+      description: an object 
       type: object
       properties:
         versions:
@@ -369,11 +364,13 @@ components:
           type: array
           description: |-
            an array of types which are considered sensible default choices as types
-           supplied in reconciliation queries. For services which do not rely on types,
-           this MAY contain a single type with a generic name
-           making it clear that all entities in the database are instances of this type.
+           supplied in reconciliation queries.
+           For services which do not rely on types, this MAY contain a single type
+           with a generic name making it clear that all entities in the database
+           are instances of this type.
           items:
             $ref: '#/components/schemas/type'
+          uniqueItems: true
         documentation:
           type: string
           format: uri
@@ -394,11 +391,11 @@ components:
         view:
           type: object
           description: |-
-           an object which contains a single field url.
-           Its value is a URI template for entities
-          $ref: '#/components/schema/uri-template'
+            an object which contains a single field url.
+            Its value is a URI template for entities
           properties:
             url:
+              $ref: '#/components/schemas/uri-template'
               
         feature_view:
           type: object
@@ -407,7 +404,7 @@ components:
             which can be used to view matching features.
           properties:
             url:
-              $ref: '/#components/schema/uri-template'
+              $ref: '#/components/schemas/uri-template'
               examples: ["http://www.wikidata.org/entity/{id}"]
         suggest:
           type: object
@@ -437,18 +434,30 @@ components:
         a service which allows clients to fetch the values of some [property]: /property "properties" on a selection of entities.
       
     data-extension-metadata:
+      type: object
       properties:
         propose_properties:
           type: boolean
           description: |-
-            a boolean indicating if the service supports [data extension property proposal]
+            a boolean indicating if the service supports [data extension property proposal]: /extend/propose
         property_settings:
           type: array
           description: |-
             an array of [data-extension-property-setting]: /data-extension-property-setting "data extension property settings". 
-          $ref: '#/components/schemas/data-extension-property-setting'
+          items:
+            $ref: '#/components/schemas/data-extension-property-setting'
+
+    data-extension-property-proposal-response:
+      type: object
+      properties:
+        properties:
+          type: array
+          description: |-
+            an array of proposed [property]: "properties".
+            These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query
 
     data-extension-property-setting:
+      type: object
       properties:
         name:
           type: string
@@ -459,6 +468,7 @@ components:
           description: |-
             a human-readable label, which is used when presenting the setting to the user in a form
         type:
+          $id: propertySettingType
           type: string
           description: |-
             a data type, which can be one of the strings `number, `text`, `checkbox`, or `select`.
@@ -474,12 +484,138 @@ components:
             a help text, which describes the meaning of the field to the user.
             This is meant to be a short string that can be displayed alongside the corresponding form field
         choices:
-          type: array
           description: |-
             If type is `select`, an array of property setting choices.
-          items:
-            $ref: '#/components/schemas/property-settings'
-            
+          if:
+            propertySettingType: 'select'
+          then:
+            type: array
+            items:
+              $ref: '#/components/schemas/property-settings'
+          else:
+            type: string
+
+    property-settings:
+      type: array
+      name: property_settings
+      description: |-
+        definition of the settings configurable by the user when fetching a property
+      items:
+        oneOf:
+          - $id: numerical_setting
+            required:
+              - type
+              - label
+              - name
+            type: object
+            description: defines a numerical setting on a property
+            properties:
+              type:
+                type: string
+                enum:
+                  - number
+              default:
+                type: number
+              label:
+                type: string
+              name:
+                type: string
+              help_text:
+                type: string
+          
+          - $id: string_setting
+            required:
+              - type
+              - label
+              - name
+            type: object
+            description: defines a string setting on a property
+            properties:
+              type:
+                type: string
+                enum:
+                  - text
+              default:
+                type: number
+              label:
+                type: string
+              name:
+                type: string
+              help_text:
+                type: string
+
+          - $id: boolean_setting
+            required:
+              - type
+              - label
+              - name
+            type: object
+            description: defines a boolean setting on a property
+            properties:
+              type:
+                type: string
+                enum:
+                  - checkbox
+              default:
+                type: boolean
+              label:
+                type: string
+              name:
+                type: string
+              help_text:
+                type: string
+
+          - $id: fixed_choices_setting
+            required:
+              - type
+              - label
+              - name
+              - choices
+            type: object
+            description: defines a setting with a fixed set of choices
+            properties:
+              type:
+                type: string
+                enum:
+                  - select
+              default:
+                type: string
+              label:
+                type: string
+              name:
+                type: string
+              help_text:
+                type: string
+              choices:
+                type: array
+                items:
+                  required:
+                    - value
+                    - name
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                    name:
+                      type: string
+
+    extend:
+      type: object
+      description: |-
+        settings for the data extension protocol to fetch property values
+      properties:
+        propose_properties:
+          type: boolean
+          description: whether the service supports property proposals
+        property_settings:
+          $ref: '#/components/schema/property-settings'
+
+    standardizedScore:
+      type: boolean
+      description: |-
+        whether the service returns values between 0 and 100 (inclusive)
+        in the score field of reconciliation candidates
+
     condition:
       type: object
       description: some conditional object
@@ -529,11 +665,10 @@ components:
       properties:
         conditions:
           type: array
-          description:
-            an array of conditions (at least one)
-          items:
-            oneOf:
-              $ref: '#/components/schemas/condition'
+          description: an array of conditions (at least one)
+          minItems: 1
+          item:
+            $ref: '#/components/schemas/condition'
         type:
           description: |-
             an optional type identifier. Supplying such a type allows users to restrict
@@ -541,8 +676,7 @@ components:
             a hard constraint or simply induce a change on the reconciliation scores
             can be determined by the service.
             In particular, services MAY return candidates which do not belong to
-            the supplied type.
-        
+            the supplied type.     
         limit:
           description: |-
             An optional limit on the number of candidates to return,
@@ -558,11 +692,17 @@ components:
       properties:
         queries:
           type: array
-          xml:
-          name: queries
-          wrapped: true
           description: a list of queries to be processed by the service
           items:
             $ref: '#/components/schemas/reconcile-query'
-      
+    
+    reconciliation-result:
+      type: object
+      properties:
+        candidates:
+          type: array
+
     reconciliation-result-batch:
+      type: object
+      description: used to validate the JSON serialization of any reconciliation result batch
+
