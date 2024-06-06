@@ -1,4 +1,4 @@
-openapi: "3.1"
+openapi: 3.1.0
 info:
   title: Reconciliation API - OpenAPI 3.1
   summary: OpenAPI definition of the Reconciliation API
@@ -373,7 +373,7 @@ components:
            this MAY contain a single type with a generic name
            making it clear that all entities in the database are instances of this type.
           items:
-            $ref: '#/components/'
+            $ref: '#/components/schemas/type'
         documentation:
           type: string
           format: uri
