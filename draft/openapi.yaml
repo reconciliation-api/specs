@@ -1,7 +1,6 @@
 openapi: 3.1.0
 info:
   title: Reconciliation API - OpenAPI 3.1
-  summary: OpenAPI definition of the Reconciliation API
   description: |-
     Web API letting clients match data against a database hosted by the service.
 
@@ -27,36 +26,38 @@ externalDocs:
   description: Find out more about Reconciliation API
   url: https://reconciliation-api.github.io
 
-# tags:
-#   - name: manifest
-#     description: the service manifest 
-#   - name: reconciliation
-#     description: |-
-#       the process of linking entities or records with
-#       other entities or records
-#     externalDocs:
-#       description: Wikidata URL for "data reconciliation"
-#       url: https://www.wikidata.org/wiki/Q48719515
-#   - name: entity
-#     description: a record in the data source exposed by the service
-#     externalDocs:
-#       description: Wikidata URL for "entity"
-#       url: https://www.wikidata.org/wiki/Q35120
+tags:
+  - name: Service Definition
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#service-definition
+  - name: Reconcile
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#reconciliation-queries
+  - name: Suggest
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#suggest-services
+  - name: Extend
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#data-extension-service
 
+####
+#
+#  ROUTES
+#
+####     
 paths:
   /:
     get:
       operationId: getManifest
       tags:
         - Service Definition
-      summary: retrieve the service manifest
+      description: retrieve the service manifest
       responses:
         '200':
           description: Service manifest
           content:
             application/json:
               schema:
-                name: service manifest
                 $ref: '#/components/schemas/manifest'
               example:
                 $ref: examples/manifest/valid/getty.json
@@ -65,7 +66,7 @@ paths:
       operationId: reconciliationQueries
       tags:
         - Reconcile
-      summary: submit a batch of reconciliation queries
+      description: submit a batch of reconciliation queries
       requestBody:
         required: true
         description: A batch of reconciliation queries
@@ -74,7 +75,7 @@ paths:
             schema:
               $ref: '#/components/schemas/reconcile-query-batch'
             example:
-              $ref: '#/components/schemas/examples/reconciliation-query-batch/valid/example-full'
+              $ref: '#/components/examples/reconciliation-query-batch-valid'
       responses:
         '200':
           description: Reconciliation candidates for each query
@@ -83,13 +84,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/reconciliation-result-batch'
               example:
-                $ref: '#/components/schemas/reconciliation-result-batch/valid/example-full'
+                $ref: '#/components/examples/reconciliation-result-batch-valid'
   /suggest/entity:
     get:
       operationId: suggestEntities
       tags:
         - Suggest
-      summary: retrieve auto-complete suggestions for entities
+      description: retrieve auto-complete suggestions for entities
       parameters:
         - name: prefix
           in: query
@@ -111,14 +112,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/suggest-entities-response'
               example:
-                $ref: '#/components/schemas/suggest-entities-response/valid/example'
+                $ref: '#/components/examples/suggest-entities-response-valid'
 
   /suggest/property:
     get:
       operationId: suggestProperties
       tags:
         - Suggest
-      summary: Retrieve auto-complete suggestions for properties
+      description: Retrieve auto-complete suggestions for properties
       parameters:
         - name: prefix
           in: query
@@ -138,15 +139,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/suggest-properties-response.json
+                $ref: '#/components/schemas/suggest-properties-response'
               example:
-                $ref: examples/suggest-properties-response/valid/example.json
+                $ref: '#/components/examples/suggest-properties-response-valid'
   /suggest/type:
     get:
       operationId: suggestTypes
       tags:
         - Suggest
-      summary: Retrieve auto-complete suggestions for types
+      description: Retrieve auto-complete suggestions for types
       parameters:
         - name: prefix
           in: query
@@ -166,15 +167,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: components/schemas/suggest-types-response
+                $ref: '#/components/schemas/suggest-types-response'
               example:
-                $ref: components/schemas/suggest-types-response/valid/example
+                $ref: '#/components/examples/suggest-types-response-valid'
   /preview:
     get:
       operationId: preview
       tags:
         - Preview
-      summary: Retrieve a compact representation of an entity as an HTML page
+      description: Retrieve a compact representation of an entity as an HTML page
       parameters:
         - name: id
           in: query
@@ -193,7 +194,7 @@ paths:
       operationId: extend
       tags:
         - Extend
-      summary: Retrieve the values of properties on a list of entities
+      description: Retrieve the values of properties on a list of entities
       requestBody:
         required: true
         description: A list of entities and the properties to fetch on them
@@ -202,7 +203,7 @@ paths:
             schema:
               $ref: '#/components/schemas/data-extension-query'
             example:
-              $ref: examples/data-extension-query/valid/example-full.json
+              $ref: '#/components/examples/data-extension-query-valid'
       responses:
         '200':
           description: The values of the properties on those entities
@@ -211,13 +212,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/data-extension-response'
               example:
-                $ref: '#examples/data-extension-response/valid/example-full'
+                $ref: '#/components/examples/data-extension-response-valid'
   /extend/propose:
     get:
       operationId: proposeProperties
       tags:
         - Extend
-      summary: List properties commonly fetched on entities of a given type
+      description: List properties commonly fetched on entities of a given type
       parameters:
         - name: type
           in: query
@@ -237,36 +238,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/data-extension-property-proposal-response'
               example:
-                $ref: '#/components/schemas/data-extension-property-proposal/valid/response'
+                $ref: '#/components/examples/data-extension-property-proposal-valid'
 
 components:
+
+####
+#  
+#  SCHEMAS
+#
+####
   schemas:
 
     identifier:
       type: string
-      name: id
       description: a unique character string that identifies an entity
+      example: Q12345
 
     entity:
       required:
         - id
         - name
-      summary: |-
+      description: |-
         An entity is a record in the data source exposed by the service.
         For each entity, expanding the template with 'id' being set to
         the entity's identifier MUST result in a valid URI.
       type: object
       properties:
         id:
-          type: string
-          description: |-
-            an identifier for the entity.
-            This identifier must be unique among all entities.
-            Services for which the entity's identifier is already a full URI
-            can use the '{+id} template, which disables the escaping of some characters
-            when inserting the identifier in the URI template.
-          $ref: '#/components/schemas/uri-template'
-
+          $ref: '#/components/schemas/identifier'
         name:
           type: string
           description: a name, which is also a non-empty string
@@ -283,29 +282,34 @@ components:
       type: object
       properties:
         id:
-          $id: '#/components/schemas/identifier'
           type: string
           description: |-
            a unique identifier for the type.
            This identifier must be unique among all types.
+          example: Q1420
         name:
           type: string
           description: a human-readable name for the type which is a non-empty string
+          example: car
         description:
           type: string
           description: |-
-            optional description which can be provided to disambiguate namesakes
-            and provide more context
+            optional description which can be provided to disambiguate
+            namesakes and provide more context
+          example: motorized road vehicle designed to carry people
         broader:
           type: array
           description: |-
-           an optional array of types, each representing a direct (i.e., immediate) 'broader' [skos-reference] category of [entities]: /entity
+           an optional array of types, each representing a direct (i.e., immediate)
+           [broader](/broader) skos-reference category of [entities](/entity)
           items:
             $ref: '#/components/schemas/broader'
+          example: ["road vehicle", "motor vehicle"]
   
     broader:
       type: string
-      description: a [skos-reference broader category](https://www.w3.org/TR/skos-reference/#semantic-relations)
+      description: |-
+        a [skos-reference broader category](https://www.w3.org/TR/skos-reference/#semantic-relations)
         
     property:
       required:
@@ -314,11 +318,6 @@ components:
       type: object
       properties:
         id:
-          $id: '#/components/schemas/identifier'
-          type: string
-          description: |-
-           an identifier, which is a non-empty string.
-           This identifier must be unique among all properties
           $ref: '#/components/schemas/identifier'
         name:
           type: string
@@ -326,7 +325,6 @@ components:
     
     property-value:
       type: string
-      name: property value
       description: a value for a property
       enum:
         - string
@@ -336,6 +334,7 @@ components:
     uri-template:
       type: string
       description: a URI template as defined by [RFC6570](https://www.rfc-editor.org/rfc/rfc6570)
+    
     manifest:
       required:
         - versions
@@ -350,7 +349,11 @@ components:
             The array of API versions supported by the endpoint, such as ["0.1", "0.2"].
             Since this field did not exist in version 0.1, services which do not declare
             a versions field are expected to only support version 0.1.
-          examples: ["0.1", "0.2"]
+          items:
+            type: string
+          contains:
+            enum:
+              - 0.2
         name:
           type: string
           description: |-
@@ -359,7 +362,6 @@ components:
            In the case where multiple reconciliation services exist for the same database,
            it is in the interest of a service to bear a meaningful name
            which will help disambiguating it from others
-          examples: [myReconService]
         defaultTypes:
           type: array
           description: |-
@@ -373,13 +375,11 @@ components:
           uniqueItems: true
         documentation:
           type: string
-          format: uri
           description: |-
            an optional URL with human-readable documentation about the service,
            for instance giving more information about the data it exposes.
         logo:
           type: string
-          format: uri
           description: |-
             an optional URL of a square image which can be used as the service's logo.
         serviceVersion:
@@ -396,7 +396,6 @@ components:
           properties:
             url:
               $ref: '#/components/schemas/uri-template'
-              
         feature_view:
           type: object
           description: |-
@@ -405,8 +404,11 @@ components:
           properties:
             url:
               $ref: '#/components/schemas/uri-template'
-              examples: ["http://www.wikidata.org/entity/{id}"]
         suggest:
+          required:
+            - entity
+            - property
+            - type
           type: object
           description: |-
             an optional object which may contain the following fields,
@@ -428,6 +430,7 @@ components:
           type: object
           description: |-
             a data extension metadata, supplied if the service offers a data extension service
+          $ref: '#/components/schemas/data-extension-metadata'
     
     data-extension-service:
       description: |-
@@ -455,6 +458,8 @@ components:
           description: |-
             an array of proposed [property]: "properties".
             These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query
+          items:
+            $ref: '#/components/schemas/property'
 
     data-extension-property-setting:
       type: object
@@ -468,14 +473,22 @@ components:
           description: |-
             a human-readable label, which is used when presenting the setting to the user in a form
         type:
-          $id: propertySettingType
           type: string
           description: |-
             a data type, which can be one of the strings `number, `text`, `checkbox`, or `select`.
             This determines which type of value the property setting is expected to store.
             Clients SHOULD render this setting with the corresponding HTML element
+          enum:
+            - number
+            - text
+            - checkbox
+            - select
         default:
-          type: string
+          oneOf:
+            - type: string
+            - type: number
+          discriminator:
+            propertyName: type
           description: |-
             a default value for the setting, when not provided or left untouched by the user
         help_text:
@@ -484,120 +497,118 @@ components:
             a help text, which describes the meaning of the field to the user.
             This is meant to be a short string that can be displayed alongside the corresponding form field
         choices:
-          description: |-
-            If type is `select`, an array of property setting choices.
-          if:
-            propertySettingType: 'select'
-          then:
-            type: array
-            items:
-              $ref: '#/components/schemas/property-settings'
-          else:
+          $ref: '#/components/schemas/property-setting-choices'
+   
+    numerical-setting:
+      required:
+        - type
+        - label
+        - name
+      type: object
+      description: defines a numerical setting on a property
+      properties:
+        type:
+          type: string
+          enum:
+            - number
+        default:
+          type: number
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
+
+    string-setting:
+        required:
+          - type
+          - label
+          - name
+        type: object
+        description: defines a string setting on a property
+        properties:
+          type:
+            type: string
+            enum:
+              - text
+          default:
+            type: number
+          label:
+            type: string
+          name:
+            type: string
+          help_text:
             type: string
 
+    boolean-setting:
+      required:
+        - type
+        - label
+        - name
+      type: object
+      description: defines a boolean setting on a property
+      properties:
+        type:
+          type: string
+          enum:
+            - checkbox
+        default:
+          type: boolean
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
+
+    fixed-choices-setting:
+      required:
+        - type
+        - label
+        - name
+        - choices
+      type: object
+      description: defines a setting with a fixed set of choices
+      properties:
+        type:
+          type: string
+          enum:
+            - select
+        default:
+          type: string
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
+        choices:
+          type: array
+          items:
+            required:
+              - value
+              - name
+            type: object
+            properties:
+              value:
+                type: string
+              name:
+                type: string
+ 
+    property-setting-choices:
+      oneOf:    
+        - $ref: '#/components/schemas/numerical-setting'
+        - $ref: '#/components/schemas/string-setting'
+        - $ref: '#/components/schemas/boolean-setting'
+        - $ref: '#/components/schemas/fixed-choices-setting'
+          
     property-settings:
       type: array
-      name: property_settings
       description: |-
         definition of the settings configurable by the user when fetching a property
       items:
-        oneOf:
-          - $id: numerical_setting
-            required:
-              - type
-              - label
-              - name
-            type: object
-            description: defines a numerical setting on a property
-            properties:
-              type:
-                type: string
-                enum:
-                  - number
-              default:
-                type: number
-              label:
-                type: string
-              name:
-                type: string
-              help_text:
-                type: string
-          
-          - $id: string_setting
-            required:
-              - type
-              - label
-              - name
-            type: object
-            description: defines a string setting on a property
-            properties:
-              type:
-                type: string
-                enum:
-                  - text
-              default:
-                type: number
-              label:
-                type: string
-              name:
-                type: string
-              help_text:
-                type: string
-
-          - $id: boolean_setting
-            required:
-              - type
-              - label
-              - name
-            type: object
-            description: defines a boolean setting on a property
-            properties:
-              type:
-                type: string
-                enum:
-                  - checkbox
-              default:
-                type: boolean
-              label:
-                type: string
-              name:
-                type: string
-              help_text:
-                type: string
-
-          - $id: fixed_choices_setting
-            required:
-              - type
-              - label
-              - name
-              - choices
-            type: object
-            description: defines a setting with a fixed set of choices
-            properties:
-              type:
-                type: string
-                enum:
-                  - select
-              default:
-                type: string
-              label:
-                type: string
-              name:
-                type: string
-              help_text:
-                type: string
-              choices:
-                type: array
-                items:
-                  required:
-                    - value
-                    - name
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                    name:
-                      type: string
+        $ref: '#/components/schemas/property-setting-choices'
 
     extend:
       type: object
@@ -608,7 +619,7 @@ components:
           type: boolean
           description: whether the service supports property proposals
         property_settings:
-          $ref: '#/components/schema/property-settings'
+          $ref: '#/components/schemas/property-settings'
 
     standardizedScore:
       type: boolean
@@ -667,7 +678,7 @@ components:
           type: array
           description: an array of conditions (at least one)
           minItems: 1
-          item:
+          items:
             $ref: '#/components/schemas/condition'
         type:
           description: |-
@@ -706,3 +717,44 @@ components:
       type: object
       description: used to validate the JSON serialization of any reconciliation result batch
 
+    suggest-entities-response:
+      required:
+        - result
+      type: object
+      description: |-
+        this schema can be used to validate the JSON response
+        of a suggest service for entities
+      properties:
+        result:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/entity'
+              - $ref: '#/components/schemas/property'
+              - $ref: '#/components/schemas/type'
+
+####
+# 
+#  EXAMPLES
+#
+####
+
+examples:
+
+  reconciliation-query-batch-valid:
+    type: object
+  
+  reconciliation-result-batch-valid:
+    type: object
+  
+  suggest-types-response-valid:
+    type: object    
+
+  suggest-entities-response-valid:
+    type: object
+    
+  data-extension-response-valid:
+    type: object
+  
+  data-extension-property-proposal-valid:
+    type: object
