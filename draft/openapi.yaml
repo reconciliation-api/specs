@@ -16,10 +16,10 @@ info:
   license:
     name: W3C Community Final Specification Agreement (FSA)
     url: https://www.w3.org/community/about/process/fsa-deed/
-# ---------
-# version: is the version of this document, not the version of the Reconciliation API.
-#          when updating this document, please bump this version below:
-# ---------
+  # ---------
+  # version: is the version of this document, not the version of the Reconciliation API.
+  #          when updating this document, please bump this version below:
+  # ---------
   version: 0.0.1
 
 externalDocs:
@@ -39,7 +39,7 @@ tags:
   - name: Extend
     externalDocs:
       url: https://reconciliation-api.github.io/specs/draft/#data-extension-service
-      
+
 paths:
   /:
     get:
@@ -47,6 +47,7 @@ paths:
       tags:
         - Service Definition
       description: retrieve the service manifest
+      security: []
       responses:
         '200':
           description: Service manifest
@@ -54,14 +55,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/manifest'
-              example:
-                $ref: examples/manifest/valid/getty.json
+              examples:
+                manifest-viaf:
+                  $ref: '#/components/examples/manifest-viaf'
+                manifest-getty:
+                  $ref: '#/components/examples/manifest-getty'
   /reconcile:
     post:
       operationId: reconciliationQueries
       tags:
         - Reconcile
       description: submit a batch of reconciliation queries
+      security: []
       requestBody:
         required: true
         description: A batch of reconciliation queries
@@ -69,8 +74,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/reconcile-query-batch'
-            example:
-              $ref: '#/components/examples/reconciliation-query-batch-valid'
+
       responses:
         '200':
           description: Reconciliation candidates for each query
@@ -78,14 +82,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/reconciliation-result-batch'
-              example:
-                $ref: '#/components/examples/reconciliation-result-batch-valid'
+        '401':
+          description: |-
+            Authentication failure,
+            when a [security scheme](https://spec.openapis.org/oas/latest.html#security-scheme-object) is provided in the [service manifest](#/components/schemas/manifest)
+          content:
+            application/json:
+              schema:
+                type: object
+                examples: ['HTTP/1.1 401 Unauthorized Access']
+
   /suggest/entity:
     get:
       operationId: suggestEntities
       tags:
         - Suggest
       description: retrieve auto-complete suggestions for entities
+      security: []
       parameters:
         - name: prefix
           in: query
@@ -115,6 +128,7 @@ paths:
       tags:
         - Suggest
       description: Retrieve auto-complete suggestions for properties
+      security: []
       parameters:
         - name: prefix
           in: query
@@ -143,6 +157,7 @@ paths:
       tags:
         - Suggest
       description: Retrieve auto-complete suggestions for types
+      security: []
       parameters:
         - name: prefix
           in: query
@@ -171,6 +186,7 @@ paths:
       tags:
         - Preview
       description: Retrieve a compact representation of an entity as an HTML page
+      security: []
       parameters:
         - name: id
           in: query
@@ -190,6 +206,7 @@ paths:
       tags:
         - Extend
       description: Retrieve the values of properties on a list of entities
+      security: []
       requestBody:
         required: true
         description: A list of entities and the properties to fetch on them
@@ -246,7 +263,7 @@ components:
 
     id:
       type: string
-      description: a unique character string that identifies an entity
+      description: a unique character string
       examples:
         - Q12345
 
@@ -280,27 +297,30 @@ components:
       description: |-
         a category or subclass or some classification grouping
         applied to an [entity](#/components/schemas/entity)
-      example: automobile brand
+      examples: [automobile brand]
       externalDocs:
-        url: 
+        url:
       properties:
         id:
           type: string
           description: |-
-           a unique identifier for the type.
-           This identifier must be unique among all types.
-          example: Q1420
+            a unique identifier for the type.
+            This identifier must be unique among all types.
+          examples:
+            - Q1420
         name:
           type: string
           description: a human-readable name for the type which is a non-empty string
           minLength: 1
-          example: car
+          examples:
+            - car
         description:
           type: string
           description: |-
             a description which can be provided to disambiguate
             namesakes and provide more context
-          example: motorized road vehicle designed to carry people
+          examples:
+            - motorized road vehicle designed to carry people
         broader:
           type: array
           description: |-
@@ -310,10 +330,10 @@ components:
             type: string
             description: |-
               a [skos-reference broader category](https://www.w3.org/TR/skos-reference/#semantic-relations)
-          example:
+          examples:
             - road vehicle
             - motor vehicle
-  
+
     property:
       required:
         - id
@@ -325,7 +345,7 @@ components:
         name:
           type: string
           description: a human-readable name for the property
-    
+
     property-value:
       type: string
       description: a value for a [property](#/components/schemas/property)
@@ -333,18 +353,18 @@ components:
         - string
         - boolean
         - integer
-    
+
     uri-template:
       type: string
       format: uri-template
       description: a URI template as defined by [RFC6570](https://www.rfc-editor.org/rfc/rfc6570)
-    
+
     manifest:
       required:
         - versions
         - name
         - view
-      description: validates a service manifest, describing features supported by the endpoint 
+      description: validates a service manifest, describing features supported by the endpoint
       type: object
       properties:
         versions:
@@ -359,50 +379,56 @@ components:
             enum:
               - "0.1"
               - "0.2"
-          example: "0.2"
+          examples:
+            - "0.2"
         name:
           type: string
           description: |-
-           a human-readable name for the service,
-           generally the name of the database it exposes.
-           In the case where multiple reconciliation services exist for the same database,
-           it is in the interest of a service to bear a meaningful name
-           which will help disambiguating it from others
+            a human-readable name for the service,
+            generally the name of the database it exposes.
+            In the case where multiple reconciliation services exist for the same database,
+            it is in the interest of a service to bear a meaningful name
+            which will help disambiguating it from others
         documentation:
           type: string
           description: |-
-           an URL with human-readable documentation about the service,
-           for instance giving more information about the data it exposes.
-          example: https://example.com/recon/v2/docs
+            an URL with human-readable documentation about the service,
+            for instance giving more information about the data it exposes.
+          examples: ["https://example.com/recon/v2/docs"]
         serviceVersion:
           type: string
           description: |-
-           an string representing the version of the software which exposes this service.
-           This is not to be confused with [versions](#/components/schemas/manifest/properties/versions) property
-           which is about the versions of the reconciliation API supported by the service.
+            an string representing the version of the software which exposes this service.
+            This is not to be confused with [versions](#/components/schemas/manifest/properties/versions) property
+            which is about the versions of the reconciliation API supported by the service.
         logo:
           type: string
           description: |-
             an URI to a square image which can be used as the service's logo.
-          example: https://example.com/recon/logo.png
+          examples: ["https://example.com/recon/logo.png"]
         authentication:
-          $ref: https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json#/$defs/security-scheme
+          type: object
+          description: a security scheme object
+          externalDocs:
+            description: OpenAPI Specification - Security Scheme
+            url: https://spec.openapis.org/oas/latest.html#security-scheme-object
         lang:
           type: string
           description: |-
             tag value for the default text-processing language used by this service.
             The value MUST be a single valid [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-          example: en-US
+          examples:
+            - en-US
           externalDocs:
             url: https://www.rfc-editor.org/rfc/bcp/bcp47.txt
         defaultTypes:
           type: array
           description: |-
-           an array of [types](#/components/schemas/type) which are considered sensible default choices as types
-           supplied in reconciliation queries.
-           For services which do not rely on types, this MAY contain a single type
-           with a generic name making it clear that all entities in the database
-           are instances of this type.
+            an array of [types](#/components/schemas/type) which are considered sensible default choices as types
+            supplied in reconciliation queries.
+            For services which do not rely on types, this MAY contain a single type
+            with a generic name making it clear that all entities in the database
+            are instances of this type.
           items:
             $ref: '#/components/schemas/type'
           uniqueItems: true
@@ -414,13 +440,12 @@ components:
             - type
           type: object
           description: |-
-            an optional object which may contain the following fields,
-            depending on which suggest services are offered
+            settings for the suggest protocol, to auto-complete entities, propertie, and types
           properties:
             entity:
               type: boolean
               description: |-
-                indicates if the service supports auto-suggestion of [entities](#/components/schemas/entity)
+                indicates if the service supports auto-suggestion of [entities](#/components/schemas/entity), in which case it should offer a [/suggest/entity](#/paths/suggest/entity) endpoint
             property:
               type: boolean
               description: |-
@@ -471,12 +496,12 @@ components:
             a hard constraint or simply induce a change on the reconciliation scores
             can be determined by the service.
             In particular, services MAY return candidates which do not belong to
-            the supplied type.     
+            the supplied type.
         limit:
           description: |-
             An optional limit on the number of candidates to return,
             which must be a positive integer
-        
+
     reconcile-query-batch:
       required:
         - queries
@@ -490,7 +515,9 @@ components:
           description: a list of queries to be processed by the service
           items:
             $ref: '#/components/schemas/reconcile-query'
-  
+      examples:
+        - $ref: '#/components/examples/reconciliation-query-batch-valid'
+
     reconciliation-candidate:
       type: object
       properties:
@@ -517,9 +544,9 @@ components:
         features:
           type: array
           description: |-
-            an array of [matching features](#/components/schemas/matching-feature)
+            an array of matching [features](#/components/schemas/feature)
           items:
-            $ref: '#/components/schemas/matching-feature'
+            $ref: '#/components/schemas/feature'
 
     preview:
       required:
@@ -536,12 +563,12 @@ components:
           type: integer
           description: the height in pixels of the same viewport
 
-    matching-feature:
+    feature:
       type: object
       properties:
         id:
           $ref: '#/components/schemas/id'
-          example:
+          examples:
             - name_tfidf
             - pagerank
             - type_match
@@ -560,10 +587,21 @@ components:
         candidates:
           type: array
           items:
-          
+            $ref: '#/components/schemas/reconciliation-candidate'
+
     reconciliation-result-batch:
+      required:
+        - result
       type: object
       description: used to validate the JSON serialization of any reconciliation result batch
+      properties:
+        results:
+          type: array
+          description: the list of candidates for each reconciliation query, in the same order
+          items:
+            $ref: '#/components/schemas/reconciliation-result'
+      examples:
+        - $ref: '#/components/examples/reconciliation-result-batch-valid'
 
     suggest-entities-response:
       required:
@@ -607,7 +645,7 @@ components:
 
     data-extension-query:
       type: object
-    
+
     data-extension-response:
       type: object
 
@@ -659,7 +697,7 @@ components:
             This is meant to be a short string that can be displayed alongside the corresponding form field
         choices:
           $ref: '#/components/schemas/property-setting-choices'
-   
+
     numerical-setting:
       required:
         - type
@@ -682,25 +720,25 @@ components:
           type: string
 
     string-setting:
-        required:
-          - type
-          - label
-          - name
-        type: object
-        description: defines a string setting on a property
-        properties:
-          type:
-            type: string
-            enum:
-              - text
-          default:
-            type: number
-          label:
-            type: string
-          name:
-            type: string
-          help_text:
-            type: string
+      required:
+        - type
+        - label
+        - name
+      type: object
+      description: defines a string setting on a property
+      properties:
+        type:
+          type: string
+          enum:
+            - text
+        default:
+          type: number
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
 
     boolean-setting:
       required:
@@ -756,14 +794,14 @@ components:
                 type: string
               name:
                 type: string
- 
+
     property-setting-choices:
-      oneOf:    
+      oneOf:
         - $ref: '#/components/schemas/numerical-setting'
         - $ref: '#/components/schemas/string-setting'
         - $ref: '#/components/schemas/boolean-setting'
         - $ref: '#/components/schemas/fixed-choices-setting'
-          
+
     property-settings:
       type: array
       description: |-
@@ -803,20 +841,20 @@ components:
         v:
           description: |-
             one or more [property-value]: /property-value "property values". If `match_type` is `name`, then this value is to be matched to entity names, otherwise to the property values via the supplied [pid]. The specifics of how this similarity is defined are determined by the service.
-        
+
         required:
           description: |-
             an optional boolean indicating if a match for the property is required for an
             entity to enter the list of candidates (i.e. acting like a filter or a WHERE
             clause in SQL) or optional (i.e. only effecting the entity's rank in the
             list of candidates)
-        
+
         match_quantifier:
           description: |-
             An optional string to indicate which of the values in v to match.
             MUST be any (equivalent to boolean OR), all (equivalent to boolean AND),
             or none (equivalent to boolean NOT)
-        
+
         match_qualifier:
           description: |-
             An optional string to indicate how to match the values in v.
@@ -829,39 +867,76 @@ components:
             match_qualifier MUST return the supported match_qualifiers for each property
             in their property suggest responses
 
-# ---------
-#  
-#  EXAMPLES
-#
-# ---------
+  # ---------
+  #
+  #  EXAMPLES
+  #
+  # ---------
 
   examples:
 
     reconciliation-query-batch-valid:
-      type: object
       description: example of a valid query batch with required fields only
 
     reconciliation-result-batch-valid:
-      type: object
+      description: example of a valid query batch result
 
     suggest-entities-response-valid:
-      type: object
+      description: example of a valid suggest entities response
 
     suggest-types-response-valid:
-      type: object
+      description: example of a valid suggest types response
 
     suggest-properties-response-valid:
-      type: object
-
-    data-extension-query:
-      type: object
+      description: example of a valid suggest properties response
 
     data-extension-query-valid:
-      type: object
+      description: example of a valid data extension query
 
     data-extension-response-valid:
-      type: object
+      description: example of a valid data extension query response
 
-    data-extension-property-proposal-valid:
-      type: object
-  
+    data-extension-property-proposal-response-valid:
+      description: example of a valid data extension property proposal response
+
+    manifest-viaf:
+      description: a minimal example of a service manifest
+      value: '{"versions": ["0.2"],"name": "VIAF","view": { "url": "https://viaf.org/viaf/{id}" }}'
+
+    manifest-getty:
+      description: a minimal example of a service manifest
+      value: '{
+        "versions": ["0.2"],
+        "defaultTypes": [
+            {
+              "id": "/ulan",
+              "name": "ULAN search"
+            },
+            {
+              "id": "/tgn",
+              "name": "TGN search"
+            },
+            {
+            "id": "/aat",
+              "name": "AAT search"
+            },
+            {
+              "id": "/all",
+              "name": "Search all Vocabs"
+            }
+          ],
+        "name": "Getty Vocabularies Reconciliation Service",
+        "batchSize": 50,
+        "preview": {
+          "height": 200,
+          "width": 350
+          },
+        "suggest": {
+            "entity": false,
+            "property": true,
+            "type": false
+          },
+        "view": {
+            "url": "http://vocab.getty.edu/page/{id}"
+          }
+        }'
