@@ -663,20 +663,20 @@ components:
     data-extension-property-setting:
       type: object
       properties:
+        id:
+          type: string
+          description: |-
+            an unique identifier for the setting
         name:
           type: string
           description: |-
-            a name for the setting, which identifies the setting uniquely
-        label:
-          type: string
-          description: |-
-            a human-readable label, which is used when presenting the setting to the user in a form
+            a human-readable label which is used when presenting the setting to the user in a form
         type:
           type: string
           description: |-
             a data type, which can be one of the strings `number, `text`, `checkbox`, or `select`.
-            This determines which type of value the property setting is expected to store.
-            Clients SHOULD render this setting with the corresponding HTML element
+            This determines which type of value the [property setting](#/components/schemas/property-settings) is expected to store.
+            Clients SHOULD render this setting with the corresponding HTML element.
           enum:
             - number
             - text
@@ -898,6 +898,41 @@ components:
 
     data-extension-property-proposal-response-valid:
       description: example of a valid data extension property proposal response
+    
+    data-extension-metadata:
+      description: a full example showing property settings
+      value: '{
+        "propose_properties": {
+          "service_url": "https://lobid.org",
+          "service_path": "/gnd/reconcile/properties"
+        },
+        "property_settings": [
+          {
+            "id": "limit",
+            "name": "Limit",
+            "type": "number",
+            "default": 0,
+            "help_text": "Maximum number of values to return per row (0 for no limit)"
+          },
+          {
+            "id": "content",
+            "name": "Content",
+            "type": "select",
+            "default": "literal",
+            "help_text": "Content type: ID or literal",
+            "choices": [
+              {
+                "value": "id",
+                "name": "ID"
+              },
+              {
+                "value": "literal",
+                "name": "Literal"
+              }
+            ]
+          }
+        ]
+        }'
 
     manifest-viaf:
       description: a minimal example of a service manifest
