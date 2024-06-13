@@ -62,7 +62,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "match_type": {
+                "matchType": {
                   "type": "string",
                   "description": "A string to indicate whether to match the supplied value to entity names or property values",
                   "enum": [
@@ -72,7 +72,7 @@
                 },
                 "pid": {
                   "type": "string",
-                  "description": "The identifier of the property, whose values will be compared to the values supplied. Required if 'match_type' is 'property'."
+                  "description": "The identifier of the property, whose values will be compared to the values supplied. Required if 'matchType' is 'property'."
                 },
                 "v": {
                   "description": "A value (or array of values) to match against the entity names or property values associated with the property on each candidate",
@@ -92,7 +92,7 @@
                   "type": "boolean",
                   "description": "A boolean indicating if a match of this condition is required for an entity to enter the list of candidates"
                 },
-                "match_quantifier": {
+                "matchQuantifier": {
                   "type": "string",
                   "description": "A string to indicate which of the values in v to match",
                   "enum": [
@@ -101,25 +101,16 @@
                     "none"
                   ]
                 },
-                "match_qualifier": {
+                "matchQualifier": {
                   "type": "string",
                   "description": "A string to indicate how to match the values in v"
                 }
               },
               "required": [
-                "match_type",
+                "matchType",
                 "v"
               ]
             }
-          },
-          "type_strict": {
-            "type": "string",
-            "description": "A classification of the type matching strategy when multiple types are supplied",
-            "enum": [
-              "any",
-              "should",
-              "all"
-            ]
           }
         },
         "required": [

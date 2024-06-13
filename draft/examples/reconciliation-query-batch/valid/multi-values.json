@@ -5,11 +5,11 @@
       "limit": 5,
       "conditions": [
         {
-          "match_type": "name",
+          "matchType": "name",
           "v": "Christel Hanewinckel"
         },
         {
-          "match_type": "property",
+          "matchType": "property",
           "pid": "professionOrOccupation",
           "v": [
             "Politik*",

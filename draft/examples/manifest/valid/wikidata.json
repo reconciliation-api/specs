@@ -9,11 +9,11 @@
   "logo": "https://tools.wmflabs.org/openrefine-wikidata/logo.png",
   "serviceVersion": "1.2.3",
   "extend": {
-    "property_settings": [
+    "propertySettings": [
       {
         "name": "limit",
         "label": "Limit",
-        "help_text": "Maximum number of values to return per row (0 for no limit)",
+        "helpText": "Maximum number of values to return per row (0 for no limit)",
         "type": "number",
         "default": 0
       },
@@ -21,7 +21,7 @@
         "name": "rank",
         "label": "Ranks",
         "type": "select",
-        "help_text": "Filter statements by rank",
+        "helpText": "Filter statements by rank",
         "choices": [
           {
             "name": "Any rank",
@@ -42,7 +42,7 @@
         "name": "references",
         "label": "References",
         "type": "select",
-        "help_text": "Filter statements by their references",
+        "helpText": "Filter statements by their references",
         "choices": [
           {
             "name": "Any statement",
@@ -62,12 +62,12 @@
       {
         "name": "count",
         "label": "Return counts instead of values",
-        "help_text": "The number of values will be returned.",
+        "helpText": "The number of values will be returned.",
         "type": "checkbox",
         "default": false
       }
     ],
-    "propose_properties": true
+    "proposeProperties": true
   },
   "defaultTypes": [
     {

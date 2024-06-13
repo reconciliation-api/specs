@@ -241,6 +241,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
             <li><a href="https://github.com/reconciliation-api/specs/pull/142">Remove support for JSONP</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/156">Add optional <code>standardizedScore</code> field to the manifest</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/166">Unify naming to camelCase convention</a></li>
           </ul>
         </section>
       </section>
@@ -368,7 +369,7 @@ database are instances of this type.<dd>
           <dd>An optional string which describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
           <dt><code>view</code></dt>
           <dd>An object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
-          <dt><code>feature_view</code></dt>
+          <dt><code>featureView</code></dt>
           <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
           <dt><code>preview</code></dt>
           <dd>A <a>preview metadata</a> object, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
@@ -512,24 +513,24 @@ database are instances of this type.<dd>
                 It is used to filter the set of candidates (similar to a WHERE clause in SQL),
 		by allowing clients to specify an attribute of entities that should match. It consists of:
          <dl>
-            <dt><code>match_type</code></dt>
+            <dt><code>matchType</code></dt>
             <dd>Either <code>name</code> or <code>property</code>, depending on whether the condition relates to entity names or their properties.</dd>
             <dt><code>pid</code></dt>
-            <dd>A <a href='#properties'>property</a> identifier, to be provided if and only if the <code>match_type</code> is <code>property</code>.</dd>
+            <dd>A <a href='#properties'>property</a> identifier, to be provided if and only if the <code>matchType</code> is <code>property</code>.</dd>
             <dt><code>v</code></dt>
-            <dd>one or more <a>property values</a>. If <code>match_type</code> is <code>name</code>, then this value is to
+            <dd>one or more <a>property values</a>. If <code>matchType</code> is <code>name</code>, then this value is to
                 be matched to entity names, otherwise to the property values via the supplied <code>pid</code>. The specifics of how this similarity
                 is defined are determined by the service.</dd> 
             <dt><code>required</code></dt>
             <dd>An optional boolean indicating if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)
               or optional (i.e. only effecting the entity's rank in the list of candidates);</dd>
-            <dt><code>match_quantifier</code></dt>
+            <dt><code>matchQuantifier</code></dt>
             <dd>An optional string to indicate which of the values in <code>v</code> to match. MUST be <code>any</code> (equivalent to boolean OR), <code>all</code> (equivalent to boolean AND), or <code>none</code> (equivalent to boolean NOT);</dd>
-            <dt><code>match_qualifier</code></dt>
+            <dt><code>matchQualifier</code></dt>
             <dd>An optional string to indicate how to match the values in <code>v</code>.
               This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
               (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
-              To allow discovery of supported qualifiers by clients, services that support <code>match_qualifier</code> MUST return the supported <code>match_qualifiers</code> for each property
+              To allow discovery of supported qualifiers by clients, services that support <code>matchQualifier</code> MUST return the supported <code>matchQualifiers</code> for each property
               in their property <a href='#suggest-responses'>suggest responses</a>.</p></dd>
          </dl>
         
@@ -751,8 +752,8 @@ in the <code>score</code> field). By exposing individual features in their respo
               <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>;</dd>
 	      <dt><code>notable</code></dt>
 	      <dd>When suggesting entities only, this field can be used to supply some important types (not necessarily all types) of the suggested entity. The value must be an array of either type identifiers (as strings) or type objects, containing an <code>id</code> and <code>name</code> field which represent the type.</dd>
-              <dt><code>match_qualifiers</code></dt>
-              <dd>When suggesting properties only, an optional array of objects, each containing an <code>id</code> and <code>name</code> field, which represent the property's <code>match_qualifiers</code> supported in <a>reconciliation queries</a>.</dd>
+              <dt><code>matchQualifiers</code></dt>
+              <dd>When suggesting properties only, an optional array of objects, each containing an <code>id</code> and <code>name</code> field, which represent the property's <code>matchQualifiers</code> supported in <a>reconciliation queries</a>.</dd>
             </dl>
             </dd>
           </dl>
@@ -808,9 +809,9 @@ in the <code>score</code> field). By exposing individual features in their respo
         <p>
           The <dfn>data extension metadata</dfn> is an object stored in the <a>service manifest</a> in the <code>extend</code> field. It consists of the following settings, all optional:
           <dl>
-            <dt><code>propose_properties</code></dt>
+            <dt><code>proposeProperties</code></dt>
             <dd>A boolean indicating if the service supports <a>data extension property proposal</a>;</dd>
-            <dt><code>property_settings</code></dt>
+            <dt><code>propertySettings</code></dt>
             <dd>An array of <a>data extension property settings</a>.</dd>
           </dl>
         </p>
@@ -825,7 +826,7 @@ in the <code>score</code> field). By exposing individual features in their respo
             <dd>A data type, which can be one of the strings <code>"number"</code>, <code>"text"</code>, <code>"checkbox"</code>, or <code>"select"</code>. This determines which type of value the property setting is expected to store: clients SHOULD render this setting with the corresponding HTML element;</li>
 	    <dt><code>default</code></dt>
 	    <dd>A default value for the setting, when not provided or left untouched by the user;</dd>
-	    <dt><code>help_text</code></dt>
+	    <dt><code>helpText</code></dt>
             <dd>A help text, which describes the meaning of the field to the user. This is meant to be a short string that can be displayed alongside the corresponding form field;</dd>
 	    <dt><code>choices</code></dt>
             <dd>If <code>type</code> is <code>select</code>, an array of property setting choices.</dd>

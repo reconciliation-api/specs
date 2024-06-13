@@ -4,7 +4,7 @@
     "view": {
         "url": "https://viaf.org/viaf/{id}"
     },
-    "feature_view": {
+    "featureView": {
         "url": "https://vocab.getty.edu/recon/features/{id}"
     }
 }

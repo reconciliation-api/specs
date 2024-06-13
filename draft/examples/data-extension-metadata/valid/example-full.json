@@ -1,19 +1,19 @@
 {
-  "propose_properties": true,
-  "property_settings": [
+  "proposeProperties": true,
+  "propertySettings": [
     {
       "name": "limit",
       "label": "Limit",
       "type": "number",
       "default": 0,
-      "help_text": "Maximum number of values to return per row (0 for no limit)"
+      "helpText": "Maximum number of values to return per row (0 for no limit)"
     },
     {
       "name": "content",
       "label": "Content",
       "type": "select",
       "default": "literal",
-      "help_text": "Content type: ID or literal",
+      "helpText": "Content type: ID or literal",
       "choices": [
         {
           "value": "id",

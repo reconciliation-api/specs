@@ -4,7 +4,7 @@
       "name": "coordinate location",
       "description": "geocoordinates of the subject. For Earth, please note that only WGS84 coordinating system is supported at the moment",
       "id": "P625",
-      "match_qualifiers": [
+      "matchQualifiers": [
         {"id": "ExactMatch", "name": "Exact match of the coordinates"},
         {"id": "DecimalPlaces-N", "name": "Match the coordinates with a precision of N decimal places"}
       ]
@@ -13,7 +13,7 @@
       "name": "place of birth",
       "description": "most specific known (e.g. city instead of country, or hospital instead of city) birth location of a person, animal or fictional character",
       "id": "P19",
-      "match_qualifiers": [
+      "matchQualifiers": [
         {"id": "schema:containsPlace", "name": "Containment relation between a place and another that it contains"},
         {"id": "schema:containedInPlace", "name": "Containment relation between a place and another that contains it"}
       ]

@@ -10,11 +10,7 @@
     "url": "https://reconcile.ror.org/reconcile"
   },
   "suggest": {
-    "entity": {
-      "flyout_service_path": "/flyout?id={id}",
-      "service_path": "/suggest",
-      "service_url": "https://reconcile.ror.org"
-    }
+    "entity": true
   },
   "preview": {
     "width": 400,
