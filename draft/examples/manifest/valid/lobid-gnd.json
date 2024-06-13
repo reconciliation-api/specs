@@ -51,15 +51,15 @@
   "extend": {
     "propertySettings": [
       {
-        "name": "limit",
-        "label": "Limit",
+        "id": "limit",
+        "name": "Limit",
         "type": "number",
         "default": 0,
         "helpText": "Maximum number of values to return per row (0 for no limit)"
       },
       {
-        "name": "content",
-        "label": "Content",
+        "id": "content",
+        "name": "Content",
         "type": "select",
         "default": "literal",
         "helpText": "Content type: ID or literal",

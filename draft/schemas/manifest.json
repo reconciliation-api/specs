@@ -128,7 +128,7 @@
                   "default": {
                     "type": "number"
                   },
-                  "label": {
+                  "id": {
                     "type": "string"
                   },
                   "name": {
@@ -140,7 +140,7 @@
                 },
                 "required": [
                   "type",
-                  "label",
+                  "id",
                   "name"
                 ]
               },
@@ -157,7 +157,7 @@
                   "default": {
                     "type": "string"
                   },
-                  "label": {
+                  "id": {
                     "type": "string"
                   },
                   "name": {
@@ -169,7 +169,7 @@
                 },
                 "required": [
                   "type",
-                  "label",
+                  "id",
                   "name"
                 ]
               },
@@ -186,7 +186,7 @@
                   "default": {
                     "type": "boolean"
                   },
-                  "label": {
+                  "id": {
                     "type": "string"
                   },
                   "name": {
@@ -198,7 +198,7 @@
                 },
                 "required": [
                   "type",
-                  "label",
+                  "id",
                   "name"
                 ]
               },
@@ -215,7 +215,7 @@
                   "default": {
                     "type": "string"
                   },
-                  "label": {
+                  "id": {
                     "type": "string"
                   },
                   "name": {
@@ -245,7 +245,7 @@
                 },
                 "required": [
                   "type",
-                  "label",
+                  "id",
                   "name",
                   "choices"
                 ]
