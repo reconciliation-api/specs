@@ -3,7 +3,11 @@
     {
       "candidates": [
         {
-          "name": "Urbaniak, Regina",
+          "name": [
+            {
+              "str": "Urbaniak, Regina"
+            }
+          ],
           "score": 53.015232,
           "match": false,
           "type": [

@@ -23,8 +23,26 @@
                   "description": "Entity identifier of the candidate"
                 },
                 "name": {
-                  "type": "string",
-                  "description": "Entity name of the candidate"
+                  "type": "array",
+                  "description": "Names for the candidate entity",
+                  "items": {
+                      "type": "object",
+                      "properties": {
+                        "str": {
+                          "type": "string"
+                        },
+                        "lang": {
+                          "type": "string"
+                        },
+                        "dir": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "str"
+                      ],
+                      "additionalProperties": false
+                  }
                 },
                 "description": {
                   "type": "string",

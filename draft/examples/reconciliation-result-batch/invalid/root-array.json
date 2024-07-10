@@ -3,7 +3,11 @@
     [
       {
         "id": "120333937",
-        "name": "Urbaniak, Regina",
+        "name": [
+          {
+            "str": "Urbaniak, Regina"
+          }
+        ],
         "score": 53.015232,
         "match": false,
         "type": [
@@ -19,7 +23,11 @@
       },
       {
         "id": "1127147390",
-        "name": "Urbaniak, Jan",
+        "name": [
+          {
+            "str": "Urbaniak, Jan"
+          }
+        ],
         "score": 52.357353,
         "match": false,
         "type": [

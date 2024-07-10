@@ -4,7 +4,13 @@
       "candidates": [
         {
           "id": "120333937",
-          "name": "Urbaniak, Regina",
+          "name": [
+            {
+              "str": "Urbaniak, Regina",
+              "lang": "de",
+              "dir": "auto"
+            }
+          ],
           "description": "1969-| Diss. Fachbereich Mathematik",
           "score": 53.015232,
           "match": false,
@@ -43,7 +49,13 @@
         },
         {
           "id": "1127147390",
-          "name": "Urbaniak, Jan",
+          "name": [
+            {
+              "str": "Urbaniak, Jan",
+              "lang": "de",
+              "dir": "auto"
+            }
+          ],
           "description": "Universität Wrocław, Niederlandestudien",
           "score": 52.357353,
           "match": false,
@@ -64,7 +76,13 @@
       "candidates": [
         {
           "id": "123064325",
-          "name": "Schwanhold, Ernst",
+          "name": [
+            {
+              "str": "Schwanhold, Ernst",
+              "lang": "de",
+              "dir": "auto"
+            }
+          ],
           "description": "1948-| Mitglied des Deutschen Bundestages, SPD (1993)",
           "score": 86.43497,
           "features": [
@@ -103,7 +121,13 @@
         },
         {
           "id": "116362988X",
-          "name": "Schwanhold, Nadine",
+          "name": [
+            {
+              "str": "Schwanhold, Nadine",
+              "lang": "de",
+              "dir": "auto"
+            }
+          ],
           "description": "Dissertation Potsdam, Universität, Mathematik-Naturwissenschaftliche Fakultät, 2017",
           "score": 62.04763,
           "match": false,
