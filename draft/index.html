@@ -242,7 +242,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
             <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/156">Add optional <code>standardizedScore</code> field to the manifest</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/166">Unify naming to camelCase convention</a></li>
-            <li><a href="https://github.com/reconciliation-api/specs/pull/176">Change candidate <code>name</code> from string to array of objects with required <code>str</code>, optional <code>lang</code> and <code>dir</code> fields</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/176">Change candidate <code>name</code> and <code>description</code> from string to array of objects with required <code>str</code>, optional <code>lang</code> and <code>dir</code> fields</a></li>
           </ul>
         </section>
       </section>
@@ -567,9 +567,9 @@ database are instances of this type.<dd>
 	    <dt><code>id</code></dt>
 	    <dd>The identifier of the candidate entity;</dd>
 	    <dt><code>name</code></dt>
-	    <dd>An array of objects representing names for the candidate entity. Each object MUST contain a string value in its <code>str</code> field, and MAY contain additional <a href="#text-processing-language">lang</a> and <a href="#text-direction">dir</a> fields;</dd>
+	    <dd>An array of <a>string objects</a> with names for the candidate entity;</dd>
 	    <dt><code>description</code></dt>
-	    <dd>The entity description MAY optionally be included;</dd>
+	    <dd>An optional array of <a>string objects</a> with descriptions for the candidate entity;</dd>
 	    <dt><code>type</code></dt>
 	    <dd>The types of the candidate entity;</dd>
 	    <dt><code>score</code></dt>
@@ -578,6 +578,17 @@ database are instances of this type.<dd>
             <dd>An optional array of <a>matching features</a>;</dd>
 	    <dt><code>match</code></dt>
             <dd>A boolean matching decision, which indicates whether the service considers this candidate good enough to be chosen as a correct match.</dd>
+          </dl>
+        </p>
+        <p>
+          A <dfn>string object</dfn> contains the following fields:
+          <dl>
+            <dt><code>str</code></dt>
+            <dd>The string value;</dd>
+            <dt><code>lang</code></dt>
+            <dd>Optionally, the <a href="#text-processing-language">text-processing language</a> of the string;</dd>
+            <dt><code>dir</code></dt>
+            <dd>Optionally, the <a href="#text-direction">text direction</a> of the string.</dd>
           </dl>
         </p>
         <p>

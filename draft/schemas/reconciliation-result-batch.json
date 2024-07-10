@@ -3,6 +3,26 @@
   "$id": "https://reconciliation-api.github.io/specs/draft/schemas/reconciliation-result-batch.json",
   "type": "object",
   "description": "This schema can be used to validate the JSON serialization of any reconciliation result batch.",
+  "definitions": {
+    "string_object": {
+        "type": "object",
+        "properties": {
+          "str": {
+            "type": "string"
+          },
+          "lang": {
+            "type": "string"
+          },
+          "dir": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "str"
+        ],
+        "additionalProperties": false
+    }
+  },
   "required": [
     "results"
   ],
@@ -26,27 +46,15 @@
                   "type": "array",
                   "description": "Names for the candidate entity",
                   "items": {
-                      "type": "object",
-                      "properties": {
-                        "str": {
-                          "type": "string"
-                        },
-                        "lang": {
-                          "type": "string"
-                        },
-                        "dir": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "str"
-                      ],
-                      "additionalProperties": false
+                    "$ref": "#/definitions/string_object"
                   }
                 },
                 "description": {
-                  "type": "string",
-                  "description": "Optional description of the candidate entity"
+                  "type": "array",
+                  "description": "Optional descriptions of the candidate entity",
+                  "items": {
+                    "$ref": "#/definitions/string_object"
+                  }
                 },
                 "score": {
                   "type": "number",

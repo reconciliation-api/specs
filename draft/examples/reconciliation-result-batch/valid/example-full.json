@@ -11,7 +11,11 @@
               "dir": "auto"
             }
           ],
-          "description": "1969-| Diss. Fachbereich Mathematik",
+          "description": [
+            {
+              "str": "1969-| Diss. Fachbereich Mathematik"
+            }
+          ],
           "score": 53.015232,
           "match": false,
           "features": [
@@ -56,7 +60,11 @@
               "dir": "auto"
             }
           ],
-          "description": "Universität Wrocław, Niederlandestudien",
+          "description": [
+            {
+              "str": "Universität Wrocław, Niederlandestudien"
+            }
+          ],
           "score": 52.357353,
           "match": false,
           "type": [
@@ -83,7 +91,11 @@
               "dir": "auto"
             }
           ],
-          "description": "1948-| Mitglied des Deutschen Bundestages, SPD (1993)",
+          "description": [
+            {
+              "str": "1948-| Mitglied des Deutschen Bundestages, SPD (1993)"
+            }
+          ],
           "score": 86.43497,
           "features": [
             {
@@ -128,7 +140,11 @@
               "dir": "auto"
             }
           ],
-          "description": "Dissertation Potsdam, Universität, Mathematik-Naturwissenschaftliche Fakultät, 2017",
+          "description": [
+            {
+              "str": "Dissertation Potsdam, Universität, Mathematik-Naturwissenschaftliche Fakultät, 2017"
+            }
+          ],
           "score": 62.04763,
           "match": false,
           "type": [
