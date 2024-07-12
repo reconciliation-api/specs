@@ -4,11 +4,19 @@
       "candidates": [
         {
           "id": "120333937",
-          "name": "Urbaniak, Regina"
+          "name": [
+            {
+              "str": "Urbaniak, Regina"
+            }
+          ]
         },
         {
           "id": "1127147390",
-          "name": "Urbaniak, Jan"
+          "name": [
+            {
+              "str": "Urbaniak, Jan"
+            }
+          ]
         }
       ]
     },
@@ -16,11 +24,19 @@
       "candidates": [
         {
           "id": "123064325",
-          "name": "Schwanhold, Ernst"
+          "name": [
+            {
+              "str": "Schwanhold, Ernst"
+            }
+          ]
         },
         {
           "id": "116362988X",
-          "name": "Schwanhold, Nadine"
+          "name": [
+            {
+              "str": "Schwanhold, Nadine"
+            }
+          ]
         }
       ]
     }
