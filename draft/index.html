@@ -523,18 +523,18 @@ database are instances of this type.<dd>
                 is defined are determined by the service.</dd> 
             <dt><code>required</code></dt>
             <dd>An optional boolean indicating if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)
-              or optional (i.e. only effecting the entity's rank in the list of candidates);</dd>
+              or optional (i.e. only effecting the entity's rank in the list of candidates). If omitted, the service SHOULD assume the requested value to be <code>false</code>;</dd>
             <dt><code>matchQuantifier</code></dt>
-            <dd>An optional string to indicate which of the values in <code>v</code> to match. MUST be <code>any</code> (equivalent to boolean OR), <code>all</code> (equivalent to boolean AND), or <code>none</code> (equivalent to boolean NOT);</dd>
+            <dd>An optional string to indicate which of the values in <code>v</code> to match. MUST be <code>any</code> (equivalent to boolean OR), <code>all</code> (equivalent to boolean AND), or <code>none</code> (equivalent to boolean NOT). If omitted, the service SHOULD assume the requested value to be <code>any</code>;</dd>
             <dt><code>matchQualifier</code></dt>
             <dd>An optional string to indicate how to match the values in <code>v</code>.
               This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
               (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
               To allow discovery of supported qualifiers by clients, services that support <code>matchQualifier</code> MUST return the supported <code>matchQualifiers</code> for each property
-              in their property <a href='#suggest-responses'>suggest responses</a>.</p></dd>
+              in their property <a href='#suggest-responses'>suggest responses</a>. If omitted, the exact matching behavior is up to the service.</p></dd>
          </dl>
         
-	    A reconciliation service that supports property assignments SHOULD provide a <a>suggest service</a> for discovering these properties. If the optional fields are omitted, the exact behavior ("must match all", "should match some", etc.) is up to the service.
+	    A reconciliation service that supports property assignments SHOULD provide a <a>suggest service</a> for discovering these properties.
         </p>
         <p>
           A <dfn>reconciliation query batch</dfn> is an array of <a>reconciliation queries</a>.
