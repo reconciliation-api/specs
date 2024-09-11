@@ -531,7 +531,7 @@ database are instances of this type.<dd>
               This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
               (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
               To allow discovery of supported qualifiers by clients, services that support <code>matchQualifier</code> MUST return the supported <code>matchQualifiers</code> for each property
-              in their property <a href='#suggest-responses'>suggest responses</a>. If omitted, the exact matching behavior is up to the service.</p></dd>
+              in their property <a href='#suggest-responses'>suggest responses</a>. If omitted, the matching behavior is up to the service.</p></dd>
          </dl>
         
 	    A reconciliation service that supports property assignments SHOULD provide a <a>suggest service</a> for discovering these properties.
