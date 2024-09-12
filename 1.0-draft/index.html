@@ -354,7 +354,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         A <dfn>service manifest</dfn> consists of the following fields:
         <dl>
           <dt><code>versions</code></dt>
-          <dd>The array of API versions supported by the endpoint, such as <code>["0.1", "0.2"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1. A service implementing the current draft should include <code>1.0-draft</code> in the array.</dd>
+          <dd>The array of API versions supported by the endpoint, such as <code>["0.1", "0.2", "1.0-draft"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1. A service implementing the current draft should include <code>1.0-draft</code> in the array.</dd>
           <dt><code>name</code></dt>
           <dd>A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
 will help disambiguating it from others;</dd>
