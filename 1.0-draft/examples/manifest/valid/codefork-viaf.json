@@ -1,5 +1,5 @@
 {
-  "versions": ["0.2"],
+  "versions": ["1.0-draft"],
   "name": "VIAF",
   "view": {
     "url": "http://viaf.org/viaf/{id}"

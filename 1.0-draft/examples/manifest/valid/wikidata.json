@@ -1,5 +1,5 @@
 {
-  "versions": ["0.1", "0.2"],
+  "versions": ["0.1", "0.2", "1.0-draft"],
   "name": "Wikidata (en)",
   "preview": {
     "width": 400,

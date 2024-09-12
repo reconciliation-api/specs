@@ -1,5 +1,5 @@
 {
-  "versions": ["0.2"],
+  "versions": ["1.0-draft"],
   "name": "findthatcharity",
   "view": {
     "url": "https://findthatcharity.uk/charity/{id}"

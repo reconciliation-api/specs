@@ -64,5 +64,6 @@
   },
   "view": {
     "url": "http://data.slub-dresden.de/{id}"
-  }
+  },
+  "versions": ["1.0-draft"]
 }
