@@ -242,7 +242,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
             <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/156">Add optional <code>standardizedScore</code> field to the manifest</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/166">Unify naming to camelCase convention</a></li>
-            <li><a href="https://github.com/reconciliation-api/specs/pull/176">Change candidate <code>name</code> and <code>description</code> from string to array of objects with required <code>str</code>, optional <code>lang</code> and <code>dir</code> fields</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/176">For objects selected by users (candidates, suggest responses, property proposals), change <code>name</code> and <code>description</code> from string to array of objects with required <code>str</code>, optional <code>lang</code> and <code>dir</code> fields</a></li>
           </ul>
         </section>
       </section>
@@ -868,7 +868,7 @@ containing a type identifier.
           A <dfn>data extension property proposal response</dfn> consists of:
           <dl>
             <dt><code>properties</code></dt>
-            <dd>An array of proposed <a>properties</a>. These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query;</dd>
+            <dd>An array of objects representing the proposed <a>properties</a>, each containing an <code>id</code> (as a string), a <code>name</code> and optionally a <code>description</code> (both as an array of <a>string objects</a>). These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query;</dd>
             <dt><code>type</code></dt>
             <dd>The <a>type</a> identifier supplied in the query;</dd>
             <dt><code>limit</code></dt>
