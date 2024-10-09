@@ -4,23 +4,68 @@
   "properties": [
     {
       "id": "affiliation",
-      "name": "Affiliation"
+      "name": [
+        {
+          "str": "Affiliation"
+        }
+      ],
+      "description": [
+        {
+          "str": "A corporate body associated with a person or group of persons."
+        }
+      ]
     },
     {
       "id": "geographicAreaCode",
-      "name": "Ländercode"
+      "name": [
+        {
+          "str": "Geographic Area Code",
+          "lang": "en"
+        },
+        {
+          "str": "Ländercode",
+          "lang": "de"
+        }
+      ]
     },
     {
       "id": "preferredName",
-      "name": "Bevorzugter Name"
+      "name": [
+        {
+          "str": "Preferred name",
+          "lang": "en"
+        },
+        {
+          "str": "Bevorzugter Name",
+          "lang": "de"
+        }
+      ]
     },
     {
       "id": "professionOrOccupation",
-      "name": "Beruf oder Beschäftigung"
+      "name": [
+        {
+          "str": "Profession or occupation",
+          "lang": "en"
+        },
+        {
+          "str": "Beruf oder Beschäftigung",
+          "lang": "de"
+        }
+      ]
     },
     {
       "id": "variantName",
-      "name": "Varianter Name"
+      "name": [
+        {
+          "str": "Variant name",
+          "lang": "en"
+        },
+        {
+          "str": "Varianter Name",
+          "lang": "de"
+        }
+      ]
     }
   ]
 }

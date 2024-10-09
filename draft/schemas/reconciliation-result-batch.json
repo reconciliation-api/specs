@@ -23,12 +23,18 @@
                   "description": "Entity identifier of the candidate"
                 },
                 "name": {
-                  "type": "string",
-                  "description": "Entity name of the candidate"
+                  "type": "array",
+                  "description": "Names for the candidate entity",
+                  "items": {
+                    "$ref": "string-object.json"
+                  }
                 },
                 "description": {
-                  "type": "string",
-                  "description": "Optional description of the candidate entity"
+                  "type": "array",
+                  "description": "Optional descriptions of the candidate entity",
+                  "items": {
+                    "$ref": "string-object.json"
+                  }
                 },
                 "score": {
                   "type": "number",

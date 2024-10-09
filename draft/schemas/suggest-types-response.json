@@ -6,7 +6,29 @@
   "properties": {
     "result": {
       "type": "array",
-      "items": { "$ref": "type.json" }
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identifier of the suggested type"
+          },
+          "name": {
+            "type": "array",
+            "description": "Name of the suggested type",
+            "items": {
+              "$ref": "string-object.json"
+            }
+          },
+          "description": {
+            "type": "array",
+            "description": "An optional description which can be provided to disambiguate namesakes, providing more context.",
+            "items": {
+              "$ref": "string-object.json"
+            }
+          }
+        }
+      }
     }
   },
   "required": [

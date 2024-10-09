@@ -1,6 +1,10 @@
 {
   "id": "1117582299",
-  "name": "Urbaniak, Hans-Eberhard",
+  "name": [
+    {
+      "str": "Urbaniak, Hans-Eberhard"
+    }
+  ],
   "score": 85.71888,
   "features": [
     {

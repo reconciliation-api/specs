@@ -1,26 +1,78 @@
 {
   "result": [
     {
-      "name": "coordinate location",
-      "description": "geocoordinates of the subject. For Earth, please note that only WGS84 coordinating system is supported at the moment",
+      "name": [
+        {
+          "str": "coordinate location"
+        }
+      ],
+      "description": [
+        {
+          "str": "geocoordinates of the subject. For Earth, please note that only WGS84 coordinating system is supported at the moment"
+        }
+      ],
       "id": "P625",
       "matchQualifiers": [
-        {"id": "ExactMatch", "name": "Exact match of the coordinates"},
-        {"id": "DecimalPlaces-N", "name": "Match the coordinates with a precision of N decimal places"}
+        {
+          "id": "ExactMatch",
+          "name": [
+            {
+              "str": "Exact match of the coordinates"
+            }
+          ]
+        },
+        {
+          "id": "DecimalPlaces-N",
+          "name": [
+            {
+              "str": "Match the coordinates with a precision of N decimal places"
+            }
+          ]
+        }
       ]
     },
     {
-      "name": "place of birth",
-      "description": "most specific known (e.g. city instead of country, or hospital instead of city) birth location of a person, animal or fictional character",
+      "name": [
+        {
+          "str": "place of birth"
+        }
+      ],
+      "description": [
+        {
+          "str": "most specific known (e.g. city instead of country, or hospital instead of city) birth location of a person, animal or fictional character"
+        }
+      ],
       "id": "P19",
       "matchQualifiers": [
-        {"id": "schema:containsPlace", "name": "Containment relation between a place and another that it contains"},
-        {"id": "schema:containedInPlace", "name": "Containment relation between a place and another that contains it"}
+        {
+          "id": "schema:containsPlace",
+          "name": [
+            {
+              "str": "Containment relation between a place and another that it contains"
+            }
+          ]
+        },
+        {
+          "id": "schema:containedInPlace",
+          "name": [
+            {
+              "str": "Containment relation between a place and another that contains it"
+            }
+          ]
+        }
       ]
     },
     {
-      "name": "located in time zone",
-      "description": "time zone for this item",
+      "name": [
+        {
+          "str": "located in time zone"
+        }
+      ],
+      "description": [
+        {
+          "str": "time zone for this item"
+        }
+      ],
       "id": "P421"
     }
   ]

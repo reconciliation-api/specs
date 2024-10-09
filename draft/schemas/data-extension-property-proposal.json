@@ -14,12 +14,18 @@
             "description": "Identifier of the suggested property"
           },
           "name": {
-            "type": "string",
-            "description": "Name of the suggested property"
+            "type": "array",
+            "description": "Name of the suggested property",
+            "items": {
+              "$ref": "string-object.json"
+            }
           },
           "description": {
-            "type": "string",
-            "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
+            "type": "array",
+            "description": "An optional description which can be provided to disambiguate namesakes, providing more context.",
+            "items": {
+              "$ref": "string-object.json"
+            }
           }
         },
         "required": [
