@@ -94,22 +94,7 @@
                         "additionalProperties": false
                       },
                       {
-                        "type": "object",
-                        "properties": {
-                          "str": {
-                            "type": "string"
-                          },
-                          "lang": {
-                            "type": "string"
-                          },
-                          "dir": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "str"
-                        ],
-                        "additionalProperties": false
+                        "$ref": "string-object.json"
                       },
                       {
                         "type": "object",
