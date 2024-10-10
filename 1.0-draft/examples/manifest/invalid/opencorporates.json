@@ -17,5 +17,6 @@
       "id": "/organization/organization",
       "name": "Organization"
     }
-  ]
+  ],
+  "versions": ["1.0-draft"]
 }

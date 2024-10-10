@@ -1,5 +1,5 @@
 {
-  "versions": ["0.2"],
+  "versions": ["1.0-draft"],
   "name": "IPNI Name Reconciliation Service",
   "view": {
     "url": "http://ipni.org/urn:lsid:ipni.org:names:{id}"

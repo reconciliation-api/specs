@@ -16,5 +16,6 @@
     "width": 400,
     "height": 100,
     "url": "https://reconcile.ror.org/preview/{id}"
-  }
+  },
+  "versions": ["1.0-draft"]
 }
