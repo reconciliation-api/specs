@@ -54,6 +54,10 @@
             company: "National Library of Finland",
             companyURL: "https://www.kansalliskirjasto.fi/en"
           },
+          {
+            name: "Albin Larsson",
+            url: "https://byabbe.se/",
+          }
           // add yourself here!
           {
             name: "Add Yourself Here!"
@@ -698,6 +702,46 @@ in the <code>score</code> field). By exposing individual features in their respo
        <pre data-include="examples/preview-response/example.html" data-include-format="text" class="example html">
        </pre>
       </p>
+      </section>
+    </section>
+    <section>
+      <h2>Structured Preview Service</h2>
+      <p>
+        This section specifies how reconciliation services can provide previews of their entities in a structured format.
+      </p>
+      <section>
+        <h3>Structured Preview Endpoint</h3>
+        <p>
+          When supported, the structured preview service is queried by resolving the URI template <code>/structured-preview?id={id}</code> relative to the reconciliation endpoint, where <code>id</code> is subsituted by the <a>entity</a> identifier.
+        </p>
+      </section>
+      <section>
+        <h3>Structured Preview Responses</h3>
+        <p>
+          A response to a structured preview query must be a JSON object with the following fields describing the entity:
+          <dl>
+            <dt><code>id</code></dt>
+            <dd>The identifier of the entity;</dd>
+            <dt><code>name</code></dt>
+            <dd>Its corresponding human-readable name, to be displayed prominently to the user;</dd>
+          </dl>
+
+          The response may also contain the following optional fields:
+          <dl>
+            <dt><code>description</code></dt>
+            <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>;</dd>
+            <dt><code>url</code></dt>
+            <dd>An optional URL to a page with more information about the entity;</dd>
+            <dt><code>image</code></dt>
+            <dd>An optional URL to an image representing the entity;</dd>
+            <dt><code>tags</code></dt>
+            <dd>An optional list of tags and optionally an URL associated with each tag. Tags can represent entity types, categories among other things;</dd>
+          </dl>
+        </p>
+        <p>
+          For instance, a structured preview service could return the following response:
+          <pre data-include="examples/structured-preview-response/valid/example.json" class="example json"></pre>
+        </p>
       </section>
     </section>
     <section>
