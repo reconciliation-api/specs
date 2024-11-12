@@ -8,5 +8,6 @@
   "name": "GODOT (Graph of Dated Objects and Texts) Reconciliation Service - Roman Consulates",
   "preview": {
     "url": "https://godot.date/reconcile/preview={id}"
-  }
+  },
+  "versions": ["1.0-draft"]
 }

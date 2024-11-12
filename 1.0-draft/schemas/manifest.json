@@ -11,7 +11,7 @@
         "type": "string"
       },
       "contains": {
-        "enum": ["0.2"]
+        "enum": ["1.0-draft"]
       }
     },
     "name": {

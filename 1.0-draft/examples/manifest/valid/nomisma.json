@@ -1,5 +1,5 @@
 {
-  "versions": ["0.2"],
+  "versions": ["1.0-draft"],
   "name": "Nomisma.org",
   "view": {
     "url": "http://nomisma.org/id/{id}"
