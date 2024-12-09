@@ -580,6 +580,10 @@ database are instances of this type.<dd>
           </dl>
         </p>
         <p>
+          To propose multi-lingual candidates to the client, the reconciliation service MAY return multiple candidates with identical <code>id</code>, but different names, <a href="#text-processing-language">text processing languages</a> or <a href="#text-direction">text directions</a>.
+          The client MAY render these candidates as a single entity, but SHOULD include details from all candidates, so users can comprehend why the entity is being proposed.
+        </p>
+        <p>
           A <dfn>matching feature</dfn> is a numerical or boolean value which can be used to determine how likely it is for the candidate to be the correct entity. It contains the following fields:
           <dl>
             <dt><code>id</code></dt>
