@@ -1,0 +1,11 @@
+{
+	"id": "http://www.wikidata.org/entity/Q2",
+	"name": "Earth",
+	"description": "third planet from the Sun in the Solar System",
+	"url": "https://www.wikidata.org/wiki/Q2",
+	"image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/The_Blue_Marble_%285052124705%29.jpg/330px-The_Blue_Marble_%285052124705%29.jpg",
+	"tags": [
+		["terrestrial planet", "http://www.wikidata.org/entity/Q128207"],
+		["inner planet of the Solar System", "http://www.wikidata.org/entity/Q3504248"]
+	]
+}
