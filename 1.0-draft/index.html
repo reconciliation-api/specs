@@ -415,7 +415,7 @@ database are instances of this type.<dd>
         <dl>
            <dt><code>/</code></dt>
            <dd>The root endpoint, which supports the GET method and returns the service manifest. Services MUST support this route;</dd>
-           <dt><code>/reconcile</code></dt>
+           <dt><code>/match</code></dt>
            <dd>The route used to submit <a>reconciliation query batches</a>, with the POST method. Services MUST support this route;</dd>
            <dt><code>/suggest/entity</code></dt>
            <dd>The route used for auto-completion of entities, with the GET method. Services MAY support this route, as indicated  in their manifest;</dd>
@@ -488,7 +488,7 @@ database are instances of this type.<dd>
     <section>
       <h2>Reconciliation Queries</h2>
       <p>
-        This section specifies how clients can send reconciliation queries to services and
+        This section specifies how clients can send reconciliation queries to the reconciliation service and
         how services respond to them.
       </p>
       <section>
@@ -618,21 +618,21 @@ in the <code>score</code> field). By exposing individual features in their respo
         </p>
       </section>
       <section>
-        <h3>Sending Reconciliation Queries to a Service</h3>
+        <h3>Sending Reconciliation Queries to the Match Service</h3>
         <p>
-	  The primary role of a reconciliation service is to translate <a>reconciliation query batches</a> to
+	  The primary role of a reconciliation service is to provide a match service that translates <a>reconciliation query batches</a> to
 	  <a>reconciliation result batches</a> over HTTP.
 	</p>
 	<p>
-          A reconciliation service MUST support HTTP POST requests at the route <code>/reconcile</code> (relative to its <a>endpoint</a>) with
+          The match service MUST support HTTP POST requests at the route <code>/match</code> (relative to its <a>endpoint</a>) with
           <code>application/json</code> bodies containing a
           <a>reconciliation query batch</a>.
         </p>
         <p>
-          <pre class="example nohighlight">POST /reconcile &lt;reconciliation query batch&gt;</pre>
+          <pre class="example nohighlight">POST /match &lt;reconciliation query batch&gt;</pre>
         </p>
 	<p>
-	   The service returns the corresponding query batch serialized in JSON.
+	   The match service returns the corresponding query batch serialized in JSON.
 	</p>
       </section>
       <section class="informative">
