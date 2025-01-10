@@ -54,6 +54,13 @@
             company: "National Library of Finland",
             companyURL: "https://www.kansalliskirjasto.fi/en"
           },
+          {
+            name: "Gregory Saumier-Finch",
+            url: "https://www.linkedin.com/in/gregorysaumierfinch/",
+            orcid: "0000-0001-5003-7424",
+            company: "Culture Creates",
+            companyURL: "https://culturecreates.com/"
+          },
           // add yourself here!
           {
             name: "Add Yourself Here!"
@@ -415,7 +422,7 @@ database are instances of this type.<dd>
         <dl>
            <dt><code>/</code></dt>
            <dd>The root endpoint, which supports the GET method and returns the service manifest. Services MUST support this route;</dd>
-           <dt><code>/reconcile</code></dt>
+           <dt><code>/match</code></dt>
            <dd>The route used to submit <a>reconciliation query batches</a>, with the POST method. Services MUST support this route;</dd>
            <dt><code>/suggest/entity</code></dt>
            <dd>The route used for auto-completion of entities, with the GET method. Services MAY support this route, as indicated  in their manifest;</dd>
@@ -486,10 +493,10 @@ database are instances of this type.<dd>
       </section>
     </section>
     <section>
-      <h2>Reconciliation Queries</h2>
+      <h2>Match Service</h2>
       <p>
-        This section specifies how clients can send reconciliation queries to services and
-        how services respond to them.
+        This section specifies how clients can send reconciliation queries to the match service and
+        how the match service responds to them.
       </p>
       <section>
         <h3>Structure of a Reconciliation Query</h3>
@@ -618,21 +625,21 @@ in the <code>score</code> field). By exposing individual features in their respo
         </p>
       </section>
       <section>
-        <h3>Sending Reconciliation Queries to a Service</h3>
+        <h3>Sending Reconciliation Queries to the Match Service</h3>
         <p>
-	  The primary role of a reconciliation service is to translate <a>reconciliation query batches</a> to
+	  The match service translates <a>reconciliation query batches</a> to
 	  <a>reconciliation result batches</a> over HTTP.
 	</p>
 	<p>
-          A reconciliation service MUST support HTTP POST requests at the route <code>/reconcile</code> (relative to its <a>endpoint</a>) with
+          The match service MUST support HTTP POST requests at the route <code>/match</code> (relative to its <a>endpoint</a>) with
           <code>application/json</code> bodies containing a
           <a>reconciliation query batch</a>.
         </p>
         <p>
-          <pre class="example nohighlight">POST /reconcile &lt;reconciliation query batch&gt;</pre>
+          <pre class="example nohighlight">POST /match &lt;reconciliation query batch&gt;</pre>
         </p>
 	<p>
-	   The service returns the corresponding query batch serialized in JSON.
+	   The match service returns the corresponding query batch serialized in JSON.
 	</p>
       </section>
       <section class="informative">
