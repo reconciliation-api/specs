@@ -275,6 +275,8 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
              <dd>a <emph>name</emph>, which is also a non-empty string;</dd>
              <dt><code>description</code></dt>
              <dd>an optional <emph>description</emph> as a human-readable string;</dd>
+             <dt><code>image</code></dt>
+             <dd>an optional URL of an <emph>image</emph> which illustrates the entity;</dd>
              <dt><code>type</code></dt>
              <dd>an array of <a>types</a>, possibly empty;</dd>
            </dl>
@@ -761,6 +763,8 @@ in the <code>score</code> field). By exposing individual features in their respo
               <dd>Its corresponding human-readable name, to be displayed prominently to the user;</dd>
               <dt><code>description</code></dt>
               <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>;</dd>
+              <dt><code>image</code></dt>
+              <dd>An optional URL to an image illustrating the entity, helping the user identify the entity visually. This image could for instance be displayed alongside the <code>name</code> and <code>description</code>;</dd>
 	      <dt><code>notable</code></dt>
 	      <dd>When suggesting entities only, this field can be used to supply some important types (not necessarily all types) of the suggested entity. The value must be an array of either type identifiers (as strings) or type objects, containing an <code>id</code> and <code>name</code> field which represent the type.</dd>
               <dt><code>matchQualifiers</code></dt>
