@@ -81,10 +81,10 @@
                             "type": "string"
                           },
                           "lang": {
-                            "type": "string"
+                            "$ref": "lang.json"
                           },
                           "dir": {
-                            "type": "string"
+                            "$ref": "dir.json"
                           }
                         },
                         "required": [
@@ -100,10 +100,10 @@
                             "type": "string"
                           },
                           "lang": {
-                            "type": "string"
+                            "$ref": "lang.json"
                           },
                           "dir": {
-                            "type": "string"
+                            "$ref": "dir.json"
                           }
                         },
                         "required": [

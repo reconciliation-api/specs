@@ -52,8 +52,10 @@
             "description": "The maximum number of candidates to return"
           },
           "lang": {
-            "type": "string",
-            "description": "The text-processing language for the query"
+            "$ref": "lang.json"
+          },
+          "dir": {
+            "$ref": "dir.json"
           },
           "conditions": {
             "type": "array",
