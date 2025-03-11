@@ -24,6 +24,12 @@
             },
             "name": {
               "type": "string"
+            },
+            "lang": {
+              "$ref": "lang.json"
+            },
+            "dir": {
+              "$ref": "dir.json"
             }
           },
           "required": [
