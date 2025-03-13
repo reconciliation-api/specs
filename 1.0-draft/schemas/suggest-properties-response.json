@@ -21,6 +21,12 @@
             "type": "string",
             "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
           },
+          "lang": {
+            "$ref": "lang.json"
+          },
+          "dir": {
+            "$ref": "dir.json"
+          },
           "matchQualifiers": {
             "type": "array",
             "description": "An optional array of objects representing the matchQualifiers supported for the suggested property",
@@ -34,6 +40,12 @@
                 "name": {
                   "type": "string",
                   "description": "Name of the matchQualifier"
+                },
+                "lang": {
+                  "$ref": "lang.json"
+                },
+                "dir": {
+                  "$ref": "dir.json"
                 }
               },
               "required": [

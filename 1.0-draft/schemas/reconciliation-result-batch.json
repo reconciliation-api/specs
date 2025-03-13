@@ -30,6 +30,12 @@
                   "type": "string",
                   "description": "Optional description of the candidate entity"
                 },
+                "lang": {
+                  "$ref": "lang.json"
+                },
+                "dir": {
+                  "$ref": "dir.json"
+                },
                 "image": {
                   "type": "string",
                   "description": "Optional URL of an image illustrating the entity"
@@ -51,6 +57,12 @@
                       "name": {
                         "type": "string",
                         "description": "A human-readable name for the feature"
+                      },
+                      "lang": {
+                        "$ref": "lang.json"
+                      },
+                      "dir": {
+                        "$ref": "dir.json"
                       },
                       "value": {
                         "description": "The value of the feature for this reconciliation candidate",
@@ -89,6 +101,12 @@
                           },
                           "name": {
                             "type": "string"
+                          },
+                          "lang": {
+                            "$ref": "lang.json"
+                          },
+                          "dir": {
+                            "$ref": "dir.json"
                           }
                         },
                         "required": [

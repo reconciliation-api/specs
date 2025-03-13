@@ -1,0 +1,10 @@
+{
+    "$id": "https://reconciliation-api.github.io/specs/draft/schemas/dir.json",
+    "type": "string",
+    "enum": [
+        "ltr",
+        "rtl",
+        "auto"
+    ],
+    "description": "The text direction for the natural language fields of this object"
+}
