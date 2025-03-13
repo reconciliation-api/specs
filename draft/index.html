@@ -5,6 +5,7 @@
     <script src='../libs/respec-w3c.js' async class='remove'></script>
     <script class='remove'>
       var respecConfig = {
+        xref: ["RFC2119", "RFC6570", "RFC8259"],
         specStatus: "CG-DRAFT",
         subtitle: "A protocol for data matching on the Web",
         pluralize: true,
@@ -252,7 +253,6 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           </ul>
         </section>
       </section>
-      <section id="conformance"></section>
     </section>
     <section>
       <h2>Core Concepts</h2>
@@ -263,21 +263,71 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         or <a>properties</a> with <a>property values</a>.
         The purpose of this section is to define these notions.
       </p>
+      <h3 data-link-for="conventions">Terms Used</h3>
+      <p>
+        The following concepts are used and borrowed from JSON [[RFC8259]] syntax as well as from [[RFC2119]]:
+      <ul>
+        <li>
+          <dfn data-lt="json object">Object</dfn>
+          - This is an unordered set of <code>{"name":"value"}</code> pairs. An object begins with <code>{</code> (left brace) and ends with <code>}</code> (right brace). Each name is followed by <code>:</code> (colon) and the <code>{"name":"value"}</code> pairs are separated by <code>,</code> (comma).
+        </li>
+        <li>
+        <dfn
+          data-lt="key|keyword|fields">
+          field
+        </dfn> - is the alternative term used throughout to refer to the key or name part in a <code>{"name":"value"}</code> pair in a JSON object as defined by [[RFC8259]].
+        Or more loosely, a "key" in JSON data.  The typical convention when dealing with APIs or programmatic querying of
+        records is to use the term "fields" rather than "keys", so we have chosen to use that term in this specification
+        when speaking of objects to query/request or respond with.
+        </li>
+        <li>
+          <dfn data-lt="text">String</dfn>
+          - This is a sequence of zero or more Unicode characters. Strings are written within double quotes and can contain various escape characters.
+        </li>
+        <li>
+          <dfn data-lt="number">Integer</dfn>
+          - This is a signed decimal number (ex. 20) that may contain a fractional part and may use exponential E notation. JSON does not support octal or hexadecimal numbers. 
+        </li>
+        <li>
+          <dfn data-lt="list">Array</dfn>
+          - This is an ordered collection of values. An array begins with <code>[</code> (left bracket) and ends with <code>]</code> (right bracket). Values are separated by <code>,</code> (comma).
+        </li>
+        <li>
+          <dfn>Boolean</dfn>
+          - This is either <code>true</code> or <code>false</code>.
+        </li>
+
+        <li>
+          <!-- "required" is not a defined term since it is a default and unused currently.
+               So, we just make it bold italics to provide a similar style as defined terms.
+          -->
+        ( <b><i>required</i></b> ) - is the default and might be shown at times to signify those fields which are mandatory and MUST be used in all reconciliation services.
+        If the field is not specified as either ( <b>required</b> ) or ( <b>optional</b> ), then it is REQUIRED.
+        </li>
+        <li>
+        (<dfn
+          data-lt="NOT MANDATORY|NON-MANDATORY">
+          optional
+        </dfn>) - is used to signify those fields which are not mandatory and MAY be used.
+        </li>
+      </ul>
+      </p>
+      </p>
       <section>
         <h3 data-link-for="entities">Entities</h3>
         <p>
            An <dfn>entity</dfn> is a record in the data source exposed by the service.
            It comprises the following fields:
-           <dl>
-	     <dt><code>id</code></dt>
-             <dd>an identifier, which is a non-empty string. This identifier must be unique among all entities;</dd>
-             <dt><code>name</code></dt>
-             <dd>a <emph>name</emph>, which is also a non-empty string;</dd>
-             <dt><code>description</code></dt>
-             <dd>an optional <emph>description</emph> as a human-readable string;</dd>
-             <dt><code>type</code></dt>
-             <dd>an array of <a>types</a>, possibly empty;</dd>
-           </dl>
+        <dl>
+        <dt><code>id</code></dt>
+          <dd>{{String}} a non-empty identifier. This identifier must be unique among all entities;</dd>
+        <dt><code>name</code></dt>
+          <dd>{{String}} ({{optional}}) a non-empty <emph>name</emph> or <emph></emph>label</emph> for the entity;</dd>
+        <dt><code>description</code></dt>
+          <dd>{{String}} ({{optional}}) a <emph>description</emph> as a human-readable string;</dd>
+        <dt><code>type</code></dt>
+          <dd>{{Array}} ({{optional}}) list of <a>types</a>, possibly empty, the entity is classified by;</dd>
+        </dl>
            Moreover, for each <a>property</a> the entity contains a set of associated <a>property values</a>, possibly empty.
         </p>
         <p>
@@ -306,11 +356,11 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           It comprises the following fields:
           <dl>
              <dt><code>id</code></dt>
-             <dd>an identifier, which is a non-empty string. This identifier must be unique among all types;</dd>
+             <dd>{{String}} an identifier, which is non-empty. This identifier must be unique among all types;</dd>
              <dt><code>name</code></dt>
-             <dd>a human-readable name, which is a non-empty string;</dd>
+             <dd>{{String}} ({{optional}}) a human-readable name, which is non-empty;</dd>
              <dt><code>broader</code></dt>
-             <dd>an optional array of <a>types</a>, each representing a direct (i.e., immediate) <a href="https://www.w3.org/TR/skos-reference/#semantic-relations">broader</a> [[skos-reference]] category of <a>entities</a>.</dd>
+             <dd>{{Array}} ({{optional}}) list of <a>types</a>, each representing a direct (i.e., immediate) <a href="https://www.w3.org/TR/skos-reference/#semantic-relations">broader</a> [[skos-reference]] category of <a>entities</a>.</dd>
           </dl>
         </p>
       </section>
@@ -321,9 +371,9 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           It comprises the following fields:
           <dl>
 	    <dt><code>id</code></dt>
-            <dd>an identifier, which is a non-empty string. This identifier must be unique among all properties;</dd>
+            <dd>{{String}} an identifier, which is a non-empty string. This identifier must be unique among all properties;</dd>
 	    <dt><code>name</code></dt>
-            <dd>a human-readable name, which is a non-empty string.</dd>
+            <dd>{{String}} ({{optional}}) a human-readable name, which is a non-empty string.</dd>
           </dl>
         </p>
       </section>
@@ -332,17 +382,18 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         <p>
           A <dfn>property value</dfn> can be any of the following:
           <ul>
-             <li>A string;</li>
-             <li>A boolean;</li>
-             <li>An integer;</li>
+             <li>A {{string}};</li>
+             <li>A {{boolean}};</li>
+             <li>An {{integer}};</li>
              <li>A floating-point value;</li>
-             <li>An <a>entity</a>.</li>
+             <li>An {{entity}}.</li>
           </ul>
         </p>
       </section>
+      <section id="conformance"></section>
     </section>
     <section>
-      <h2>Service Definition</h2>
+      <h2 data-link-for="service definition">Service Definition</h2>
       <p>
         This section documents how reconciliation services are exposed as HTTP(S) services and
         how they can announce the features of the API they implement.
@@ -352,57 +403,57 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         service is offered.
       </p>
       <section>
-        <h3>Service Manifest</h3>
+        <h3 data-lt="manifest">Service Manifest</h3>
         <p>
            When the reconciliation service <a>endpoint</a> is queried with a HTTP GET query without
            parameters, the <a>service manifest</a> MUST be returned.
         </p>
       <p>
-        A <dfn>service manifest</dfn> consists of the following fields:
+        A <dfn>service manifest</dfn> consists of the following {{fields}}:
         <dl>
           <dt><code>versions</code></dt>
-          <dd>The array of API versions supported by the endpoint, such as <code>["0.1", "0.2", "1.0-draft"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1. A service implementing the current draft should include <code>1.0-draft</code> in the array.</dd>
+          <dd>{{Array}} API versions supported by the endpoint, such as <code>["0.1", "0.2", "1.0-draft"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
           <dt><code>name</code></dt>
-          <dd>A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
+          <dd>{{String}} A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
 will help disambiguating it from others;</dd>
           <dt><code>defaultTypes</code></dt>
-          <dd>An array of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
+          <dd>{{Array}} ({{optional}}) list of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
 database are instances of this type.<dd>
           <dt><code>documentation</code></dt>
-          <dd>An optional URL with human-readable documentation about the service, for instance giving more information about the data it exposes;</dd>
+          <dd>{{String}} ({{optional}}) URL that points to human-readable documentation about the service, for instance giving more information about the data it exposes;</dd>
           <dt><code>logo</code></dt>
-          <dd>An optional URL of a square image which can be used as the service's logo;</dd>
+          <dd>{{String}} ({{optional}}) URL that points to a square image which can be used as the service's logo;</dd>
           <dt><code>serviceVersion</code></dt>
-          <dd>An optional string which describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
+          <dd>{{String}} ({{optional}}) describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
           <dt><code>view</code></dt>
-          <dd>An object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
+          <dd>{{Object}} contains a single field URL. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
           <dt><code>featureView</code></dt>
-          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
+          <dd>{{Object}} ({{optional}}) contains a single field URL. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
           <dt><code>preview</code></dt>
-          <dd>A <a>preview metadata</a> object, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
+          <dd>{{Object}} ({{optional}}) contains <a>preview metadata</a> supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
           <dt><code>suggest</code></dt>
-          <dd>An optional object which may contain the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
+          <dd>{{Object}} ({{optional}}) contains the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
             <dl>
               <dt><code>entity</code></dt>
-              <dd>A boolean indicating if the service supports auto-suggestion of <a>entities</a>;</dd>
+              <dd>{{Boolean}} ({{optional}}) indicates if the service supports auto-suggestion of <a>entities</a>;</dd>
               <dt><code>property</code></dt>
-              <dd>A boolean indicating if the service supports auto-suggestion of <a>properties</a>;</dd>
+              <dd>{{Boolean}} ({{optional}}) indicates if the service supports auto-suggestion of <a>properties</a>;</dd>
               <dt><code>type</code></dt>
-              <dd>A boolean indicating if the service supports auto-suggestion of <a>types</a>;</dd>
+              <dd>{{Boolean}} ({{optional}}) indicates if the service supports auto-suggestion of <a>types</a>;</dd>
             </dl>
           </dd>
           <dt><code>extend</code></dt>
-          <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
+          <dd>{{Object}} ({{optional}}) contains <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
           <dt><code>batchSize</code></dt>
-          <dd>The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
+          <dd>{{Integer}} ({{optional}}) The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
           <dt><code>authentication</code></dt>
-          <dd>An <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
+          <dd>{{Object}} ({{optional}}) A <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
           <dt><code>lang</code></dt>
-          <dd>An optional value for the default <a href="#text-processing-language">text-processing language</a> used by this service.</dd>
+          <dd>{{String}} ({{optional}}) value for the default <a href="#text-processing-language">text-processing language</a> used by this service.</dd>
           <dt><code>dir</code></dt>
-          <dd>An optional value for the default <a href="#text-direction">text direction</a> used by this service.</dd>
+          <dd>{{String}} ({{optional}}) value for the default <a href="#text-direction">text direction</a> used by this service.</dd>
           <dt><code>standardizedScore</code></dt>
-          <dd>An optional boolean indicating if the service returns values between 0 and 100 (inclusive) in the <code>score</code> field of <a>reconciliation candidates</a>. This enables clients to process and display candidates accordingly, e.g. with score percentages or visualizations.</dd>
+          <dd>{{Integer}} ({{optional}}) indicating if the service returns values between 0 and 100 (inclusive) in the <code>score</code> field of <a>reconciliation candidates</a>. This enables clients to process and display candidates accordingly, e.g. with score percentages or visualizations.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -504,7 +555,7 @@ database are instances of this type.<dd>
           A <dfn>reconciliation query</dfn> consists of the following fields. 
           <dl>
 	    <dt><code>conditions</code></dt>
-	    <dd>An array of <a>conditions</a> (at least one).</dd>
+	    <dd>{{Array}} An array of <a>conditions</a> (at least one).</dd>
 	    <dt><code>type</code></dt>
             <dd>An optional <a>type</a> identifier. Supplying such a type allows users to restrict
 	    	the search to entities which bear this type. Whether this restriction should be a
