@@ -1,15 +1,1149 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="Refresh" content="0; url='https://reconciliation-api.github.io/specs/1.0-draft/'" />
-		<title>Reconciliation Service API Specifications</title>
-	</head>
-	<!-- Looking for the specs? Each version of the specs is available in
-	     its own subfolder. The current draft is in the "draft" subdirectory. -->
-	<body>
-		<script type="text/javascript">
-		window.location.replace(window.location.href.replace('/draft', '/1.0-draft'));
-		</script>
-	</body>
+  <head>
+    <meta charset='utf-8'>
+    <script src='../libs/respec-w3c.js' async class='remove'></script>
+    <script class='remove'>
+      var respecConfig = {
+        specStatus: "CG-DRAFT",
+        subtitle: "A protocol for data matching on the Web",
+        pluralize: true,
+	doJsonLd: true,
+        group: 'reconciliation',
+        wg: "Entity Reconciliation Community Group",
+        wgPublicList: "public-reconciliation",
+        wgURI: "https://www.w3.org/community/reconciliation/",
+	canonicalURI: "https://reconciliation-api.github.io/specs/1.0-draft/",
+	edDraftURI: "https://reconciliation-api.github.io/specs/1.0-draft/",
+        prevRecURI: "https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/",
+        latestVersion: "https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/",
+	license: "w3c-software-doc",
+        github: {
+           repoURL: "https://github.com/reconciliation-api/specs",
+           branch: "master"
+        },
+        editors: [
+          {
+            name: "Antonin Delpeuch",
+            url: "https://antonin.delpeuch.eu/",
+            orcid: "0000-0002-8612-8827"
+          },
+          {
+            name: "Adrian Pohl",
+            url: "https://lobid.org/team/ap",
+            orcid: "0000-0001-9083-7442",
+            company: "Hochschulbibliothekszentrum NRW",
+            companyURL: "https://www.hbz-nrw.de/"
+          },
+          {
+            name: "Fabian Steeg",
+            url: "http://fsteeg.com",
+            orcid: "0000-0001-8829-1989",
+            company: "Hochschulbibliothekszentrum NRW",
+            companyURL: "https://www.hbz-nrw.de/"
+          },
+          {
+            name: "Thad Guidry Sr.",
+            url: "https://www.linkedin.com/in/thadguidry/",
+            orcid: "0000-0001-7446-501X"
+          },
+          {
+            name: "Osma Suominen",
+            url: "https://fi.linkedin.com/in/osmasuominen",
+            orcid: "0000-0003-0042-0745",
+            company: "National Library of Finland",
+            companyURL: "https://www.kansalliskirjasto.fi/en"
+          },
+          {
+            name: "Gregory Saumier-Finch",
+            url: "https://www.linkedin.com/in/gregorysaumierfinch/",
+            orcid: "0000-0001-5003-7424",
+            company: "Culture Creates",
+            companyURL: "https://culturecreates.com/"
+          },
+          // add yourself here!
+          {
+            name: "Add Yourself Here!"
+          }
+        ],
+        localBiblio: {
+          "beek-2018": {"aliasOf": "doi:10.1007/978-3-319-93417-4_5"},
+          "christen-2012": {"aliasOf": "doi:10.1007/978-3-642-31164-2"},
+          "CSRF": {
+            "title": "Cross-Site Request Forgery",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/CSRF"
+          },
+          "XSS": {
+            "title": "Cross-Site Scripting",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/XSS"
+          },
+          "DoS": {
+            "title": "Denial of Service",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/DoS"
+          },
+          "injection": {
+            "title": "Code injection",
+            "publisher": "English Wikipedia",
+            "href": "https://en.wikipedia.org/wiki/Code_injection"
+          },
+          "accessibility": {
+            "title": "Accessibility",
+            "publisher": "W3C",
+            "href": "https://www.w3.org/standards/webdesign/accessibility"
+          },
+          "BCP 47": {
+            "title": "Tags for Identifying Languages",
+            "publisher": "IETF",
+            "href": "https://www.rfc-editor.org/rfc/bcp/bcp47.txt"
+          },
+          "IANA Language Subtag Registry": {
+            "title": "IANA-maintained registry of language subtags",
+            "publisher": "IANA",
+            "href": "https://www.iana.org/assignments/language-subtag-registry"
+          },
+          "EDTF": {
+            "title": "Extended Date/Time Format Specification (part of ISO 8601:2019)",
+            "publisher": "Library of Congress / International Organization for Standardization",
+            "href": "https://www.loc.gov/standards/datetime/"
+          },
+        }
+      };
+    </script>
+    <title>Reconciliation Service API</title>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+        This document describes the reconciliation service API, a protocol edited by the
+        <a href="https://www.w3.org/community/reconciliation/">W3C Entity Reconciliation Community Group</a>.
+        It is intended as a comprehensive and definitive specification of this API in its given state.
+	Various aspects of this API need to be improved, as hinted by notes throughout this document.
+      </p>
+    </section>
+    <section id='sotd'>
+      <p>
+        Members of the Community Group are encouraged to contribute to this document by
+        documenting the current behaviour of the reconciliation API.
+        The <a href="https://github.com/w3c/respec/wiki/ReSpec-Editor's-Guide">ReSpec Editor's Guide</a>
+        can be used to learn more about the markup to use in this document.
+      </p>
+    </section>
+    <section class="informative">
+      <h2>Introduction</h2>
+      <section>
+        <h3>Data Matching on the Web</h3>
+        <p>
+          Integrating data from sources which do not share common unique identifiers often requires matching (or <emph>reconciling</emph>, <emph>merging</emph>) records which refer to the same entities.
+	  The promises of the Linked Open Data movement, the ability to mix up data from different publishers expressed in a common language (such as <abbr title="Resource Description Framework">RDF</abbr>) rely on being able to identify identities across services.
+	  Due to the Web's decentralized nature, there is nothing preventing a service from publishing a new <abbr title="Universal Resource Identifier">URI</abbr> for a resource or concept which is
+already expressed by another URI.
+        </p>
+	<p>
+	  Various mechanisms exist to state the equivalence between two URIs: for instance, such a correspondence can be stated with the <code>owl:sameAs</code> property [[owl-features]], or using looser notions equivalences defined in <abbr title="Simple Knowledge
+Organization System">SKOS</abbr> [[skos-primer]]. But such statements must in turn be themselves findable.
+          One can aggregate <code>owl:sameAs</code> statements from various sources to infer identities by transitivity, but this is a subtle art as some data sources can erroneously equate different concepts [[beek-2018]].
+          After all, any quest towards building a universal identifier system which avoids duplicates is necessarily doomed.
+          Data publishers use different granularities to model the world. Concepts have fluctuating boundaries across languages, cultures and time.
+        </p>
+        <p>
+          In practice, we can determine if two database records refer to the same entity by comparing their attributes.
+          For instance, two entries about cities bearing the same name, in the same country and with the same mayor are likely to refer to the same city.
+          The reconciliation API that we present here makes it easier to discover such matches.
+          It is a protocol that a data provider can implement, enabling its consumers to efficiently match their own data to the entities represented by the provider.
+        </p>
+        <p>
+          By nature, reconciliation is a heuristic process. Different entities can have many identical characteristics, leading to false positives.
+          The same entity can be represented in different ways by two databases, for instance by spelling names differently, leading to false negatives.
+          This problem has been extensively studied and many heuristics have been proposed to tackle it [[christen-2012]].
+	  The reconciliation API is agnostic about the particulars of the heuristics involved: it lets data providers choose how
+	  they want to determine which of their entities are good candidates for a particular query. What it provides
+	  is a web API to let users obtain these candidate entities without having to implement the underlying reconciliation heuristics
+	  themselves, nor download the entire contents of the target database.
+        </p>
+      </section>
+      <section>
+        <h3>History of the Reconciliation API</h3>
+        <p>
+          This API was originally designed by Metaweb as a protocol used between Freebase and Gridworks (now known as OpenRefine).
+	  Freebase was a free crowdsourced knowledge graph, storing data about a broad range of topics and exposed on the web as linked data.
+	  OpenRefine is tool which was originally designed to help populate this knowledge graph by importing data into it.
+	  It supports a range of operations which help the user reshape their data to prepare it for ingestion in a data model such as Freebase's.
+	  One of these operations is <emph>reconciliation</emph>, which matches mentions of entities in the local dataset to records in the target database. The reconciliation API was initially introduced to specify how OpenRefine and Freebase could communicate during that process. 
+        </p>
+	<p>
+	  The reconciliation API was then turned into a generic protocol that any database could implement.
+	  This made it possible to register such a database into OpenRefine by adding it as a <emph>Standard Service</emph>.
+	  This API was implemented by various services, either directly by the service provider itself (for instance the <a href="https://www.crossref.org/labs/fundref-reconciliation-service/">Crossref funder database</a>,
+	  <a href="http://numishare.blogspot.com/2017/10/nomisma-launches-openrefine.html">Nomisma</a> or the <a href="http://www.getty.edu/research/tools/vocabularies/obtain/openrefine.html">Getty thesaurus</a>) or by a third party as a wrapper sitting on top of other existing web APIs for the service
+	  (such as <a href="https://tools.wmflabs.org/openrefine-wikidata/">Wikidata</a> or <a href="http://refine.codefork.com/">VIAF</a>).
+	  Software was also developed to expose a reconciliation endpoint out of any tabular file (<a href="http://www.okfnlabs.org/reconcile-csv/">reconcile-csv</a>) or by wrapping a SPARQL endpoint (in the <a
+href="https://github.com/stkenny/grefine-rdf-extension">OpenRefine RDF extension</a>).
+	</p>
+	<p>
+	This API was documented on OpenRefine's wiki as <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-API">a living document</a> which evolved gradually, as OpenRefine improved.
+	  In addition to its core feature, fetching reconciliation candidates matching a given query, services are optionally able
+	  to implement additional endpoints which ease the integration of the service in OpenRefine's UI, by providing previews
+	  for entities (with a Preview Service) and auto-completion for various inputs (with Suggest Services).
+	  In 2018, a Data Extension Service was added, letting consumers pull data from the target database once they have reconciled
+	  their records.
+        </p>
+        <p>
+          In 2019 the <a href="https://w3c.org/community/reconciliation">W3C Entity Reconciliation Community Group</a> was formed,
+	  with the intention of promoting and improving this API outside the strict scope of the OpenRefine project.
+	  This document is an attempt to better specify this API.
+	</p>
+      </section>
+      <section>
+        <h3>External Resources</h3>
+        <p>
+          A <a href="https://reconciliation-api.github.io/testbench/">list of known public endpoints</a> is maintained by the community, where they can also be tried out interactively. OpenRefine's wiki also hosts a <a
+href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">list of reconciliable data source</a> which also includes non-hosted or discontinued services.
+	  Existing clients to the API, such as <a href="http://openrefine.org">OpenRefine</a> or <a href="https://coli-conc.gbv.de/cocoda/">Cocoda</a> can be used to interact with reconciliation services.
+        </p>
+      </section>
+      <section>
+        <h3>Versions</h3>
+        <p>
+          This section summarizes the differences between successive versions of the API.
+        </p>
+        <section>
+          <h4><a href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.1-20230321/">0.1</a></h4>
+          <p>Initial documentation of the reconciliation API as supported by OpenRefine 3.0 to 3.2.</p>
+        </section>
+        <section>
+          <h4><a href="https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/">0.2</a></h4>
+          <p>Initial improvements to the specifications made by our Community Group. Most of them are backwards-compatible, except for the requirement to support CORS for cross-origin access.</p>
+          <ul>
+            <li>Let manifests announce which versions of the protocol are supported by the service</li>
+            <li>Make CORS support mandatory and JSONP support optional</li>
+            <li>Add support for exposing type hierarchies</li>
+            <li>Improve definition of schema space</li>
+            <li>Establish the connection between properties in reconciliation queries and in data extension queries</li>
+            <li>Make 'query' field of reconciliation queries optional</li>
+            <li>Add support for returning matching features in reconciliation candidates</li>
+            <li>Add support for authentication</li>
+            <li>Add support for referencing other reconciliation services in reconciled values returned by data extension</li>
+            <li>Add support for specifying the size of expected reconciliation batch sizes</li>
+          </ul>
+        </section>
+        <section>
+          <h4>This draft: 1.0-draft</h4>
+          <p>Collection of changes which make the API conform to the REST principles and follow the W3C's guidelines around accessibility, localization and security.</p>
+          <ul>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/85">Have all URI templates follow the RFC6570 syntax</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/89">Add <code>documentation</code>, <code>serviceVersion</code> and <code>logo</code> fields to the manifest</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/91">Remove configurability of the endpoints of various sub-services, determine them by the root reconciliation endpoint instead</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/92">Change the format of reconciliation queries, responses and data extension responses</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/99">Add a section on security and privacy considerations</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/103">Add a section on accessibility</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/115">Restrict reconciliation queries to only support passing a single <code>type</code> and remove the <code>type_strict</code> parameter</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/124">Specify the behaviour of suggest services when an empty prefix is passed</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/131">Add matching settings that can be offered by reconciliation services to configure how property values are compared</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/133">Make the <code>score</code> field of reconciliation optional</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/136">Improve support for content language and text direction following the W3C's checklist</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/140">Remove <code>identifierSpace</code> and <code>schemaSpace</code> and make view templates mandatory</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/142">Remove support for JSONP</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/156">Add optional <code>standardizedScore</code> field to the manifest</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/166">Unify naming to camelCase convention</a></li>
+          </ul>
+        </section>
+      </section>
+      <section id="conformance"></section>
+    </section>
+    <section>
+      <h2>Core Concepts</h2>
+      <p>
+        This section documents the data model behind the reconciliation API.
+        A reconciliation service lets users match their data against <a>entities</a>
+        exposed by the service. Matching can be refined by filtering by <a>type</a>
+        or <a>properties</a> with <a>property values</a>.
+        The purpose of this section is to define these notions.
+      </p>
+      <section>
+        <h3 data-link-for="entities">Entities</h3>
+        <p>
+           An <dfn>entity</dfn> is a record in the data source exposed by the service.
+           It comprises the following fields:
+           <dl>
+	     <dt><code>id</code></dt>
+             <dd>an identifier, which is a non-empty string. This identifier must be unique among all entities;</dd>
+             <dt><code>name</code></dt>
+             <dd>a <emph>name</emph>, which is also a non-empty string;</dd>
+             <dt><code>description</code></dt>
+             <dd>an optional <emph>description</emph> as a human-readable string;</dd>
+             <dt><code>type</code></dt>
+             <dd>an array of <a>types</a>, possibly empty;</dd>
+           </dl>
+           Moreover, for each <a>property</a> the entity contains a set of associated <a>property values</a>, possibly empty.
+        </p>
+        <p>
+           Reconciliation services MUST define in their <a>service manifest</a> a <dfn>URI template</dfn> for entities,
+           as defined by [[RFC6570]]. This URI template builds a view URI for each entity, and has <code>id</code> as only variable.
+           For each entity, expanding the template with <code>id</code> being set to the entity's identifier
+           MUST result in a valid URI.
+        </p>
+        <p>
+           For example, a service which uses Wikidata identifiers for its entities could use <code>http://www.wikidata.org/entity/{id}</code>
+           as URI template for entities. For an entity with identifier <code>Q5</code>, this would expand to <code>http://www.wikidata.org/entity/Q5</code>.
+           Services for which the entity's identifier is already a full URI can use the <code>{+id}</code> template, which disables the escaping of some characters
+           when inserting the identifier in the template.
+           See [[RFC6570]] for more examples of URI templates.   
+        </p>
+        <p>
+           Similarly, it is possible to associate to each <a>matching feature</a> a URL where documentation about
+           the feature is provided, by means of a URI template. Inserting any feature identifier in this template
+           generates the URL for the feature.
+        </p>
+      </section>
+      <section>
+        <h3 data-link-for="types">Types</h3>
+        <p>
+          A <dfn>type</dfn> represents a category of <a>entities</a>.
+          It comprises the following fields:
+          <dl>
+             <dt><code>id</code></dt>
+             <dd>an identifier, which is a non-empty string. This identifier must be unique among all types;</dd>
+             <dt><code>name</code></dt>
+             <dd>a human-readable name, which is a non-empty string;</dd>
+             <dt><code>broader</code></dt>
+             <dd>an optional array of <a>types</a>, each representing a direct (i.e., immediate) <a href="https://www.w3.org/TR/skos-reference/#semantic-relations">broader</a> [[skos-reference]] category of <a>entities</a>.</dd>
+          </dl>
+        </p>
+      </section>
+      <section>
+        <h3 data-link-for="properties">Properties</h3>
+        <p>
+          A <dfn>property</dfn> represents a type of attribute that entities can have in the data source.
+          It comprises the following fields:
+          <dl>
+	    <dt><code>id</code></dt>
+            <dd>an identifier, which is a non-empty string. This identifier must be unique among all properties;</dd>
+	    <dt><code>name</code></dt>
+            <dd>a human-readable name, which is a non-empty string.</dd>
+          </dl>
+        </p>
+      </section>
+      <section>
+        <h3 data-link-for="property values">Property Values</h3>
+        <p>
+          A <dfn>property value</dfn> can be any of the following:
+          <ul>
+             <li>A string;</li>
+             <li>A boolean;</li>
+             <li>An integer;</li>
+             <li>A floating-point value;</li>
+             <li>An <a>entity</a>.</li>
+          </ul>
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Service Definition</h2>
+      <p>
+        This section documents how reconciliation services are exposed as HTTP(S) services and
+        how they can announce the features of the API they implement.
+      </p>
+      <p>
+        The <dfn>endpoint</dfn> of a reconciliation service is a URL from which the reconciliation
+        service is offered.
+      </p>
+      <section>
+        <h3>Service Manifest</h3>
+        <p>
+           When the reconciliation service <a>endpoint</a> is queried with a HTTP GET query without
+           parameters, the <a>service manifest</a> MUST be returned.
+        </p>
+      <p>
+        A <dfn>service manifest</dfn> consists of the following fields:
+        <dl>
+          <dt><code>versions</code></dt>
+          <dd>The array of API versions supported by the endpoint, such as <code>["0.1", "0.2", "1.0-draft"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1. A service implementing the current draft should include <code>1.0-draft</code> in the array.</dd>
+          <dt><code>name</code></dt>
+          <dd>A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
+will help disambiguating it from others;</dd>
+          <dt><code>defaultTypes</code></dt>
+          <dd>An array of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
+database are instances of this type.<dd>
+          <dt><code>documentation</code></dt>
+          <dd>An optional URL with human-readable documentation about the service, for instance giving more information about the data it exposes;</dd>
+          <dt><code>logo</code></dt>
+          <dd>An optional URL of a square image which can be used as the service's logo;</dd>
+          <dt><code>serviceVersion</code></dt>
+          <dd>An optional string which describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
+          <dt><code>view</code></dt>
+          <dd>An object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
+          <dt><code>featureView</code></dt>
+          <dd>An optional object which contains a single field <code>url</code>. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
+          <dt><code>preview</code></dt>
+          <dd>A <a>preview metadata</a> object, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
+          <dt><code>suggest</code></dt>
+          <dd>An optional object which may contain the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
+            <dl>
+              <dt><code>entity</code></dt>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>entities</a>;</dd>
+              <dt><code>property</code></dt>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>properties</a>;</dd>
+              <dt><code>type</code></dt>
+              <dd>A boolean indicating if the service supports auto-suggestion of <a>types</a>;</dd>
+            </dl>
+          </dd>
+          <dt><code>extend</code></dt>
+          <dd>A <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
+          <dt><code>batchSize</code></dt>
+          <dd>The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
+          <dt><code>authentication</code></dt>
+          <dd>An <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
+          <dt><code>lang</code></dt>
+          <dd>An optional value for the default <a href="#text-processing-language">text-processing language</a> used by this service.</dd>
+          <dt><code>dir</code></dt>
+          <dd>An optional value for the default <a href="#text-direction">text direction</a> used by this service.</dd>
+          <dt><code>standardizedScore</code></dt>
+          <dd>An optional boolean indicating if the service returns values between 0 and 100 (inclusive) in the <code>score</code> field of <a>reconciliation candidates</a>. This enables clients to process and display candidates accordingly, e.g. with score percentages or visualizations.</dd>
+        </dl>
+      </p>
+      <p>For instance, a service could expose the following minimal service manifest:
+        <pre data-include="examples/manifest/valid/example-min.json" class="example json"></pre>
+      </p>
+      <p>
+        A more complete example, with some optional services implemented:
+        <pre data-include="examples/manifest/valid/getty.json" class="example json"></pre>
+      </p>
+      </section>
+      <section>
+        <h3>Overview of Possible Routes</h3>
+        <p>
+          We give here an overview of the routes that reconciliation services MUST and MAY implement. They are all relative to the root <a>endpoint</a>, which we assume here to be <code>/</code>.
+        </p>
+        <p>
+        <dl>
+           <dt><code>/</code></dt>
+           <dd>The root endpoint, which supports the GET method and returns the service manifest. Services MUST support this route;</dd>
+           <dt><code>/match</code></dt>
+           <dd>The route used to submit <a>reconciliation query batches</a>, with the POST method. Services MUST support this route;</dd>
+           <dt><code>/suggest/entity</code></dt>
+           <dd>The route used for auto-completion of entities, with the GET method. Services MAY support this route, as indicated  in their manifest;</dd>
+           <dt><code>/suggest/property</code></dt>
+           <dd>The route used for auto-completion of properties, with the GET method. Services MAY support this route, as indicated in their manifest;</dd>
+           <dt><code>/suggest/type</code></dt>
+           <dd>The route used for auto-completion of types, with the GET method. Services MAY support this route, as indicated in their manifest;</dd>
+           <dt><code>/preview</code></dt>
+           <dd>The route used to preview an entity, with the GET method. Services MAY support this route, depending on the presence of a <a>preview metadata</a> object in their manifest;</dd>
+           <dt><code>/extend</code></dt>
+           <dd>The route used to submit <a>data extension queries</a>, with the POST method. Services MAY support this route, depending on the presence of a <a>data extension metadata</a> object in their manifest;</dd>
+           <dt><code>/extend/propose</code></dt>
+           <dd>The route used to obtain <a>data extension property proposals</a>, with the GET method. Services MAY support this route, following what their <a>data extension metadata</a> object in their manifest indicates.</dd>
+        </dl>
+       </p>
+      </section>
+      <section>
+        <h3>HTTP(S) Access</h3>
+	<p>
+	   In the interest of protecting the data sent as reconciliation queries, all endpoints of reconciliation
+	   services SHOULD be available over HTTPS [[RFC7230]] [[SECURING-WEB]]. This does not apply to locally hosted services.
+	</p>
+      </section>
+      <section>
+        <h3>Cross-Origin Access</h3>
+        <p>
+           All HTTP(S) endpoints exposed by the service MUST enable access by CORS [[cors]] to enable
+           web-based clients to access the service from a different domain without exposing themselves to
+           untrusted third-party code.
+        </p>
+        <p class="note">
+           Some clients might only require cross-origin access on some particular endpoints,
+	   which are called directly by a web UI.
+	   Since this depends on the architecture of the client, this cannot be relied upon
+	   and cross-origin access MUST be implemented for all endpoints in a uniform way.
+        </p>
+      </section>
+      <section>
+        <h3>Error Handling and Rate-limiting</h3>
+        <p>
+           Services SHOULD use the broad spectrum of HTTP status codes [[RFC2616]] [[RFC6585]] to
+           expose errors, for instance due to malformed or too frequent queries.
+        </p>
+        <p class="note">
+           The response body of such error responses is not specified so far.
+        </p>
+      </section>
+      
+        <h3>Authentication</h3>
+        <p>
+           Services MAY request users to provide an authentication token when making queries.
+           They can do so by adding a <dfn>security scheme</dfn> to their manifest. Security schemes are defined in [[OPENAPIS]] and
+           support authentication by API key, HTTP Authentication [[RFC7617]], OAuth 2 [[RFC6749]] and <a href="https://tools.ietf.org/html/draft-ietf-oauth-discovery-06">OpenID Connect</a>.
+        </p>
+        <p>
+           For instance, the following security scheme indicates that basic HTTP authentication is required on this endpoint:
+           <pre data-include="examples/security-scheme/valid/http_basic_auth.json" class="example json"></pre>
+        </p>
+        <p>
+           Requiring an API key passed as a query parameter can be expressed as follows:
+           <pre data-include="examples/security-scheme/valid/api_key.json" class="example json"></pre>
+        </p>
+        <p>
+           If a security scheme is provided in the service manifest, all queries to the service MUST provide
+           the corresponding credentials, except for retrieving the service manifest itself.
+           When invalid authentication is supplied in any HTTP request, the service MUST return an HTTP 401 error.
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Match Service</h2>
+      <p>
+        This section specifies how clients can send reconciliation queries to the match service and
+        how the match service responds to them.
+      </p>
+      <section>
+        <h3>Structure of a Reconciliation Query</h3>
+        <p>
+          A <dfn>reconciliation query</dfn> consists of the following fields. 
+          <dl>
+	    <dt><code>conditions</code></dt>
+	    <dd>An array of <a>conditions</a> (at least one).</dd>
+	    <dt><code>type</code></dt>
+            <dd>An optional <a>type</a> identifier. Supplying such a type allows users to restrict
+	    	the search to entities which bear this type. Whether this restriction should be a
+	    	hard constraint or simply induce a change on the reconciliation scores can be
+	    	determined by the service. In particular, services MAY return candidates which
+	    	do not belong to the supplied type;</dd>
+	    <dt><code>limit</code></dt>
+            <dd>An optional limit on the number of candidates to return, which must be a positive integer;</dd>
+          </dl>
+        </p>
+        <p>
+          A <dfn>condition</dfn> specifies a constraint that should be matched by the entities to return.
+                It is used to filter the set of candidates (similar to a WHERE clause in SQL),
+		by allowing clients to specify an attribute of entities that should match. It consists of:
+         <dl>
+            <dt><code>matchType</code></dt>
+            <dd>Either <code>name</code> or <code>property</code>, depending on whether the condition relates to entity names or their properties.</dd>
+            <dt><code>pid</code></dt>
+            <dd>A <a href='#properties'>property</a> identifier, to be provided if and only if the <code>matchType</code> is <code>property</code>.</dd>
+            <dt><code>v</code></dt>
+            <dd>one or more <a>property values</a>. If <code>matchType</code> is <code>name</code>, then this value is to
+                be matched to entity names, otherwise to the property values via the supplied <code>pid</code>. The specifics of how this similarity
+                is defined are determined by the service.</dd> 
+            <dt><code>required</code></dt>
+            <dd>An optional boolean indicating if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)
+              or optional (i.e. only effecting the entity's rank in the list of candidates). If omitted, the service SHOULD assume the requested value to be <code>false</code>;</dd>
+            <dt><code>matchQuantifier</code></dt>
+            <dd>An optional string to indicate which of the values in <code>v</code> to match. MUST be <code>any</code> (equivalent to boolean OR), <code>all</code> (equivalent to boolean AND), or <code>none</code> (equivalent to boolean NOT). If omitted, the service SHOULD assume the requested value to be <code>any</code>;</dd>
+            <dt><code>matchQualifier</code></dt>
+            <dd>An optional string to indicate how to match the values in <code>v</code>.
+              This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
+              (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
+              To allow discovery of supported qualifiers by clients, services that support <code>matchQualifier</code> MUST return the supported <code>matchQualifiers</code> for each property
+              in their property <a href='#suggest-responses'>suggest responses</a>. If omitted, the matching behavior is up to the service.</p></dd>
+         </dl>
+        
+	    A reconciliation service that supports property assignments SHOULD provide a <a>suggest service</a> for discovering these properties.
+        </p>
+        <p>
+          A <dfn>reconciliation query batch</dfn> is an array of <a>reconciliation queries</a>.
+        </p>
+        <p>
+          Minimal example of a <a>reconciliation query batch</a> with mandatory fields only:
+          <pre data-include="examples/reconciliation-query-batch/valid/example-min.json" class="example json"></pre>
+        </p>
+        <p>
+          Full example of a <a>reconciliation query batch</a> with all optional fields:
+          <pre data-include="examples/reconciliation-query-batch/valid/example-full.json" class="example json"></pre>
+        </p>
+	<p>
+	  For a single property it is possible to provide multiple values as an array. The values provided do not need
+	  to have the same type. In the following example a string and a reconciled value are provided as values for the
+	  same property.
+	  <pre data-include="examples/reconciliation-query-batch/valid/multi-values.json" class="example json"></pre>
+	</p>
+        <p>
+          A <a href="#reconciliation-query-batch-json-schema">JSON schema to validate the serialization of a query batch</a> is available.
+        </p>
+      </section>
+      <section>
+        <h3>Reconciliation Query Responses</h3>
+        <p>
+	  A <dfn>reconciliation candidate</dfn> represents an <a>entity</a> as a response to a <a>reconciliation query</a>.
+	  It is proposed to the client as a potential matching entity for this query. It contains the following fields:
+          <dl>
+	    <dt><code>id</code></dt>
+	    <dd>The identifier of the candidate entity;</dd>
+	    <dt><code>name</code></dt>
+	    <dd>The name of the candidate entity;</dd>
+	    <dt><code>description</code></dt>
+	    <dd>The entity description MAY optionally be included;</dd>
+	    <dt><code>type</code></dt>
+	    <dd>The types of the candidate entity;</dd>
+	    <dt><code>score</code></dt>
+	    <dd>An optional numeral indicating how well this candidate entity matches the query: a higher score indicates a better match. If candidates are scored, the reconciliation service SHOULD sort candidates in decreasing score order. If <code>standardizedScore</code> is set to <code>true</code> in the <a>service manifest</a>, this value MUST be between 0 and 100 (inclusive);</dt>
+            <dt><code>features</code></dt>
+            <dd>An optional array of <a>matching features</a>;</dd>
+	    <dt><code>match</code></dt>
+            <dd>A boolean matching decision, which indicates whether the service considers this candidate good enough to be chosen as a correct match.</dd>
+          </dl>
+        </p>
+        <p>
+          To propose multi-lingual candidates to the client, the reconciliation service MAY return multiple candidates with identical <code>id</code>, but different names, <a href="#text-processing-language">text processing languages</a> or <a href="#text-direction">text directions</a>.
+          The client MAY render these candidates as a single entity, but SHOULD include details from all candidates, so users can comprehend why the entity is being proposed.
+        </p>
+        <p>
+          A <dfn>matching feature</dfn> is a numerical or boolean value which can be used to determine how likely it is for the candidate to be the correct entity. It contains the following fields:
+          <dl>
+            <dt><code>id</code></dt>
+            <dd>A string which identifies the feature, such as <code>"name_tfidf"</code> or <code>"pagerank"</code>. This id must be unique among all the matching features returned for a given candidate;</dd>
+            <dt><code>name</code></dt>
+            <dd>A human-readable name, which is a non-empty string.</dd>
+            <dt><code>value</code></dt>
+            <dd>The value of the feature for the candidate, which can be any boolean or numerical value.</dd>
+          </dl>
+         Multiple matching features are often used in combination to provide the final matching score (available
+in the <code>score</code> field). By exposing individual features in their responses, services make it possible for clients
+         to compute matching scores which fit their use cases better.
+        </p>
+        <p>
+          Example of a <a>reconciliation candidate</a> with all possible fields:
+          <pre data-include="examples/reconciliation-candidate/valid/example.json" class="example json"></pre>
+        </p>
+        <p>
+	  A <dfn>reconciliation result</dfn> is a set of <a>reconciliation candidates</a>. It is serialized in JSON
+	  as an object containing in the field <code>candidates</code> an array of such reconciliation candidate objects.
+        </p>
+        <p>
+          A <dfn>reconciliation result batch</dfn> is an array of <a>reconciliation results</a> given in the same order as in the corresponding <a>reconciliation query batch</a>.
+          When serialized in JSON, it is wrapped in an object under the <code>results</code> field.
+        </p>
+        <p>
+          Full example of a <a>reconciliation result batch</a>:
+          <pre data-include="examples/reconciliation-result-batch/valid/example-full.json" class="example json"></pre>
+        </p>
+        <p>
+          A <a href="#reconciliation-result-batch-json-schema">JSON schema to validate the serialization of a reconciliation result batch</a> is available.
+        </p>
+      </section>
+      <section>
+        <h3>Sending Reconciliation Queries to the Match Service</h3>
+        <p>
+	  The match service translates <a>reconciliation query batches</a> to
+	  <a>reconciliation result batches</a> over HTTP.
+	</p>
+	<p>
+          The match service MUST support HTTP POST requests at the route <code>/match</code> (relative to its <a>endpoint</a>) with
+          <code>application/json</code> bodies containing a
+          <a>reconciliation query batch</a>.
+        </p>
+        <p>
+          <pre class="example nohighlight">POST /match &lt;reconciliation query batch&gt;</pre>
+        </p>
+	<p>
+	   The match service returns the corresponding query batch serialized in JSON.
+	</p>
+      </section>
+      <section class="informative">
+	<h3>A Note on Candidate Retrieval and Scoring</h3>
+	<p>
+	  The way candidates are retrieved from the underlying database and scored against the query is left
+	  entirely at the discretion of the service.
+	  However services should retrieve and score the candidates of each query in a batch independently
+	  of the other queries in the same batch, or in previous ones.
+          It is also expected that reconciliation queries where <code>query</code> matches exactly the name
+          of an entity in the database and with no other constraint should return at least this entity, unless
+          it is hidden by many namesakes. Similarly, supplying an entity identifier as <code>query</code>
+          should return the corresponding entity as a candidate, with a high score.
+	</p>
+	<p>
+	  Deciding on a scoring method is one of the main difficulties in developing a reconciliation service.
+          Depending on the use case, we might not want a score at all: in cases like geo containment (a place should be inside a specific area) or date ranges (a point in time should be inside a specific time range) the score is irrelevant, as candidates are either in or out. Thus the score attribute is optional.
+          Services are encouraged to expose as many <a>matching features</a> as they deem useful, in particular
+          features which require knowledge of global statistics on the database or other attributes. Examples include:
+          <dl>
+            <dt>Name matching</dt>
+            <dd>Similarity metrics to compare the entity name and the query;</dd>
+            <dt>Entity popularity</dt>
+            <dd>Metrics which predict how likely an entity is likely to be refered to, regardless of the query supplied;</dd>
+            <dt>Comparison of attributes to query properties</dt>
+            <dd>Obtained using similarity metrics to compare the supplied properties and measure their discriminative power;</dd>
+            <dt>Type matching</dt>
+            <dd>To quantify how well any type supplied in the query corresponds to the candidate's types.</dd>
+          </dl>
+	  By exposing such features, services make it possible for clients to use a wide range of data matching strategies [[christen-2012]]. This also makes the global candidate scores less opaque.
+	</p>
+	<p class="note">
+	  Many open source reconciliation services are available and these might provide some inspiration
+	  concerning indexing and scoring methods when developing new services.
+	  See <a href="#external-resources">External Resources</a> for some examples.
+	</p>
+      </section>
+    </section>
+    <section>
+      <h2>Preview Service</h2>
+      <p>
+        This section specifies how reconciliation services can provide embeddable HTML previews
+        of their entities, which clients can display in their user interface.
+      </p>
+      <section>
+      <h3>Preview Metadata</h3>
+      <p>Reconciliation services MAY offer a preview service by providing the <dfn>preview metadata</dfn> as an object stored in the <a>service manifest</a> under the key <code>preview</code>. It consists of the following fields, all mandatory:
+        <dl>
+          <dt><code>width</code></dt>
+          <dd>The width in pixels of the viewport where to render an entity preview;</dd>
+          <dt><code>height</code></dt>
+          <dd>The height in pixels of the same viewport.</dd>
+        </dl>
+      </p>
+      <p>
+        For instance, a service may expose the following <a>preview metadata</a>:
+        <pre data-include="examples/preview-metadata/valid/example.json" class="example json"></pre>
+      </p>
+      </section>
+      <section>
+      <h3>Preview Queries</h3>
+      <p>A preview service is queried by resolving the URI template <code>/preview?id={id}</code> relative to the reconciliation endpoint, where <code>id</code> is subsituted by the <a>entity</a> identifier. The URL must resolve to an HTML document,
+        which MUST be viewable in an HTML viewport whose dimensions are determined by the <a>preview metadata</a>.
+      </p>
+      <p>
+        For instance, assuming that the reconciliation API is running at <code>/api</code> and serves the example preview metadata above, the service could respond to a preview request as follows:
+       <pre data-include="examples/preview-response/example.html" data-include-format="text" class="example html">
+       </pre>
+      </p>
+      </section>
+    </section>
+    <section>
+      <h2>Suggest Services</h2>
+      <p>
+        This section specifies how reconciliation services can provide auto-complete
+        endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
+        A reconciliation service can offer a <dfn>suggest service</dfn> for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
+        These suggest services can be used by clients to let users select an entity, property or type manually, at various stages of their reconciliation workflows.
+        Suggest services for entities, properties and types are declared independently
+        in the <a>service manifest</a>.
+      </p>
+      <section>
+      <h3>Suggest Endpoints</h3>
+      <p>
+        When supported, the suggest endpoints are located at the following URIs, relative to the service's root <a>endpoint</a>:
+        <dl>
+          <dt><code>/suggest/entity</code></dt>
+          <dt><code>/suggest/property</code></dt>
+          <dt><code>/suggest/type</code></dt>
+        </dl>
+      </p>
+      </section>
+      <section>
+      <h3>Suggest Queries</h3>
+        <p>A suggest service MUST accept GET queries with the following URL-encoded parameters:
+          <dl>
+            <dt><code>prefix</code></dt>
+            <dd>The string input by the user in the auto-suggest-enabled field;
+              depending on the data users are working with, they might want to select a suggestion from all available <a>types</a>, <a>properties</a>, or even <a>entities</a>;
+              to allow that, services MAY send all suggestions if the prefix is empty, and clients SHOULD provide a way to send the empty prefix;</dd>
+            <dt><code>cursor</code></dt>
+            <dd>An optional integer to specify the number of suggestions to skip: this can be used by clients to fetch more suggestions.</dd>
+          </dl>
+        </p>
+      </section>
+      <section id="suggest-responses">
+        <h3>Suggest Responses</h3>
+        <p>
+          A response to a suggest query consists of the following fields:
+          <dl>
+            <dt><code>result</code></dt>
+            <dd>An array of items, which can be <a>entities</a>, <a>properties</a>
+            or <a>types</a> depending on which of these the service
+            is provided for. Each such object can contain the following fields:
+            <dl>
+              <dt><code>id</code></dt>
+              <dd>The identifier of the entity, property or type suggested;</dd>
+              <dt><code>name</code></dt>
+              <dd>Its corresponding human-readable name, to be displayed prominently to the user;</dd>
+              <dt><code>description</code></dt>
+              <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>;</dd>
+	      <dt><code>notable</code></dt>
+	      <dd>When suggesting entities only, this field can be used to supply some important types (not necessarily all types) of the suggested entity. The value must be an array of either type identifiers (as strings) or type objects, containing an <code>id</code> and <code>name</code> field which represent the type.</dd>
+              <dt><code>matchQualifiers</code></dt>
+              <dd>When suggesting properties only, an optional array of objects, each containing an <code>id</code> and <code>name</code> field, which represent the property's <code>matchQualifiers</code> supported in <a>reconciliation queries</a>.</dd>
+            </dl>
+            </dd>
+          </dl>
+        </p>
+	<p class="note">
+          The key <code>notable</code> comes from a notion of <em>notable types</em> that existed in Freebase.
+	</p>
+        <p>
+          For instance, a suggest service for <a>entities</a> could return the following response:
+          <pre data-include="examples/suggest-entities-response/valid/example.json" class="example json"></pre>
+        </p>
+        <p>
+          A suggest service for <a>properties</a> could return the following response:
+          <pre data-include="examples/suggest-properties-response/valid/example.json" class="example json"></pre>
+        </p>
+        <p>
+          And a  suggest service for <a>types</a> could return the following response:
+          <pre data-include="examples/suggest-types-response/valid/example.json" class="example json"></pre>
+        </p>
+	<p>
+	  JSON schemas to validate suggest responses are available <a href="#suggest-entities-response-json-schema">for entities</a>, <a href="#suggest-properties-response-json-schema">for properties</a> and <a href="#suggest-types-response-json-schema">for types</a>.
+	</p>
+      </section>
+      <section class="informative">
+        <h3>General Expectations about Suggest Services</h3>
+        <p>
+          It is generally expected by users that an entity suggest query where <code>prefix</code> is the name of an entity should return this entity in the suggest response, unless that entity is hidden behind many other namesakes.
+          Similarly, supplying an entity identifier as <code>prefix</code> should return this entity in the suggest response. 
+          Analogous expectations apply for property and type suggest services.
+        </p>
+        <p>
+          As the <code>prefix</code> name suggests, suggest services are expected to perform prefix search on their database of records, such that a suggest service can be used to provide auto-completion as users type names or identifiers in a field.
+        </p>
+      </section>      
+    </section>
+    <section>
+      <h2>Data Extension Service</h2>
+      <p>
+        This section specifies how reconciliation services can let clients fetch the values
+        of some <a>properties</a> on a selection of <a>entities</a>.
+      </p>
+      <p>
+        A data extension service MUST support <a>data extension query requests</a>.
+      </p>
+      <p>
+        A data extension service SHOULD provide <a>data extension property proposals</a>.
+      </p>
+      <p>
+        A data extension service MAY support <a>data extension property settings</a>.
+      </p>
+      <section>
+        <h3>Data Extension Metadata</h3>
+        <p>
+          The <dfn>data extension metadata</dfn> is an object stored in the <a>service manifest</a> in the <code>extend</code> field. It consists of the following settings, all optional:
+          <dl>
+            <dt><code>proposeProperties</code></dt>
+            <dd>A boolean indicating if the service supports <a>data extension property proposal</a>;</dd>
+            <dt><code>propertySettings</code></dt>
+            <dd>An array of <a>data extension property settings</a>.</dd>
+          </dl>
+        </p>
+        <p>
+          A <dfn>data extension property setting</dfn> consists of:
+          <dl>
+	    <dt><code>id</code></dt>
+            <dd>A unique identifier for the setting;</dd>
+            <dt><code>name</code></dt>
+	    <dd>A human-readable name, which is used when presenting the setting to the user in a form;</dd>
+	    <dt><code>type</code></dt>
+            <dd>A data type, which can be one of the strings <code>"number"</code>, <code>"text"</code>, <code>"checkbox"</code>, or <code>"select"</code>. This determines which type of value the property setting is expected to store: clients SHOULD render this setting with the corresponding HTML element;</li>
+	    <dt><code>default</code></dt>
+	    <dd>A default value for the setting, when not provided or left untouched by the user;</dd>
+	    <dt><code>helpText</code></dt>
+            <dd>A help text, which describes the meaning of the field to the user. This is meant to be a short string that can be displayed alongside the corresponding form field;</dd>
+	    <dt><code>choices</code></dt>
+            <dd>If <code>type</code> is <code>select</code>, an array of property setting choices.</dd>
+          </dl>
+        </p>
+        <p>
+          Example of <a>data extension metadata</a> with all optional fields:
+          <pre data-include="examples/data-extension-metadata/valid/example-full.json" class="example json"></pre>
+        </p>
+      </section>
+      <section>
+        <h3>Data Extension Property Proposals</h3>
+        <p>
+          A <dfn>data extension property proposal</dfn> service returns <a>properties</a> for a given <a>type</a> identifier.
+        </p>
+        <p>
+          If the reconciliation service supports data extension property proposals, it MUST support HTTP GET requests to the endpoint <code>/extend/propose</code> (relative to the reconciliation endpoint) with a <code>type</code> query parameter
+containing a type identifier.
+        </p>
+        <p>
+          The service SHOULD support an optional <code>limit</code> query parameter to control the number of proposed properties.
+        </p>
+        <p>
+          <pre class="example nohighlight">GET /extend/propose?type=&lt;type identifier&gt;[&amp;limit=&lt;limit&gt;]</pre>
+        </p>
+        <p>
+          A <dfn>data extension property proposal response</dfn> consists of:
+          <dl>
+            <dt><code>properties</code></dt>
+            <dd>An array of proposed <a>properties</a>. These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query;</dd>
+            <dt><code>type</code></dt>
+            <dd>The <a>type</a> identifier supplied in the query;</dd>
+            <dt><code>limit</code></dt>
+            <dd>Optionally, an integer to indicate the requested limit;</dd>
+          </dl>
+        </p>
+        <p>
+          Example of a <a>data extension property proposal</a> response:
+          <pre data-include="examples/data-extension-property-proposal/valid/response.json" class="example json"></pre>
+        </p>
+      </section>
+      <section>
+        <h3>Data Extension Query Requests</h3>
+        <p>
+         A <dfn>data extension query request</dfn> lets clients fetch the values
+         of some <a>properties</a> on a selection of <a>entities</a>.
+        </p>
+        <p>
+          The fact that a reconciliation service offers data extension MUST be announced by including a <a>data extension metadata</a> in the <code>extend</code> field of the <a>service manifest</a>.
+        <p>
+          A data extension service MUST support HTTP POST requests at <code>/extend</code> (relative to the reconciliation endpoint) with
+          <code>application/json</code> bodies containing a <a>data extension query</a>.
+        </p>
+        <p>
+          <pre class="example nohighlight">POST /extend &lt;data extension query&gt;</pre>
+        </p>
+        <p>
+          A <dfn>data extension query</dfn> consists of:
+          <ul>
+            <li>An array of <a>entity</a> identifiers;</li>
+            <li>An array of <a>properties</a> with optional <a href="#dfn-data-extension-property-setting">settings</a>.</li>
+          </ul>
+        </p>
+        <p>
+          Example of a <a>data extension query</a>:
+          <pre data-include="examples/data-extension-query/valid/example-full.json" class="example json"></pre>
+        </p>
+      </section>
+      <section>
+        <h3>Data Extension Responses</h3>
+        <p>
+          A <dfn>data extension response</dfn> consists of <a href="#data+extension+response+metadata">metadata</a>
+          and <a href="#data+extension+response+rows">rows</a>.
+        </p>
+        <p>
+          The <dfn id="data+extension+response+metadata">metadata</dfn> contains the <a>properties</a> used for data
+          extension, as requested in the <a>data extension query</a>. If properties have <a>entities</a> as values,
+          they MAY specify a <a>type</a> in the metadata.
+        </p>
+        <p>
+          The <dfn id="data+extension+response+rows">rows</dfn> object contains, for each <a>entity</a> identifier in the
+          <a>data extension query</a>, for each <a>property</a> identifier in the
+          <a href="#data+extension+response+metadata">metadata</a>, the <a>property values</a> of that property in that entity.
+          If the property values are <a>entities</a>, their identifiers are expected to be valid entities for the service at hand.
+          If that is not the case, the service MUST specify in the <code>meta</code> section the endpoint of another reconciliation service for which the entity identifiers are valid, i.e., inserting them into the entity view template of that other service yields valid URIs.
+          This endpoint is specified on a column-per-column basis.
+        </p>
+        <p>
+          Response example for the <a>data extension query</a> from the previous example:
+          <pre data-include="examples/data-extension-response/valid/example-full.json" class="example json"></pre>
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Internationalization Considerations</h2>
+      <p>The following sections rely on terminology from the <a href="https://www.w3.org/TR/international-specs/">W3C internationalization best practices for spec developers</a>,
+        in particular on the distinction of two <a href="https://www.w3.org/International/questions/qa-text-processing-vs-metadata">types of language declaration</a>:</p>
+      <p>
+        The <dfn>language of the intended audience</dfn>, also referred to as <em>language metadata</em>, is used to describe the language(s) of the intended audience of resources as a whole. In the context of reconciliation,
+        this is relevant e.g. for setting the user interface language in a reconciliation client, providing user-facing text in the user's preferred language.
+      </p>
+      <p>
+        The <dfn>text-processing language</dfn> on the other hand declares the single language in which a specific range of text is actually written in, to support features like text-to-speech, spell checking, or hyphenation.
+        In the context of reconciliation, this distinction is importat since the actual data being reconciled will often be in a different language than the client's user interface.
+      </p>
+      <section>
+        <h3>Language of the intended audience</h3>
+        <p>
+           Following [[RFC9110]], services SHOULD support the <code>Accept-Language</code> header to let clients specify the <a>language of the intended audience</a> in which user-facing text is returned.
+           If clients set the <code>Accept-Language</code> header, the requested language(s) MUST be provided as <em>well-formed</em> [[BCP 47]] language tags.
+           Services MAY use the <code>Content-Language</code> header in their responses to expose the language(s) of the intended audience(s) of each response.
+           If services set the <code>Content-Language</code> header, they MUST use <em>valid</em> (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] tags.
+        </p>
+        <p>
+          Examples of user-facing text in service responses are: the name of the service and the name of property configuration fields in the manifest, the name and description of entities, types and properties,
+          the contents of the entity preview pages, and the documentation linked in the manifest.
+        </p>
+      </section>
+      <section>
+        <h3>Text-processing language</h3>
+
+        <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a>text-processing language</a> in a <code>lang</code> field.
+        The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
+        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
+        (see example below). A default text-processing language for any natural language string returned or processed by a service MAY be set in the <code>lang</code> field of the <a href="#service-manifest">service manifest</a>.
+        Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
+
+        <p>In the following example, we first set the text-processing language for a reconciliation query to <code>en</code>, which is inherited by the first property, and overridden in the second property with <code>zh-Hant</code>:</p>
+
+        <p>
+          <pre data-include="examples/reconciliation-query-batch/valid/text-processing-language.json" class="example json"></pre>
+        </p>
+
+      </section>
+      <section>
+        <h3>Text direction</h3>
+
+        <p>All objects returned by reconciliation services (entities, types, properties, candidates, features, etc.) MAY declare an explicit text <a href="https://www.w3.org/International/articles/inline-bidi-markup/uba-basics">
+        base direction</a> in a <code>dir</code> field. The <code>dir</code> value MUST be <code>ltr</code> for left-to-right, <code>rtl</code> for right-to-left, or <code>auto</code> for determining the direction by examining the content of each JSON field.
+        This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>v</code> and <code>str</code> (for <a>property values</a>).
+        Nested objects inherit the base direction of their parent, and can override it by setting their own <code>dir</code> value. A default base direction for any natural language string returned or processed by a service MAY be set in the <code>dir</code> field of the
+        <a href="#service-manifest">service manifest</a>. If no explicit base direction is given, left-to-right is considered the default base direction. Clients SHOULD consider the base direction to ensure correct rendering of content, e.g. by setting corresponding <code>dir</code> attributes when rendering JSON responses in HTML.
+        For instance, rendering a Persian label for 'Yahoo!' like <code>یاهو!</code> right-to-left will correctly display as <code dir="rtl">یاهو!</code>.</p>
+
+        <p>In the following example, we first set the base direction for a data extension response row to <code>ltr</code>, which is inherited by the first property, and overridden in the second property with <code>rtl</code>:</p>
+
+        <p>
+          <pre data-include="examples/data-extension-response/valid/example-dir.json" class="example json"></pre>
+        </p>
+
+      </section>
+    </section>
+    <section>
+      <h2>Accessibility Considerations</h2>
+      <p>
+        Reconciliation clients provide user interfaces for creating <a>reconciliation queries</a> and reviewing <a>reconciliation candidates</a>, including <a href="preview-service">preview</a>
+        and <a>suggest services</a>, as well as for interacting with <a href="#data-extension-service">data extension services</a>, including <a href="#dfn-data-extension-property-proposal">property proposals</a> 
+        and configuration of <a href="#dfn-data-extension-property-setting">property settings</a>. These user interfaces SHOULD be implemented ensuring [[accessibility]] for all people, whatever their hardware,
+        software, language, location, or ability.
+      </p>
+      <section>
+        <h3>Visual rendering</h3>
+        <p>
+          The <a href="#preview-service">preview service</a> provides HTML content to reconciliation clients. Using HTML allows services to provide non-text alternatives for text content, as well as 
+          semantically rich content (structure, styled text, hyperlinks, etc). Reconciliation services SHOULD ensure [[accessibility]] of this HTML content (avoid fixed font sizes, provide alternative text for images etc).
+          The service's <a>preview metadata</a> contains the suggested width and height to display the preview content. Reconciliation clients SHOULD consider adjusting these values as required for supporting accessibility features like UI scaling.
+        </p>
+        <p>
+          Except for the preview content and size, all data involved in the reconciliation and data extension process is text-based and contains no specifics about visual rendering. Reconciliation clients SHOULD ensure [[accessibility]] for this text content
+          (font resizing, screen reader support etc.) based on the technology of the underlying platform, which will typically implement the details of visual text rendering and user interface customization.
+        </p>
+      </section>
+      <section>
+        <h3>Content semantics</h3>
+        <p>
+          The main content presented to users is provided in <a>reconciliation results</a> and <a>data extension responses</a>. Both support <code>name</code> fields for all identifiable objects, in particular
+          <a>entities</a>, <a>types</a>, <a>properties</a>, and <a>matching features</a>. These SHOULD be used by reconciliation clients to provide useful labels for displaying and linking identifiable entities. 
+          The structural semantics of the content provided by reconciliation services allows different presentations (as pages, tables, etc.) in reconciliation clients. Being fully text- and JSON-based, content can 
+          be modified by third-party tools to enhance accessibility.
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>Security Considerations</h2>
+
+      <section>
+        <h3>Preventing Abuse</h3>
+        <ul>
+          <li>Reconciliation services SHOULD guard against too frequent requests to prevent [[DoS]] attacks (see <a href="#error-handling-and-rate-limiting">Error Handling and Rate-limiting</a>).</li>
+          <li>Reconciliation services SHOULD guard against malicious code when querying their underlying data store with data from <a>reconciliation queries</a> to avoid code [[injection]].</li>
+          <li>Reconciliation services SHOULD NOT parse the JSON requests sent by clients using a code execution mechanism like JavaScript's <code>eval()</code>, since requests could contain malicious code.</li>
+          <li>Reconciliation clients that display data from <a href="#preview-service">preview services</a> SHOULD ensure that the data is encoded, sanitized, or isolated to prevent [[XSS]] and [[CSRF]] attacks.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Other considerations</h3>
+        <ul>
+          <li>Reconciliation services and clients MAY support user authentication (see <a href="#authentication">authentication</a>).</li>
+          <li>Reconciliation features don't expose information about the underlying platform to clients or services, they don't allow clients or services to send data to the underlying platform, access other devices, device sensors, 
+            a user agent's native UI, or enable clients or services to downgrade default security protections.
+          </li>
+        </ul>
+      </section>
+
+    </section>
+
+    <section>
+      <h2>Privacy Considerations</h2>
+
+      <section>
+        <h3>Network data</h3>
+        <ul>
+          <li>All data in <a>reconciliation queries</a> is visible to the reconciliation service, to be processed for returning <a>reconciliation results</a> to the client.
+            To prevent malicious actors from intercepting the data that is sent and received, services SHOULD provide secure HTTPS endpoints for reconciliation.
+          </li>
+          <li>User selections of matching <a>reconciliation candidates</a> provide user-verified statements about the data. These selections are currently not sent back to the reconciliation service
+            (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Persistent data</h3>
+        <ul>
+          <li>Reconciliation clients MAY introduce new state that persists across browsing sessions for persisting <a>reconciliation queries</a>,
+            the service's <a>reconciliation results</a>, and/or the user's selection of matches.</li>
+          <li>Reconciliation clients implemented as browser extensions running in <em>Private Browsing</em> or <em>Incognito</em> mode SHOULD NOT store <a>reconciliation queries</a>,
+            the service's <a>reconciliation results</a>, or the user's selection of matches.</li>
+          <li>Reconciliation services currently don't introduce new state that persists across browsing sessions (but that may change with <a href="https://github.com/reconciliation-api/specs/issues/30">#30</a>).</li>
+          </li>
+        </ul>
+      </section>
+
+    </section>
+
+    <section class="appendix">
+      <h2>JSON Schemas</h2>
+        <p>
+          This appendix provides JSON schemas [[json-schema]] which can be used to validate the JSON serialization
+          of various elements as specified by these specifications.
+        </p>
+      <section>
+        <h3>Manifest Schema</h3>
+        <p>
+          The <a href="schemas/manifest.json">manifest schema</a> can be used to validate a <a>service manifest</a>.
+        </p>
+        <pre data-include="schemas/manifest.json" />
+      </section>
+      <section>
+        <h3 id="reconciliation-query-batch-json-schema">Reconciliation Query Batch Schema</h3>
+	    <p>
+	      The <a href="schemas/reconciliation-query-batch.json">reconciliation query batch schema</a> can be used to validate
+	      the JSON serialization of any <a>reconciliation query batch</a>, i.e. the payload of a GET/POST to the reconciliation endpoint.
+	   </p>
+	   <pre data-include="schemas/reconciliation-query-batch.json" />
+      </section>
+      <section>
+        <h3 id="reconciliation-result-batch-json-schema">Reconciliation Result Batch Schema</h3>
+	    <p>
+          The <a href="schemas/reconciliation-result-batch.json">reconciliation result batch schema</a> can be used to validate the JSON serialization of any <a>reconciliation result batch</a>.
+        </p>
+        <pre data-include="schemas/reconciliation-result-batch.json" />
+      </section>
+      <section>
+        <h3 id="suggest-entities-response-json-schema">Suggest Entities Response Schema</h3>
+	<p>
+          The <a href="schemas/suggest-entities-response.json">suggest entities response schema</a> can be used to validate the JSON serialization of any <a href="#suggest-responses">suggest response</a> for entities.
+        </p>
+        <pre data-include="schemas/suggest-entities-response.json" />
+      </section>
+      <section>
+        <h3 id="suggest-properties-response-json-schema">Suggest Properties Response Schema</h3>
+	<p>
+          The <a href="schemas/suggest-properties-response.json">suggest properties response schema</a> can be used to validate the JSON serialization of any <a href="#suggest-responses">suggest response</a> for properties.
+        </p>
+        <pre data-include="schemas/suggest-types-response.json" />
+      </section>
+      <section>
+        <h3 id="suggest-types-response-json-schema">Suggest Types Response Schema</h3>
+	<p>
+          The <a href="schemas/suggest-types-response.json">suggest types response schema</a> can be used to validate the JSON serialization of any <a href="#suggest-responses">suggest response</a> for types.
+        </p>
+        <pre data-include="schemas/suggest-types-response.json" />
+      </section>
+      <section>
+        <h3>Data Extension Property Proposal Schema</h3>
+        <p>
+          The <a href="schemas/data-extension-property-proposal.json">data extension query schema</a> validates <a>data extension property proposal responses</a>.
+        </p>
+        <pre data-include="schemas/data-extension-property-proposal.json" />
+      </section>
+      <section>
+        <h3>Data Extension Query Schema</h3>
+        <p>
+          The <a href="schemas/data-extension-query.json">data extension query schema</a> validates <a>data extension queries</a>.
+        </p>
+        <pre data-include="schemas/data-extension-query.json" />
+      </section>
+      <section>
+        <h3>Data Extension Response Schema</h3>
+        <p>
+          The <a href="schemas/data-extension-response.json">data extension response schema</a> validates <a>data extension responses</a>.
+        </p>
+        <pre data-include="schemas/data-extension-response.json" />
+      </section>
+    </section>
+  </body>
 </html>
