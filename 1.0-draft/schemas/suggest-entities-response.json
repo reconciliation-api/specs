@@ -27,6 +27,10 @@
           "dir": {
             "$ref": "dir.json"
           },
+          "image": {
+            "type": "string",
+            "description": "An optional URL of an image which illustrates the entity, letting users identify it visually."
+          },
           "notable": {
             "type": "array",
             "description": "Types the suggest entity belongs to",

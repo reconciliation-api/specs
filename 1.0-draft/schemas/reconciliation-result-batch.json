@@ -36,6 +36,10 @@
                 "dir": {
                   "$ref": "dir.json"
                 },
+                "image": {
+                  "type": "string",
+                  "description": "Optional URL of an image illustrating the entity"
+                },
                 "score": {
                   "type": "number",
                   "description": "Number indicating how likely it is that the candidate matches the query"
