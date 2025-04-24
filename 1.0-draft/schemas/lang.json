@@ -1,0 +1,5 @@
+{
+    "$id": "https://reconciliation-api.github.io/specs/draft/schemas/lang.json",
+    "type": "string",
+    "description": "The text-processing language for the natural language fields of this object"
+}

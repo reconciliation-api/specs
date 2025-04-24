@@ -18,6 +18,12 @@
       "type": "string",
       "description": "A human-readable name for the service or data source"
     },
+    "lang": {
+      "$ref": "lang.json"
+    },
+    "dir": {
+      "$ref": "dir.json"
+    },
     "documentation": {
       "type": "string",
       "description": "A URI which hosts documentation about this service"
@@ -136,6 +142,12 @@
                   },
                   "helpText": {
                     "type": "string"
+                  },
+                  "lang": {
+                    "$ref": "lang.json"
+                  },
+                  "dir": {
+                    "$ref": "dir.json"
                   }
                 },
                 "required": [
@@ -165,6 +177,12 @@
                   },
                   "helpText": {
                     "type": "string"
+                  },
+                  "lang": {
+                    "$ref": "lang.json"
+                  },
+                  "dir": {
+                    "$ref": "dir.json"
                   }
                 },
                 "required": [
@@ -194,6 +212,12 @@
                   },
                   "helpText": {
                     "type": "string"
+                  },
+                  "lang": {
+                    "$ref": "lang.json"
+                  },
+                  "dir": {
+                    "$ref": "dir.json"
                   }
                 },
                 "required": [
@@ -224,6 +248,12 @@
                   "helpText": {
                     "type": "string"
                   },
+                  "lang": {
+                    "$ref": "lang.json"
+                  },
+                  "dir": {
+                    "$ref": "dir.json"
+                  },
                   "choices": {
                     "type": "array",
                     "items": {
@@ -234,6 +264,12 @@
                         },
                         "name": {
                           "type": "string"
+                        },
+                        "lang": {
+                          "$ref": "lang.json"
+                        },
+                        "dir": {
+                          "$ref": "dir.json"
                         }
                       },
                       "required": [

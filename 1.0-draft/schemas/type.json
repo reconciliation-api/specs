@@ -14,6 +14,12 @@
             "type": "string",
             "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
         },
+        "lang": {
+          "$ref": "lang.json"
+        },
+        "dir": {
+          "$ref": "dir.json"
+        },
         "broader": {
             "type": "array",
             "description": "An optional array of types, each representing a direct (i.e., immediate) broader category of entities.",

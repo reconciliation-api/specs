@@ -965,7 +965,7 @@ containing a type identifier.
 
         <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a>text-processing language</a> in a <code>lang</code> field.
         The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
-        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
+        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
         (see example below). A default text-processing language for any natural language string returned or processed by a service MAY be set in the <code>lang</code> field of the <a href="#service-manifest">service manifest</a>.
         Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
 
@@ -981,7 +981,7 @@ containing a type identifier.
 
         <p>All objects returned by reconciliation services (entities, types, properties, candidates, features, etc.) MAY declare an explicit text <a href="https://www.w3.org/International/articles/inline-bidi-markup/uba-basics">
         base direction</a> in a <code>dir</code> field. The <code>dir</code> value MUST be <code>ltr</code> for left-to-right, <code>rtl</code> for right-to-left, or <code>auto</code> for determining the direction by examining the content of each JSON field.
-        This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>v</code> and <code>str</code> (for <a>property values</a>).
+        This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>v</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>).
         Nested objects inherit the base direction of their parent, and can override it by setting their own <code>dir</code> value. A default base direction for any natural language string returned or processed by a service MAY be set in the <code>dir</code> field of the
         <a href="#service-manifest">service manifest</a>. If no explicit base direction is given, left-to-right is considered the default base direction. Clients SHOULD consider the base direction to ensure correct rendering of content, e.g. by setting corresponding <code>dir</code> attributes when rendering JSON responses in HTML.
         For instance, rendering a Persian label for 'Yahoo!' like <code>یاهو!</code> right-to-left will correctly display as <code dir="rtl">یاهو!</code>.</p>

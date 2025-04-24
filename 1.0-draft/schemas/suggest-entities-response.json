@@ -21,6 +21,12 @@
             "type": "string",
             "description": "An optional description which can be provided to disambiguate namesakes, providing more context."
           },
+          "lang": {
+            "$ref": "lang.json"
+          },
+          "dir": {
+            "$ref": "dir.json"
+          },
           "image": {
             "type": "string",
             "description": "An optional URL of an image which illustrates the entity, letting users identify it visually."
@@ -39,6 +45,12 @@
                     },
                     "name": {
                       "type": "string"
+                    },
+                    "lang": {
+                      "$ref": "lang.json"
+                    },
+                    "dir": {
+                      "$ref": "dir.json"
                     }
                   },
                   "required": [
