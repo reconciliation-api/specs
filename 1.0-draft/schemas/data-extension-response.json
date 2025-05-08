@@ -15,6 +15,12 @@
           "name": {
             "type": "string"
           },
+          "lang": {
+            "$ref": "lang.json"
+          },
+          "dir": {
+            "$ref": "dir.json"
+          },
           "type": {
             "type": "object",
             "properties": {
@@ -23,6 +29,12 @@
               },
               "name": {
                 "type": "string"
+              },
+              "lang": {
+                "$ref": "lang.json"
+              },
+              "dir": {
+                "$ref": "dir.json"
               }
             },
             "required": [
@@ -81,10 +93,10 @@
                             "type": "string"
                           },
                           "lang": {
-                            "type": "string"
+                            "$ref": "lang.json"
                           },
                           "dir": {
-                            "type": "string"
+                            "$ref": "dir.json"
                           }
                         },
                         "required": [
@@ -100,10 +112,10 @@
                             "type": "string"
                           },
                           "lang": {
-                            "type": "string"
+                            "$ref": "lang.json"
                           },
                           "dir": {
-                            "type": "string"
+                            "$ref": "dir.json"
                           }
                         },
                         "required": [

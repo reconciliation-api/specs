@@ -325,6 +325,8 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <dd>{{String}} ({{optional}}) a non-empty <emph>name</emph> or <emph></emph>label</emph> for the entity;</dd>
         <dt><code>description</code></dt>
           <dd>{{String}} ({{optional}}) a <emph>description</emph> as a human-readable string;</dd>
+        <dt><code>image</code></dt>
+          <dd>{{String}} ({{optional}}) a URL of an <emph>image</emph> which illustrates the entity;</dd>
         <dt><code>type</code></dt>
           <dd>{{Array}} ({{optional}}) list of <a>types</a>, possibly empty, the entity is classified by;</dd>
         </dl>
@@ -812,6 +814,8 @@ in the <code>score</code> field). By exposing individual features in their respo
               <dd>Its corresponding human-readable name, to be displayed prominently to the user;</dd>
               <dt><code>description</code></dt>
               <dd>An optional description which can be provided to disambiguate namesakes, providing more context. This could for instance be displayed underneath the <code>name</code>;</dd>
+              <dt><code>image</code></dt>
+              <dd>An optional URL of an image illustrating the entity, helping the user identify the entity visually. This image could for instance be displayed alongside the <code>name</code> and <code>description</code>;</dd>
 	      <dt><code>notable</code></dt>
 	      <dd>When suggesting entities only, this field can be used to supply some important types (not necessarily all types) of the suggested entity. The value must be an array of either type identifiers (as strings) or type objects, containing an <code>id</code> and <code>name</code> field which represent the type.</dd>
               <dt><code>matchQualifiers</code></dt>
@@ -842,8 +846,8 @@ in the <code>score</code> field). By exposing individual features in their respo
       <section class="informative">
         <h3>General Expectations about Suggest Services</h3>
         <p>
-          It is generally expected by users that an entity suggest query where <code>prefix</code> is the name of an entity should return this entity in the suggest response, unless that entity is hidden behind many other namesakes.
-          Similarly, supplying an entity identifier as <code>prefix</code> should return this entity in the suggest response. 
+          It is generally expected by users that an entity suggest query where <code>prefix</code> is the name of an entity SHOULD return this entity in the suggest response, unless that entity is hidden behind many other namesakes.
+          Similarly, supplying an entity identifier as <code>prefix</code> MUST return this entity in the suggest response. 
           Analogous expectations apply for property and type suggest services.
         </p>
         <p>
@@ -1012,7 +1016,7 @@ containing a type identifier.
 
         <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a>text-processing language</a> in a <code>lang</code> field.
         The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
-        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
+        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
         (see example below). A default text-processing language for any natural language string returned or processed by a service MAY be set in the <code>lang</code> field of the <a href="#service-manifest">service manifest</a>.
         Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
 
@@ -1028,7 +1032,7 @@ containing a type identifier.
 
         <p>All objects returned by reconciliation services (entities, types, properties, candidates, features, etc.) MAY declare an explicit text <a href="https://www.w3.org/International/articles/inline-bidi-markup/uba-basics">
         base direction</a> in a <code>dir</code> field. The <code>dir</code> value MUST be <code>ltr</code> for left-to-right, <code>rtl</code> for right-to-left, or <code>auto</code> for determining the direction by examining the content of each JSON field.
-        This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>v</code> and <code>str</code> (for <a>property values</a>).
+        This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>v</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>).
         Nested objects inherit the base direction of their parent, and can override it by setting their own <code>dir</code> value. A default base direction for any natural language string returned or processed by a service MAY be set in the <code>dir</code> field of the
         <a href="#service-manifest">service manifest</a>. If no explicit base direction is given, left-to-right is considered the default base direction. Clients SHOULD consider the base direction to ensure correct rendering of content, e.g. by setting corresponding <code>dir</code> attributes when rendering JSON responses in HTML.
         For instance, rendering a Persian label for 'Yahoo!' like <code>یاهو!</code> right-to-left will correctly display as <code dir="rtl">یاهو!</code>.</p>
