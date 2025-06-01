@@ -4,8 +4,8 @@
       "conditions": [
         {
           "matchType": "property",
-          "pid": "uid",
-          "v": "27eb892afbb2"
+          "propertyId": "uid",
+          "propertyValue": "27eb892afbb2"
         }
       ]
     },
@@ -13,8 +13,8 @@
       "conditions": [
         {
           "matchType": "property",
-          "pid": "uid",
-          "v": "ab09da9dd37e"
+          "propertyId": "uid",
+          "propertyValue": "ab09da9dd37e"
         }
       ]
     }

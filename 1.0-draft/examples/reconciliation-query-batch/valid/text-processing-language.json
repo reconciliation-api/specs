@@ -5,17 +5,17 @@
       "conditions": [
         {
           "matchType": "name",
-          "v": "Deng Shuping"
+          "propertyValue": "Deng Shuping"
         },
         {
           "matchType": "property",
-          "pid": "professionOrOccupation",
-          "v": "art historian"
+          "propertyId": "professionOrOccupation",
+          "propertyValue": "art historian"
         },
         {
           "matchType": "property",
-          "pid": "variantName",
-          "v": "鄧淑蘋",
+          "propertyId": "variantName",
+          "propertyValue": "鄧淑蘋",
           "lang": "zh-Hant"
         }
       ]

@@ -4,7 +4,7 @@
       "conditions": [
         {
           "matchType": "name",
-          "v": "Hans-Eberhard Urbaniak"
+          "propertyValue": "Hans-Eberhard Urbaniak"
         }
       ]
     },
@@ -12,7 +12,7 @@
       "conditions": [
         {
           "matchType": "name",
-          "v": "Ernst Schwanhold"
+          "propertyValue": "Ernst Schwanhold"
         }
       ]
     }

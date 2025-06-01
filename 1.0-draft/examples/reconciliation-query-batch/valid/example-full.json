@@ -6,20 +6,20 @@
       "conditions": [
         {
           "matchType": "name",
-          "v": "Christel Hanewinckel"
+          "propertyValue": "Christel Hanewinckel"
         },
         {
           "matchType": "property",
-          "pid": "professionOrOccupation",
-          "v": "Politik*",
+          "propertyId": "professionOrOccupation",
+          "propertyValue": "Politik*",
           "required": false,
           "matchQuantifier": "any",
           "matchQualifier": "WildcardMatch"
         },
         {
           "matchType": "property",
-          "pid": "affiliation",
-          "v": "http://d-nb.info/gnd/2022139-3",
+          "propertyId": "affiliation",
+          "propertyValue": "http://d-nb.info/gnd/2022139-3",
           "required": false,
           "matchQuantifier": "any",
           "matchQualifier": "ExactMatch"
@@ -32,20 +32,20 @@
       "conditions": [
         {
           "matchType": "name",
-          "v": "Franz Thönnes"
+          "propertyValue": "Franz Thönnes"
         },
         {
           "matchType": "property",
-          "pid": "professionOrOccupation",
-          "v": "Politik*",
+          "propertyId": "professionOrOccupation",
+          "propertyValue": "Politik*",
           "required": false,
           "matchQuantifier": "any",
           "matchQualifier": "WildcardMatch"
         },
         {
           "matchType": "property",
-          "pid": "affiliation",
-          "v": "http://d-nb.info/gnd/2022139-3",
+          "propertyId": "affiliation",
+          "propertyValue": "http://d-nb.info/gnd/2022139-3",
           "required": false,
           "matchQuantifier": "any",
           "matchQualifier": "ExactMatch"
