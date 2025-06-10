@@ -269,32 +269,30 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
       <ul>
         <li>
           <dfn data-lt="json object">Object</dfn>
-          - This is an unordered set of <code>{"name":"value"}</code> pairs. An object begins with <code>{</code> (left brace) and ends with <code>}</code> (right brace). Each name is followed by <code>:</code> (colon) and the <code>{"name":"value"}</code> pairs are separated by <code>,</code> (comma).
+          - A <a data-cite="RFC8259#section-4">JSON object</a>.
         </li>
         <li>
-        <dfn
-          data-lt="key|keyword|fields">
-          field
-        </dfn> - is the alternative term used throughout to refer to the key or name part in a <code>{"name":"value"}</code> pair in a JSON object as defined by [[RFC8259]].
-        Or more loosely, a "key" in JSON data.  The typical convention when dealing with APIs or programmatic querying of
-        records is to use the term "fields" rather than "keys", so we have chosen to use that term in this specification
-        when speaking of objects to query/request or respond with.
+          <dfn data-lt="key|keyword|fields">Field</dfn>
+          - The alternative term used throughout to refer to the name part of a <code>{"name":"value"}</code> pair in a <a data-cite="RFC8259#section-4">JSON object</a>.
+          Or more loosely, a "key" in JSON data. The typical convention when dealing with APIs or programmatic querying of
+          records is to use the term "fields" rather than "keys", so we have chosen to use that term in this specification
+          when speaking of objects to query/request or respond with.
         </li>
         <li>
           <dfn data-lt="text">String</dfn>
-          - This is a sequence of zero or more Unicode characters. Strings are written within double quotes and can contain various escape characters.
+          - A <a data-cite="RFC8259#section-7">JSON string</a>.
         </li>
         <li>
-          <dfn data-lt="number">Integer</dfn>
-          - This is a signed decimal number (ex. 20) that may contain a fractional part and may use exponential E notation. JSON does not support octal or hexadecimal numbers. 
+          <dfn data-lt="integer">Number</dfn>
+          - A <a data-cite="RFC8259#section-6">JSON number</a>.
         </li>
         <li>
           <dfn data-lt="list">Array</dfn>
-          - This is an ordered collection of values. An array begins with <code>[</code> (left bracket) and ends with <code>]</code> (right bracket). Values are separated by <code>,</code> (comma).
+          - A <a data-cite="RFC8259#section-5">JSON array</a>.
         </li>
         <li>
           <dfn>Boolean</dfn>
-          - This is either <code>true</code> or <code>false</code>.
+          - A <a data-cite="RFC8259#section-3">JSON value</a> that is either <code>true</code> or <code>false</code>.
         </li>
 
         <li>
@@ -386,8 +384,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <ul>
              <li>A {{string}};</li>
              <li>A {{boolean}};</li>
-             <li>An {{integer}};</li>
-             <li>A floating-point value;</li>
+             <li>A {{number}};</li>
              <li>An {{entity}}.</li>
           </ul>
         </p>
