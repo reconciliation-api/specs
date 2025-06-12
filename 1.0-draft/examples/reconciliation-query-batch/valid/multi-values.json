@@ -6,12 +6,12 @@
       "conditions": [
         {
           "matchType": "name",
-          "v": "Christel Hanewinckel"
+          "propertyValue": "Christel Hanewinckel"
         },
         {
           "matchType": "property",
-          "pid": "professionOrOccupation",
-          "v": [
+          "propertyId": "professionOrOccupation",
+          "propertyValue": [
             "Politik*",
             {
               "id": "wissenschaftler",
