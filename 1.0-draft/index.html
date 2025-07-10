@@ -265,7 +265,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
       </p>
       <h3 data-link-for="conventions">Terms Used</h3>
       <p>
-        The following concepts are used and borrowed from JSON [[RFC8259]] syntax as well as from [[RFC2119]]:
+        The following concepts are used and borrowed from JSON [[RFC8259]]:
       <ul>
         <li>
           <dfn data-lt="json object">Object</dfn>
@@ -294,20 +294,6 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           <dfn>Boolean</dfn>
           - A <a data-cite="RFC8259#section-3">JSON value</a> that is either <code>true</code> or <code>false</code>.
         </li>
-
-        <li>
-          <!-- "required" is not a defined term since it is a default and unused currently.
-               So, we just make it bold italics to provide a similar style as defined terms.
-          -->
-        ( <b><i>required</i></b> ) - is the default and might be shown at times to signify those fields which are mandatory and MUST be used in all reconciliation services.
-        If the field is not specified as either ( <b>required</b> ) or ( <b>optional</b> ), then it is REQUIRED.
-        </li>
-        <li>
-        (<dfn
-          data-lt="NOT MANDATORY|NON-MANDATORY">
-          optional
-        </dfn>) - is used to signify those fields which are not mandatory and MAY be used.
-        </li>
       </ul>
       </p>
       </p>
@@ -318,15 +304,15 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
            It comprises the following fields:
         <dl>
         <dt><code>id</code></dt>
-          <dd>{{String}} a non-empty identifier. This identifier must be unique among all entities;</dd>
+          <dd>{{String}} (required) a non-empty identifier. This identifier must be unique among all entities;</dd>
         <dt><code>name</code></dt>
-          <dd>{{String}} ({{optional}}) a non-empty <emph>name</emph> or <emph></emph>label</emph> for the entity;</dd>
+          <dd>{{String}} (optional) a non-empty <emph>name</emph> or <emph></emph>label</emph> for the entity;</dd>
         <dt><code>description</code></dt>
-          <dd>{{String}} ({{optional}}) a <emph>description</emph> as a human-readable string;</dd>
+          <dd>{{String}} (optional) a <emph>description</emph> as a human-readable string;</dd>
         <dt><code>image</code></dt>
-          <dd>{{String}} ({{optional}}) a URL of an <emph>image</emph> which illustrates the entity;</dd>
+          <dd>{{String}} (optional) a URL of an <emph>image</emph> which illustrates the entity;</dd>
         <dt><code>type</code></dt>
-          <dd>{{Array}} ({{optional}}) list of <a>types</a>, possibly empty, the entity is classified by;</dd>
+          <dd>{{Array}} (optional) a list of <a>types</a>, possibly empty, the entity is classified by.</dd>
         </dl>
            Moreover, for each <a>property</a> the entity contains a set of associated <a>property values</a>, possibly empty.
         </p>
@@ -356,11 +342,11 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           It comprises the following fields:
           <dl>
              <dt><code>id</code></dt>
-             <dd>{{String}} an identifier, which is non-empty. This identifier must be unique among all types;</dd>
+             <dd>{{String}} (required) a non-empty identifier. This identifier must be unique among all types;</dd>
              <dt><code>name</code></dt>
-             <dd>{{String}} ({{optional}}) a human-readable name, which is non-empty;</dd>
+             <dd>{{String}} (optional) a non-empty human-readable name;</dd>
              <dt><code>broader</code></dt>
-             <dd>{{Array}} ({{optional}}) list of <a>types</a>, each representing a direct (i.e., immediate) <a href="https://www.w3.org/TR/skos-reference/#semantic-relations">broader</a> [[skos-reference]] category of <a>entities</a>.</dd>
+             <dd>{{Array}} (optional) a list of <a>types</a>, each representing a direct (i.e., immediate) <a href="https://www.w3.org/TR/skos-reference/#semantic-relations">broader</a> [[skos-reference]] category of <a>entities</a>.</dd>
           </dl>
         </p>
       </section>
@@ -371,9 +357,9 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
           It comprises the following fields:
           <dl>
 	    <dt><code>id</code></dt>
-            <dd>{{String}} an identifier, which is a non-empty string. This identifier must be unique among all properties;</dd>
+            <dd>{{String}} (required) a non-empty identifier. This identifier must be unique among all properties;</dd>
 	    <dt><code>name</code></dt>
-            <dd>{{String}} ({{optional}}) a human-readable name, which is a non-empty string.</dd>
+            <dd>{{String}} (optional) a non-empty human-readable name.</dd>
           </dl>
         </p>
       </section>
@@ -411,48 +397,39 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
         A <dfn>service manifest</dfn> consists of the following {{fields}}:
         <dl>
           <dt><code>versions</code></dt>
-          <dd>{{Array}} API versions supported by the endpoint, such as <code>["0.1", "0.2", "1.0-draft"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
+          <dd>{{Array}} (required) a list of API versions supported by the endpoint, such as <code>["0.1", "0.2", "1.0-draft"]</code>. Since this field did not exist in version 0.1, services which do not declare a <code>versions</code> field are expected to only support version 0.1.</dd>
           <dt><code>name</code></dt>
-          <dd>{{String}} A human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
+          <dd>{{String}} (required) a human-readable name for the service, generally the name of the database it exposes. In the case where multiple reconciliation services exist for the same database, it is in the interest of a service to bear a meaningful name which
 will help disambiguating it from others;</dd>
           <dt><code>defaultTypes</code></dt>
-          <dd>{{Array}} ({{optional}}) list of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
-database are instances of this type.<dd>
+          <dd>{{Array}} (optional) a list of <a>types</a> which are considered sensible default choices as types supplied in reconciliation queries. For services which do not rely on types, this MAY contain a single type with a generic name making it clear that all entities in the
+database are instances of this type.</dd>
           <dt><code>documentation</code></dt>
-          <dd>{{String}} ({{optional}}) URL that points to human-readable documentation about the service, for instance giving more information about the data it exposes;</dd>
+          <dd>{{String}} (optional) a URL that points to human-readable documentation about the service, for instance giving more information about the data it exposes;</dd>
           <dt><code>logo</code></dt>
-          <dd>{{String}} ({{optional}}) URL that points to a square image which can be used as the service's logo;</dd>
+          <dd>{{String}} (optional) a URL that points to a square image which can be used as the service's logo;</dd>
           <dt><code>serviceVersion</code></dt>
-          <dd>{{String}} ({{optional}}) describes the version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
+          <dd>{{String}} (optional) a version of the software exposing this service. This is not to be confused with <code>versions</code> which is about the versions of the reconciliation API supported by the service;</dd>
           <dt><code>view</code></dt>
-          <dd>{{Object}} contains a single field URL. Its value is a <a>URI template</a> for <a>entities</a>;</dd>
+          <dd>{{Object}} (required) a <a>URI template</a> for viewing <a>entities</a>;</dd>
           <dt><code>featureView</code></dt>
-          <dd>{{Object}} ({{optional}}) contains a single field URL. Its value is a <a>URI template</a> for <a>matching features</a>;</dd>
+          <dd>{{Object}} (optional) a <a>URI template</a> for viewing <a>matching features</a>;</dd>
           <dt><code>preview</code></dt>
-          <dd>{{Object}} ({{optional}}) contains <a>preview metadata</a> supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
+          <dd>{{Object}} (optional) the <a>preview metadata</a>, supplied if the service offers a <a href="#preview-service">preview service</a>;</dd>
           <dt><code>suggest</code></dt>
-          <dd>{{Object}} ({{optional}}) contains the following fields, depending on which <a href="#suggest-services">suggest services</a> are offered:
-            <dl>
-              <dt><code>entity</code></dt>
-              <dd>{{Boolean}} ({{optional}}) indicates if the service supports auto-suggestion of <a>entities</a>;</dd>
-              <dt><code>property</code></dt>
-              <dd>{{Boolean}} ({{optional}}) indicates if the service supports auto-suggestion of <a>properties</a>;</dd>
-              <dt><code>type</code></dt>
-              <dd>{{Boolean}} ({{optional}}) indicates if the service supports auto-suggestion of <a>types</a>;</dd>
-            </dl>
-          </dd>
+          <dd>{{Object}} (optional) the <a>suggest metadata</a>, supplied if the service offers <a href="#suggest-services">suggest services</a>;</dd>
           <dt><code>extend</code></dt>
-          <dd>{{Object}} ({{optional}}) contains <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>.</dd>
+          <dd>{{Object}} (optional) the <a>data extension metadata</a>, supplied if the service offers a <a href="#data-extension-service">data extension service</a>;</dd>
           <dt><code>batchSize</code></dt>
-          <dd>{{Integer}} ({{optional}}) The maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]]</dd>
+          <dd>{{Integer}} (optional) the maximum number of <a>reconciliation queries</a> in a single <a>reconciliation query batch</a>.  The service MAY respond to batches larger than this number with a 413 HTTP error status code [[RFC7231]];</dd>
           <dt><code>authentication</code></dt>
-          <dd>{{Object}} ({{optional}}) A <a>security scheme</a>, supplied if the service supports <a href="#authentication">authentication</a>.</dd>
+          <dd>{{Object}} (optional) the <a>security scheme</a> used by this service, supplied if the service supports <a href="#authentication">authentication</a>;</dd>
           <dt><code>lang</code></dt>
-          <dd>{{String}} ({{optional}}) value for the default <a href="#text-processing-language">text-processing language</a> used by this service.</dd>
+          <dd>{{String}} (optional) the default <a href="#text-processing-language">text-processing language</a> used by this service;</dd>
           <dt><code>dir</code></dt>
-          <dd>{{String}} ({{optional}}) value for the default <a href="#text-direction">text direction</a> used by this service.</dd>
+          <dd>{{String}} (optional) the default <a href="#text-direction">text direction</a> used by this service;</dd>
           <dt><code>standardizedScore</code></dt>
-          <dd>{{Integer}} ({{optional}}) indicating if the service returns values between 0 and 100 (inclusive) in the <code>score</code> field of <a>reconciliation candidates</a>. This enables clients to process and display candidates accordingly, e.g. with score percentages or visualizations.</dd>
+          <dd>{{Boolean}} (optional) indicates if the service returns values between 0 and 100 (inclusive) in the <code>score</code> field of <a>reconciliation candidates</a>. This enables clients to process and display candidates accordingly, e.g. with score percentages or visualizations.</dd>
         </dl>
       </p>
       <p>For instance, a service could expose the following minimal service manifest:
@@ -768,9 +745,20 @@ in the <code>score</code> field). By exposing individual features in their respo
         endpoints for their <a>entities</a>, <a>properties</a> and <a>types</a>.
         A reconciliation service can offer a <dfn>suggest service</dfn> for any of these three classes. For instance, a service which only exposes a single type might not want to expose a suggest service for types.
         These suggest services can be used by clients to let users select an entity, property or type manually, at various stages of their reconciliation workflows.
-        Suggest services for entities, properties and types are declared independently
-        in the <a>service manifest</a>.
       </p>
+      <section>
+      <h3><dfn>Suggest Metadata</dfn></h3>
+      <p>Suggest services for entities, properties and types are declared independently in the <code>suggest</code> field of the <a>service manifest</a>, using the following fields:
+        <dl>
+          <dt><code>entity</code></dt>
+          <dd>{{Boolean}} (optional) indicates if the service supports auto-suggestion of <a>entities</a>;</dd>
+          <dt><code>property</code></dt>
+          <dd>{{Boolean}} (optional) indicates if the service supports auto-suggestion of <a>properties</a>;</dd>
+          <dt><code>type</code></dt>
+          <dd>{{Boolean}} (optional) indicates if the service supports auto-suggestion of <a>types</a>;</dd>
+        </dl>
+      </p>
+      </section>
       <section>
       <h3>Suggest Endpoints</h3>
       <p>
