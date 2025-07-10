@@ -249,6 +249,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
             <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/156">Add optional <code>standardizedScore</code> field to the manifest</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/166">Unify naming to camelCase convention</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/193">Add <code>limit</code> parameter to suggest queries and rename <code>cursor</code> to <code>offset</code></a></li>
           </ul>
         </section>
       </section>
@@ -742,9 +743,14 @@ in the <code>score</code> field). By exposing individual features in their respo
             <dd>The string input by the user in the auto-suggest-enabled field;
               depending on the data users are working with, they might want to select a suggestion from all available <a>types</a>, <a>properties</a>, or even <a>entities</a>;
               to allow that, services MAY send all suggestions if the prefix is empty, and clients SHOULD provide a way to send the empty prefix;</dd>
-            <dt><code>cursor</code></dt>
+            <dt><code>limit</code></dt>
+            <dd>An optional integer to specify the number of suggestions to return.</dd>
+            <dt><code>offset</code></dt>
             <dd>An optional integer to specify the number of suggestions to skip: this can be used by clients to fetch more suggestions.</dd>
           </dl>
+        </p>
+        <p>
+          <pre class="example nohighlight">GET /suggest/entity?prefix=cumulo&amp;limit=3</pre>
         </p>
       </section>
       <section id="suggest-responses">
