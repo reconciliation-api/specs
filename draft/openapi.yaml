@@ -1,0 +1,977 @@
+openapi: 3.1.0
+info:
+  title: Reconciliation API - OpenAPI 3.1
+  description: |-
+    Web API letting clients match data against a database hosted by the service.
+
+    Some useful links:
+      - [ W3C Entity Reconciliation Community Group ](https://www.w3.org/community/reconciliation/)
+      - [ Source code for Reconciliation API ](https://github.com/reconciliation-api/specs)
+      - [ List of known public endpoints ](https://reconciliation-api.github.io/testbench/)
+      - [ OpenRefine wiki list of reconcilable data sources ](https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources)
+  contact:
+    name: W3C Entity Reconciliation Community Group
+    url: https://www.w3.org/community/reconciliation/
+    email: public-reconciliation@w3.org
+  license:
+    name: W3C Community Final Specification Agreement (FSA)
+    url: https://www.w3.org/community/about/process/fsa-deed/
+  # ---------
+  # version: is the version of this document, not the version of the Reconciliation API.
+  #          when updating this document, please bump this version below:
+  # ---------
+  version: 0.0.1
+
+externalDocs:
+  description: Find out more about Reconciliation API
+  url: https://reconciliation-api.github.io
+
+tags:
+  - name: Service Definition
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#service-definition
+  - name: Reconcile
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#reconciliation-queries
+  - name: Suggest
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#suggest-services
+  - name: Extend
+    externalDocs:
+      url: https://reconciliation-api.github.io/specs/draft/#data-extension-service
+
+paths:
+  /:
+    get:
+      operationId: getManifest
+      tags:
+        - Service Definition
+      description: retrieve the service manifest
+      security: []
+      responses:
+        '200':
+          description: Service manifest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/manifest'
+              examples:
+                manifest-viaf:
+                  $ref: '#/components/examples/manifest-viaf'
+                manifest-getty:
+                  $ref: '#/components/examples/manifest-getty'
+  /reconcile:
+    post:
+      operationId: reconciliationQueries
+      tags:
+        - Reconcile
+      description: submit a batch of reconciliation queries
+      security: []
+      requestBody:
+        required: true
+        description: A batch of reconciliation queries
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reconcile-query-batch'
+
+      responses:
+        '200':
+          description: Reconciliation candidates for each query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reconciliation-result-batch'
+        '401':
+          description: |-
+            Authentication failure,
+            when a [security scheme](https://spec.openapis.org/oas/latest.html#security-scheme-object) is provided in the [service manifest](#/components/schemas/manifest)
+          content:
+            application/json:
+              schema:
+                type: object
+                examples: ['HTTP/1.1 401 Unauthorized Access']
+
+  /suggest/entity:
+    get:
+      operationId: suggestEntities
+      tags:
+        - Suggest
+      description: retrieve auto-complete suggestions for entities
+      security: []
+      parameters:
+        - name: prefix
+          in: query
+          required: true
+          description: the search string input by the user
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          required: false
+          description: a number of results to skip
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: a list of entities suitable for displaying in a drop-down auto-complete widget
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/suggest-entities-response'
+              example:
+                $ref: '#/components/examples/suggest-entities-response-valid'
+
+  /suggest/property:
+    get:
+      operationId: suggestProperties
+      tags:
+        - Suggest
+      description: Retrieve auto-complete suggestions for properties
+      security: []
+      parameters:
+        - name: prefix
+          in: query
+          required: true
+          description: the search string input by the user
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          required: false
+          description: a number of results to skip
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of properties suitable for displaying in a drop-down auto-complete widget
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/suggest-properties-response'
+              example:
+                $ref: '#/components/examples/suggest-properties-response-valid'
+  /suggest/type:
+    get:
+      operationId: suggestTypes
+      tags:
+        - Suggest
+      description: Retrieve auto-complete suggestions for types
+      security: []
+      parameters:
+        - name: prefix
+          in: query
+          required: true
+          description: the search string input by the user
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          required: false
+          description: a number of results to skip
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of types suitable for displaying in a drop-down auto-complete widget
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/suggest-types-response'
+              example:
+                $ref: '#/components/examples/suggest-types-response-valid'
+  /preview:
+    get:
+      operationId: preview
+      tags:
+        - Preview
+      description: Retrieve a compact representation of an entity as an HTML page
+      security: []
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: an entity id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A web page describing the entity
+          content:
+            text/html:
+              example: "test"
+  /extend:
+    post:
+      operationId: extend
+      tags:
+        - Extend
+      description: Retrieve the values of properties on a list of entities
+      security: []
+      requestBody:
+        required: true
+        description: A list of entities and the properties to fetch on them
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/data-extension-query'
+            example:
+              $ref: '#/components/examples/data-extension-query-valid'
+      responses:
+        '200':
+          description: The values of the properties on those entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/data-extension-response'
+              example:
+                $ref: '#/components/examples/data-extension-response-valid'
+  /extend/propose:
+    get:
+      operationId: proposeProperties
+      tags:
+        - Extend
+      description: List properties commonly fetched on entities of a given type
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of properties which could be fetched on entities of the provided type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/data-extension-property-proposal-response'
+              example:
+                $ref: '#/components/examples/data-extension-property-proposal-valid'
+
+
+# ---------
+#
+#  SCHEMAS
+#
+# ---------
+components:
+  schemas:
+
+    id:
+      type: string
+      description: a unique character string
+      examples:
+        - Q12345
+
+    entity:
+      required:
+        - id
+        - name
+      description: |-
+        An entity is a record in the data source exposed by the service.
+        For each entity, expanding the template with 'id' being set to
+        the entity's identifier MUST result in a valid URI.
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          type: string
+          description: a name, which is also a non-empty string
+          minLength: 1
+        description:
+          type: string
+          description: an optional description as a human-readable string
+        type:
+          $ref: '#/components/schemas/type'
+
+    type:
+      required:
+        - id
+        - name
+      type: object
+      description: |-
+        a category or subclass or some classification grouping
+        applied to an [entity](#/components/schemas/entity)
+      examples: [automobile brand]
+      externalDocs:
+        url:
+      properties:
+        id:
+          type: string
+          description: |-
+            a unique identifier for the type.
+            This identifier must be unique among all types.
+          examples:
+            - Q1420
+        name:
+          type: string
+          description: a human-readable name for the type which is a non-empty string
+          minLength: 1
+          examples:
+            - car
+        description:
+          type: string
+          description: |-
+            a description which can be provided to disambiguate
+            namesakes and provide more context
+          examples:
+            - motorized road vehicle designed to carry people
+        broader:
+          type: array
+          description: |-
+            an array of [types](#/components/schemas/type), each representing a direct (i.e., immediate) broader
+            skos-reference category of [entities](#/components/schemas/entity)
+          items:
+            type: string
+            description: |-
+              a [skos-reference broader category](https://www.w3.org/TR/skos-reference/#semantic-relations)
+          examples:
+            - road vehicle
+            - motor vehicle
+
+    property:
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          type: string
+          description: a human-readable name for the property
+
+    property-value:
+      type: string
+      description: a value for a [property](#/components/schemas/property)
+      enum:
+        - string
+        - boolean
+        - integer
+
+    uri-template:
+      type: string
+      format: uri-template
+      description: a URI template as defined by [RFC6570](https://www.rfc-editor.org/rfc/rfc6570)
+
+    manifest:
+      required:
+        - versions
+        - name
+        - view
+      description: validates a service manifest, describing features supported by the endpoint
+      type: object
+      properties:
+        versions:
+          type: array
+          description: |-
+            The array of API versions supported by the endpoint.
+            Since this field did not exist in version 0.1, services which do not declare
+            a versions field are expected to only support version 0.1.
+          items:
+            type: string
+          contains:
+            enum:
+              - "0.1"
+              - "0.2"
+          examples:
+            - "0.2"
+        name:
+          type: string
+          description: |-
+            a human-readable name for the service,
+            generally the name of the database it exposes.
+            In the case where multiple reconciliation services exist for the same database,
+            it is in the interest of a service to bear a meaningful name
+            which will help disambiguating it from others
+        documentation:
+          type: string
+          description: |-
+            an URL with human-readable documentation about the service,
+            for instance giving more information about the data it exposes.
+          examples: ["https://example.com/recon/v2/docs"]
+        serviceVersion:
+          type: string
+          description: |-
+            an string representing the version of the software which exposes this service.
+            This is not to be confused with [versions](#/components/schemas/manifest/properties/versions) property
+            which is about the versions of the reconciliation API supported by the service.
+        logo:
+          type: string
+          description: |-
+            an URI to a square image which can be used as the service's logo.
+          examples: ["https://example.com/recon/logo.png"]
+        authentication:
+          type: object
+          description: a security scheme object
+          externalDocs:
+            description: OpenAPI Specification - Security Scheme
+            url: https://spec.openapis.org/oas/latest.html#security-scheme-object
+        lang:
+          type: string
+          description: |-
+            tag value for the default text-processing language used by this service.
+            The value MUST be a single valid [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+          examples:
+            - en-US
+          externalDocs:
+            url: https://www.rfc-editor.org/rfc/bcp/bcp47.txt
+        defaultTypes:
+          type: array
+          description: |-
+            an array of [types](#/components/schemas/type) which are considered sensible default choices as types
+            supplied in reconciliation queries.
+            For services which do not rely on types, this MAY contain a single type
+            with a generic name making it clear that all entities in the database
+            are instances of this type.
+          items:
+            $ref: '#/components/schemas/type'
+          uniqueItems: true
+          minItems: 1
+        suggest:
+          required:
+            - entity
+            - property
+            - type
+          type: object
+          description: |-
+            settings for the suggest protocol, to auto-complete entities, propertie, and types
+          properties:
+            entity:
+              type: boolean
+              description: |-
+                indicates if the service supports auto-suggestion of [entities](#/components/schemas/entity), in which case it should offer a [/suggest/entity](#/paths/suggest/entity) endpoint
+            property:
+              type: boolean
+              description: |-
+                indicates if the service supports auto-suggestion of [properties](#/components/schemas/property)
+            type:
+              type: boolean
+              description: |-
+                indicates if the service supports auto-suggestion of [types](#/components/schemas/type)
+        view:
+          type: object
+          description: |-
+            an object which contains a single field url.
+            Its value is a URI template for entities
+          properties:
+            url:
+              $ref: '#/components/schemas/uri-template'
+        feature_view:
+          type: object
+          description: |-
+            an object which contains a url field pointing to a human-readable web page
+            which can be used to view matching features.
+          properties:
+            url:
+              $ref: '#/components/schemas/uri-template'
+        preview:
+          $ref: '#/components/schemas/preview'
+        extend:
+          $ref: '#/components/schemas/data-extension-metadata'
+        standardizedScore:
+          $ref: '#/components/schemas/standardizedScore'
+
+    reconcile-query:
+      required:
+        - conditions
+      type: object
+      description: a single query
+      properties:
+        conditions:
+          type: array
+          description: an array of conditions (at least one)
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/condition'
+        type:
+          description: |-
+            an optional type identifier. Supplying such a type allows users to restrict
+            the search to entities which bear this type. Whether this restriction should be
+            a hard constraint or simply induce a change on the reconciliation scores
+            can be determined by the service.
+            In particular, services MAY return candidates which do not belong to
+            the supplied type.
+        limit:
+          description: |-
+            An optional limit on the number of candidates to return,
+            which must be a positive integer
+
+    reconcile-query-batch:
+      required:
+        - queries
+      type: object
+      description: |-
+        This schema validates the JSON serialization of any reconciliation query batch,
+        i.e. the payload of a POST to a reconciliation endpoint.
+      properties:
+        queries:
+          type: array
+          description: a list of queries to be processed by the service
+          items:
+            $ref: '#/components/schemas/reconcile-query'
+      examples:
+        - $ref: '#/components/examples/reconciliation-query-batch-valid'
+
+    reconciliation-candidate:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          type: string
+          description: the name of the candidate entity
+        description:
+          type: string
+        type:
+          $ref: '#/components/schemas/type'
+        score:
+          type: number
+          description: |-
+            number indicating how likely it is that the candidate matches the query.
+            A higher score indicates a better match.
+            If candidates are scored, the reconciliation service SHOULD sort candidates in
+            decreasing score order.
+            If standardizedScore is set to true in the service manifest,
+            this value MUST be between 0 and 100 (inclusive)
+          minimum: 0
+          maximum: 101
+        features:
+          type: array
+          description: |-
+            an array of matching [features](#/components/schemas/feature)
+          items:
+            $ref: '#/components/schemas/feature'
+
+    preview:
+      required:
+        - width
+        - height
+      type: object
+      description: |-
+        settings for the preview protocol, for HTML previews of [entities](#/components/schemas/entity)
+      properties:
+        width:
+          type: integer
+          description: the width in pixels of the viewport where to render an entity preview
+        height:
+          type: integer
+          description: the height in pixels of the same viewport
+
+    feature:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+          examples:
+            - name_tfidf
+            - pagerank
+            - type_match
+        name:
+          type: string
+          description: a human-readable name
+        value:
+          anyOf:
+            - type: number
+            - type: boolean
+          description: the value of the feature for the [candidate](#/components/schemas/reconciliation-candidate)
+
+    reconciliation-result:
+      type: object
+      properties:
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/reconciliation-candidate'
+
+    reconciliation-result-batch:
+      required:
+        - result
+      type: object
+      description: used to validate the JSON serialization of any reconciliation result batch
+      properties:
+        results:
+          type: array
+          description: the list of candidates for each reconciliation query, in the same order
+          items:
+            $ref: '#/components/schemas/reconciliation-result'
+      examples:
+        - $ref: '#/components/examples/reconciliation-result-batch-valid'
+
+    suggest-entities-response:
+      required:
+        - result
+      type: object
+      description: |-
+        this schema can be used to validate the JSON response
+        of a suggest service for entities
+      properties:
+        result:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/entity'
+              - $ref: '#/components/schemas/property'
+              - $ref: '#/components/schemas/type'
+
+    suggest-properties-response:
+      type: object
+
+    suggest-types-response:
+      type: object
+
+    data-extension-service:
+      description: |-
+        a service which returns to clients the values of some [properties](#/components/schemas/property) on a selection of entities.
+
+    data-extension-metadata:
+      type: object
+      properties:
+        propose_properties:
+          type: boolean
+          description: |-
+            a boolean indicating if the service supports [data extension property proposal](#/paths/extend/propose)
+        property_settings:
+          type: array
+          description: |-
+            an array of [data extension property settings](#/components/schemas/data-extension-property-setting).
+          items:
+            $ref: '#/components/schemas/data-extension-property-setting'
+
+    data-extension-query:
+      type: object
+
+    data-extension-response:
+      type: object
+
+    data-extension-property-proposal-response:
+      type: object
+      properties:
+        properties:
+          type: array
+          description: |-
+            an array of proposed [properties](#/components/schemas/property).
+            These properties are suggested as fields that could be potentially fetched via data extension for entities of the type provided in the query
+          items:
+            $ref: '#/components/schemas/property'
+
+    data-extension-property-setting:
+      type: object
+      properties:
+        id:
+          type: string
+          description: |-
+            an unique identifier for the setting
+        name:
+          type: string
+          description: |-
+            a human-readable label which is used when presenting the setting to the user in a form
+        type:
+          type: string
+          description: |-
+            a data type, which can be one of the strings `number, `text`, `checkbox`, or `select`.
+            This determines which type of value the [property setting](#/components/schemas/property-settings) is expected to store.
+            Clients SHOULD render this setting with the corresponding HTML element.
+          enum:
+            - number
+            - text
+            - checkbox
+            - select
+        default:
+          oneOf:
+            - type: string
+            - type: number
+          discriminator:
+            propertyName: type
+          description: |-
+            a default value for the setting, when not provided or left untouched by the user
+        help_text:
+          type: string
+          description: |-
+            a help text, which describes the meaning of the field to the user.
+            This is meant to be a short string that can be displayed alongside the corresponding form field
+        choices:
+          $ref: '#/components/schemas/property-setting-choices'
+
+    numerical-setting:
+      required:
+        - type
+        - label
+        - name
+      type: object
+      description: defines a numerical setting on a property
+      properties:
+        type:
+          type: string
+          enum:
+            - number
+        default:
+          type: number
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
+
+    string-setting:
+      required:
+        - type
+        - label
+        - name
+      type: object
+      description: defines a string setting on a property
+      properties:
+        type:
+          type: string
+          enum:
+            - text
+        default:
+          type: number
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
+
+    boolean-setting:
+      required:
+        - type
+        - label
+        - name
+      type: object
+      description: defines a boolean setting on a property
+      properties:
+        type:
+          type: string
+          enum:
+            - checkbox
+        default:
+          type: boolean
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
+
+    fixed-choices-setting:
+      required:
+        - type
+        - label
+        - name
+        - choices
+      type: object
+      description: defines a setting with a fixed set of choices
+      properties:
+        type:
+          type: string
+          enum:
+            - select
+        default:
+          type: string
+        label:
+          type: string
+        name:
+          type: string
+        help_text:
+          type: string
+        choices:
+          type: array
+          items:
+            required:
+              - value
+              - name
+            type: object
+            properties:
+              value:
+                type: string
+              name:
+                type: string
+
+    property-setting-choices:
+      oneOf:
+        - $ref: '#/components/schemas/numerical-setting'
+        - $ref: '#/components/schemas/string-setting'
+        - $ref: '#/components/schemas/boolean-setting'
+        - $ref: '#/components/schemas/fixed-choices-setting'
+
+    property-settings:
+      type: array
+      description: |-
+        definition of the settings configurable by the user when fetching a property
+      items:
+        $ref: '#/components/schemas/property-setting-choices'
+
+    extend:
+      type: object
+      description: |-
+        settings for the data extension protocol to fetch property values
+      properties:
+        propose_properties:
+          type: boolean
+          description: whether the service supports property proposals
+        property_settings:
+          $ref: '#/components/schemas/property-settings'
+
+    standardizedScore:
+      type: boolean
+      description: |-
+        whether the service returns values between 0 and 100 (inclusive)
+        in the [score](#/components/schemas/reconciliation-candidate/properties/score) field of reconciliation candidates
+
+    condition:
+      type: object
+      description: some conditional object
+      properties:
+        match_type:
+          description: |-
+            either `name` or `property`, depending on whether the condition relates to
+            entity names or their properties.
+        pid:
+          description: |-
+            a [property](#/components/schemas/property), to be provided if and only if the match_type is property.
+
+        v:
+          description: |-
+            one or more [property-value]: /property-value "property values". If `match_type` is `name`, then this value is to be matched to entity names, otherwise to the property values via the supplied [pid]. The specifics of how this similarity is defined are determined by the service.
+
+        required:
+          description: |-
+            an optional boolean indicating if a match for the property is required for an
+            entity to enter the list of candidates (i.e. acting like a filter or a WHERE
+            clause in SQL) or optional (i.e. only effecting the entity's rank in the
+            list of candidates)
+
+        match_quantifier:
+          description: |-
+            An optional string to indicate which of the values in v to match.
+            MUST be any (equivalent to boolean OR), all (equivalent to boolean AND),
+            or none (equivalent to boolean NOT)
+
+        match_qualifier:
+          description: |-
+            An optional string to indicate how to match the values in v.
+            This can be used for general matching relations like "skos:exactMatch",
+            "skos:closeMatch", etc. or for specific features like spatial matching
+            with geo data (e.g. containment search with "schema:containsPlace" etc.) or
+            custom matching on date fields (e.g. services supporting the [EDTF](https://www.loc.gov/standards/datetime/) specification
+            could use "EDTF:Level-0" etc.)
+            To allow discovery of supported qualifiers by clients, services that support
+            match_qualifier MUST return the supported match_qualifiers for each property
+            in their property suggest responses
+
+  # ---------
+  #
+  #  EXAMPLES
+  #
+  # ---------
+
+  examples:
+
+    reconciliation-query-batch-valid:
+      description: example of a valid query batch with required fields only
+
+    reconciliation-result-batch-valid:
+      description: example of a valid query batch result
+
+    suggest-entities-response-valid:
+      description: example of a valid suggest entities response
+
+    suggest-types-response-valid:
+      description: example of a valid suggest types response
+
+    suggest-properties-response-valid:
+      description: example of a valid suggest properties response
+
+    data-extension-query-valid:
+      description: example of a valid data extension query
+
+    data-extension-response-valid:
+      description: example of a valid data extension query response
+
+    data-extension-property-proposal-response-valid:
+      description: example of a valid data extension property proposal response
+    
+    data-extension-metadata:
+      description: a full example showing property settings
+      value: '{
+        "propose_properties": {
+          "service_url": "https://lobid.org",
+          "service_path": "/gnd/reconcile/properties"
+        },
+        "property_settings": [
+          {
+            "id": "limit",
+            "name": "Limit",
+            "type": "number",
+            "default": 0,
+            "help_text": "Maximum number of values to return per row (0 for no limit)"
+          },
+          {
+            "id": "content",
+            "name": "Content",
+            "type": "select",
+            "default": "literal",
+            "help_text": "Content type: ID or literal",
+            "choices": [
+              {
+                "value": "id",
+                "name": "ID"
+              },
+              {
+                "value": "literal",
+                "name": "Literal"
+              }
+            ]
+          }
+        ]
+        }'
+
+    manifest-viaf:
+      description: a minimal example of a service manifest
+      value: '{"versions": ["0.2"],"name": "VIAF","view": { "url": "https://viaf.org/viaf/{id}" }}'
+
+    manifest-getty:
+      description: a minimal example of a service manifest
+      value: '{
+        "versions": ["0.2"],
+        "defaultTypes": [
+            {
+              "id": "/ulan",
+              "name": "ULAN search"
+            },
+            {
+              "id": "/tgn",
+              "name": "TGN search"
+            },
+            {
+            "id": "/aat",
+              "name": "AAT search"
+            },
+            {
+              "id": "/all",
+              "name": "Search all Vocabs"
+            }
+          ],
+        "name": "Getty Vocabularies Reconciliation Service",
+        "batchSize": 50,
+        "preview": {
+          "height": 200,
+          "width": 350
+          },
+        "suggest": {
+            "entity": false,
+            "property": true,
+            "type": false
+          },
+        "view": {
+            "url": "http://vocab.getty.edu/page/{id}"
+          }
+        }'
