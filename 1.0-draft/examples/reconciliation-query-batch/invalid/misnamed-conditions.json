@@ -5,15 +5,15 @@
       "limit": 5,
       "props": [
         {
-          "v": "Christel Hanewinckel"
+          "propertyValue": "Christel Hanewinckel"
         },
         {
-          "pid": "professionOrOccupation",
-          "v": "Politik*"
+          "propertyId": "professionOrOccupation",
+          "propertyValue": "Politik*"
         },
         {
-          "pid": "affiliation",
-          "v": "http://d-nb.info/gnd/2022139-3"
+          "propertyId": "affiliation",
+          "propertyValue": "http://d-nb.info/gnd/2022139-3"
         }
       ]
     },
@@ -22,15 +22,15 @@
       "limit": 5,
       "props": [
         {
-          "v": "Franz Thönnes"
+          "propertyValue": "Franz Thönnes"
         },
         {
-          "pid": "professionOrOccupation",
-          "v": "Politik*"
+          "propertyId": "professionOrOccupation",
+          "propertyValue": "Politik*"
         },
         {
-          "pid": "affiliation",
-          "v": "http://d-nb.info/gnd/2022139-3"
+          "propertyId": "affiliation",
+          "propertyValue": "http://d-nb.info/gnd/2022139-3"
         }
       ]
     }

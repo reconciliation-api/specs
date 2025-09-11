@@ -3,14 +3,14 @@
     {
       "conditions": [
         {
-          "v": "Hans-Eberhard Urbaniak"
+          "propertyValue": "Hans-Eberhard Urbaniak"
         }
       ]
     },
     {
       "conditions": [
         {
-          "v": "Ernst Schwanhold"
+          "propertyValue": "Ernst Schwanhold"
         }
       ]
     }

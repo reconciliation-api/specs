@@ -4,7 +4,7 @@
       "conditions": [
         {
           "matchType": "name",
-          "v": "Christel Hanewinckel"
+          "propertyValue": "Christel Hanewinckel"
         }
       ],
       "type": [

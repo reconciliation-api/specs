@@ -250,6 +250,7 @@ href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliable-Data-Sources">
             <li><a href="https://github.com/reconciliation-api/specs/pull/149">Move the <code>query</code> field of reconciliation queries inside <code>properties</code> to allow for queries which do not provide entity names</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/156">Add optional <code>standardizedScore</code> field to the manifest</a></li>
             <li><a href="https://github.com/reconciliation-api/specs/pull/166">Unify naming to camelCase convention</a></li>
+            <li><a href="https://github.com/reconciliation-api/specs/pull/193">Add <code>limit</code> parameter to suggest queries and rename <code>cursor</code> to <code>offset</code></a></li>
           </ul>
         </section>
       </section>
@@ -549,19 +550,19 @@ database are instances of this type.</dd>
          <dl>
             <dt><code>matchType</code></dt>
             <dd>Either <code>name</code> or <code>property</code>, depending on whether the condition relates to entity names or their properties.</dd>
-            <dt><code>pid</code></dt>
+            <dt><code>propertyId</code></dt>
             <dd>A <a href='#properties'>property</a> identifier, to be provided if and only if the <code>matchType</code> is <code>property</code>.</dd>
-            <dt><code>v</code></dt>
+            <dt><code>propertyValue</code></dt>
             <dd>one or more <a>property values</a>. If <code>matchType</code> is <code>name</code>, then this value is to
-                be matched to entity names, otherwise to the property values via the supplied <code>pid</code>. The specifics of how this similarity
+                be matched to entity names, otherwise to the property values via the supplied <code>propertyId</code>. The specifics of how this similarity
                 is defined are determined by the service.</dd> 
             <dt><code>required</code></dt>
             <dd>An optional boolean indicating if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)
               or optional (i.e. only effecting the entity's rank in the list of candidates). If omitted, the service SHOULD assume the requested value to be <code>false</code>;</dd>
             <dt><code>matchQuantifier</code></dt>
-            <dd>An optional string to indicate which of the values in <code>v</code> to match. MUST be <code>any</code> (equivalent to boolean OR), <code>all</code> (equivalent to boolean AND), or <code>none</code> (equivalent to boolean NOT). If omitted, the service SHOULD assume the requested value to be <code>any</code>;</dd>
+            <dd>An optional string to indicate which of the values in <code>propertyValue</code> to match. MUST be <code>any</code> (equivalent to boolean OR), <code>all</code> (equivalent to boolean AND), or <code>none</code> (equivalent to boolean NOT). If omitted, the service SHOULD assume the requested value to be <code>any</code>;</dd>
             <dt><code>matchQualifier</code></dt>
-            <dd>An optional string to indicate how to match the values in <code>v</code>.
+            <dd>An optional string to indicate how to match the values in <code>propertyValue</code>.
               This can be used for general matching relations like "skos:exactMatch", "skos:closeMatch", etc. or for specific features like spatial matching with geo data
               (e.g. containment search with "schema:containsPlace" etc.) or custom matching on date fields (e.g. services supporting the [[EDTF]] specification could use "EDTF:Level-0" etc.
               To allow discovery of supported qualifiers by clients, services that support <code>matchQualifier</code> MUST return the supported <code>matchQualifiers</code> for each property
@@ -778,9 +779,14 @@ in the <code>score</code> field). By exposing individual features in their respo
             <dd>The string input by the user in the auto-suggest-enabled field;
               depending on the data users are working with, they might want to select a suggestion from all available <a>types</a>, <a>properties</a>, or even <a>entities</a>;
               to allow that, services MAY send all suggestions if the prefix is empty, and clients SHOULD provide a way to send the empty prefix;</dd>
-            <dt><code>cursor</code></dt>
+            <dt><code>limit</code></dt>
+            <dd>An optional integer to specify the number of suggestions to return.</dd>
+            <dt><code>offset</code></dt>
             <dd>An optional integer to specify the number of suggestions to skip: this can be used by clients to fetch more suggestions.</dd>
           </dl>
+        </p>
+        <p>
+          <pre class="example nohighlight">GET /suggest/entity?prefix=cumulo&amp;limit=3</pre>
         </p>
       </section>
       <section id="suggest-responses">
@@ -1001,7 +1007,7 @@ containing a type identifier.
 
         <p>All objects used in this protocol (entities, types, properties, queries, candidates, features, etc.) MAY declare an explicit <a>text-processing language</a> in a <code>lang</code> field.
         The <code>lang</code> value MUST be a single valid (i.e. found in the [[IANA Language Subtag Registry]]) [[BCP 47]] language tag. This text-processing language applies to the natural language fields of the object: <code>name</code>, <code>description</code>,
-        <code>query</code> (for <a>reconciliation queries</a>), <code>v</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
+        <code>query</code> (for <a>reconciliation queries</a>), <code>propertyValue</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>). Nested objects inherit the text-processing language of their parent, and can override it by setting their own <code>lang</code> value
         (see example below). A default text-processing language for any natural language string returned or processed by a service MAY be set in the <code>lang</code> field of the <a href="#service-manifest">service manifest</a>.
         Client and service implementors SHOULD consider the text-processing language to ensure correct processing of natural language content.</p>
 
@@ -1017,7 +1023,7 @@ containing a type identifier.
 
         <p>All objects returned by reconciliation services (entities, types, properties, candidates, features, etc.) MAY declare an explicit text <a href="https://www.w3.org/International/articles/inline-bidi-markup/uba-basics">
         base direction</a> in a <code>dir</code> field. The <code>dir</code> value MUST be <code>ltr</code> for left-to-right, <code>rtl</code> for right-to-left, or <code>auto</code> for determining the direction by examining the content of each JSON field.
-        This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>v</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>).
+        This base direction applies to the natural language fields of the object: <code>name</code> and <code>description</code> (for candidates etc.), <code>propertyValue</code> and <code>str</code> (for <a>property values</a>), <code>helpText</code> (for <a>data extension property settings</a>).
         Nested objects inherit the base direction of their parent, and can override it by setting their own <code>dir</code> value. A default base direction for any natural language string returned or processed by a service MAY be set in the <code>dir</code> field of the
         <a href="#service-manifest">service manifest</a>. If no explicit base direction is given, left-to-right is considered the default base direction. Clients SHOULD consider the base direction to ensure correct rendering of content, e.g. by setting corresponding <code>dir</code> attributes when rendering JSON responses in HTML.
         For instance, rendering a Persian label for 'Yahoo!' like <code>یاهو!</code> right-to-left will correctly display as <code dir="rtl">یاهو!</code>.</p>
