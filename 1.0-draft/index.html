@@ -549,12 +549,12 @@ database are instances of this type.</dd>
 		by allowing clients to specify an attribute of entities that should match. It consists of:
          <dl>
             <dt><code>matchType</code></dt>
-            <dd>{{String}} (required) either <code>name</code> or <code>property</code>, depending on whether the condition relates to entity names or their properties.</dd>
+            <dd>{{String}} (required) either <code>name</code> or <code>id</code> or <code>property</code>, depending on whether the condition relates to entity names, entity ids or their properties.</dd>
             <dt><code>propertyId</code></dt>
             <dd>{{String}} (required if the <code>matchType</code> is <code>property</code>) a <a href='#properties'>property</a> identifier.</dd>
             <dt><code>propertyValue</code></dt>
             <dd>{{String}} (required) one or more <a>property values</a>. If <code>matchType</code> is <code>name</code>, then this value is to
-                be matched to entity names, otherwise to the property values via the supplied <code>propertyId</code>. The specifics of how this similarity
+                be matched to entity names. If <code>matchType</code> is <code>id</code>, then this value is to be matched to entity ids, otherwise to the property values via the supplied <code>propertyId</code>. The specifics of how this similarity
                 is defined are determined by the service.</dd> 
             <dt><code>required</code></dt>
             <dd>{{Boolean}} (optional) to indicate if a match for the property is required for an entity to enter the list of candidates (i.e. acting like a filter or a WHERE clause in SQL)

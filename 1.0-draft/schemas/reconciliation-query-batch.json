@@ -72,9 +72,10 @@
               "properties": {
                 "matchType": {
                   "type": "string",
-                  "description": "A string to indicate whether to match the supplied value to entity names or property values",
+                  "description": "A string to indicate whether to match the supplied value to entity names, entity ids or property values",
                   "enum": [
                     "name",
+                    "id",
                     "property"
                   ]
                 },
@@ -83,7 +84,7 @@
                   "description": "The identifier of the property, whose values will be compared to the values supplied. Required if 'matchType' is 'property'."
                 },
                 "propertyValue": {
-                  "description": "A value (or array of values) to match against the entity names or property values associated with the property on each candidate",
+                  "description": "A value (or array of values) to match against the entity names, entity ids, or property values associated with the property on each candidate",
                   "oneOf": [
                     {
                       "$ref": "#/definitions/property_value"
