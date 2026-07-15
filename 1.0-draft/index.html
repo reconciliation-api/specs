@@ -498,7 +498,7 @@ database are instances of this type.</dd>
            The response body of such error responses is not specified so far.
         </p>
       </section>
-      <section id="authentication">
+      
         <h3>Authentication</h3>
         <p>
            Services MAY request users to provide an authentication token when making queries.
@@ -517,84 +517,6 @@ database are instances of this type.</dd>
            If a security scheme is provided in the service manifest, all queries to the service MUST provide
            the corresponding credentials, except for retrieving the service manifest itself.
            When invalid authentication is supplied in any HTTP request, the service MUST return an HTTP 401 error.
-        </p>
-      </section>
-      <section id="version-negotiation">
-        <h3>Version Negotiation</h3>
-        <p>
-          To let a service support multiple protocol versions on the same endpoint, clients MAY express the version they expect
-          in the HTTP <code>Accept</code> header with a reconciliation-specific media type.
-        </p>
-        <p>
-          A client requesting version 1 can send:
-          <pre class="example nohighlight">Accept: application/reconciliation.v1+json</pre>
-        </p>
-        <p>
-          A service that supports multiple versions SHOULD inspect this header and serve the highest-priority compatible version.
-          Reconciliation-specific media types in <code>Accept</code> SHOULD take precedence over generic media types such as
-          <code>application/json</code>. Clients MAY use standard HTTP quality factors in <code>Accept</code> to express preference
-          between supported variants.
-        </p>
-        <p>
-          Version matching for reconciliation-specific media types SHOULD be exact: for instance,
-          <code>application/reconciliation.v1+json</code> and <code>application/reconciliation.v1.1+json</code> identify
-          different protocol variants.
-        </p>
-        <p>
-          Services SHOULD only apply fallback when no reconciliation-specific media type is supplied in <code>Accept</code>.
-          In that case, services SHOULD use a documented default version for unversioned requests,
-          such as their latest stable version.
-          If a request explicitly advertises only unsupported reconciliation versions, services SHOULD return
-          HTTP 406 (Not Acceptable) instead of silently downgrading.
-        </p>
-        <p>
-          A 406 response SHOULD include a response body that helps recovery, for instance by listing the supported
-          reconciliation-specific media types.
-        </p>
-        <p>
-          Services SHOULD indicate the selected reconciliation protocol variant in the response
-          <code>Content-Type</code> header, for instance:
-          <pre class="example nohighlight">Content-Type: application/reconciliation.v1+json</pre>
-          This aligns version selection with standard HTTP content negotiation behavior.
-        </p>
-        <p>
-          When responses vary based on <code>Accept</code>, services MUST also include <code>Vary: Accept</code>.
-          This prevents intermediary caches from serving a response variant selected for one <code>Accept</code>
-          header value to clients that requested another.
-          The <code>versions</code> field in the <a>service manifest</a> advertises broad compatibility, while
-          <code>Accept</code>-based negotiation selects the variant used for a specific request.
-        </p>
-        <p>
-          Services MAY additionally include <code>Link: &lt;https://reconciliation-api.github.io/specs/1.0/&gt;; rel="profile"</code>
-          to identify the semantic profile of the selected representation.
-          This <code>Link</code> value is sent in the HTTP response headers.
-        </p>
-        <p>
-          For debugging, services MAY also include an informational header such as:
-          <code>Reconciliation-Version: 1.0</code>
-          If provided, this header is informational only and MUST NOT override the negotiated
-          representation indicated by <code>Content-Type</code>.
-        </p>
-        
-        <p>
-          Example of a successful negotiated response header:
-          <pre class="example nohighlight">HTTP/1.1 200 OK
-Date: Wed, 15 Jul 2026 14:22:31 GMT
-Content-Type: application/reconciliation.v1+json
-Vary: Accept
-Link: &lt;https://reconciliation-api.github.io/specs/1.0/&gt;; rel="profile"
-Reconciliation-Version: 1.0
-Cache-Control: public, max-age=300
-Content-Length: 1234</pre>
-        </p>
-        <p>
-          Example of a response header when only unsupported reconciliation versions are requested:
-          <pre class="example nohighlight">HTTP/1.1 406 Not Acceptable
-Date: Wed, 15 Jul 2026 14:22:31 GMT
-Content-Type: application/json
-Vary: Accept
-Cache-Control: no-store
-Content-Length: 210</pre>
         </p>
       </section>
     </section>
