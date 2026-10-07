@@ -570,13 +570,6 @@ database are instances of this type.</dd>
           This <code>Link</code> value is sent in the HTTP response headers.
         </p>
         <p>
-          For debugging, services MAY also include an informational header such as:
-          <code>Reconciliation-Version: 1.0</code>
-          If provided, this header is informational only and MUST NOT override the negotiated
-          representation indicated by <code>Content-Type</code>.
-        </p>
-        
-        <p>
           Example of a successful negotiated response header:
           <pre class="example nohighlight">HTTP/1.1 200 OK
 Date: Wed, 15 Jul 2026 14:22:31 GMT
