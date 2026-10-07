@@ -532,7 +532,7 @@ database are instances of this type.</dd>
         <p>
           A service that declares support for multiple versions in its manifest MUST inspect this header and serve the highest-priority compatible version.
           Reconciliation-specific media types in <code>Accept</code> SHOULD take precedence over generic media types such as
-          <code>application/json</code>. Clients MAY use standard HTTP quality factors in <code>Accept</code> to express preference
+          <code>application/json</code>. Clients MAY use standard HTTP quality factors as defined in [[RFC9110]] to express preference
           between supported variants.
         </p>
         <p>
