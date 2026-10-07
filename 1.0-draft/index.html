@@ -544,7 +544,7 @@ database are instances of this type.</dd>
           Services SHOULD only apply fallback when no reconciliation-specific media type is supplied in <code>Accept</code>.
           In that case, services SHOULD use a documented default version for unversioned requests,
           such as their latest stable version.
-          If a request explicitly advertises only unsupported reconciliation versions, services SHOULD return
+          If a client explicitly requests only unsupported reconciliation versions, services SHOULD return
           HTTP 406 (Not Acceptable) instead of silently downgrading.
         </p>
         <p>
